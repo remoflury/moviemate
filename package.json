@@ -4,11 +4,11 @@
 	"description": "This is an web-app built with svelte-kit and tailwindcss. It uses the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction) to fetch movie data.",
 	"private": true,
 	"repository": {
-    "type": "git",
-    "url": "git+https://github.com/remoflury/moviemate.git"
-  },
+		"type": "git",
+		"url": "git+https://github.com/remoflury/moviemate.git"
+	},
 	"author": "Tina Frauenknecht, Christina Benz, Remo Flury",
-  "license": "ISC",
+	"license": "ISC",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -32,14 +32,14 @@
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-    "tailwindcss": "^3.3.2",
-    "postcss": "^8.4.24",
-    "autoprefixer": "^10.4.14",
+		"tailwindcss": "^3.3.2",
+		"postcss": "^8.4.24",
+		"autoprefixer": "^10.4.14",
 		"vite": "^4.4.2"
 	},
 	"dependencies": {
-    "@supabase/auth-helpers-sveltekit": "^0.9.4",
-    "@supabase/supabase-js": "^2.24.0"
-  },
+		"@supabase/auth-helpers-sveltekit": "^0.9.4",
+		"@supabase/supabase-js": "^2.24.0"
+	},
 	"type": "module"
 }

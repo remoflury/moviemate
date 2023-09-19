@@ -5,132 +5,132 @@ import { error as pageError } from '@sveltejs/kit';
 import { createExistingMateProps, createSearchMateProps } from '$lib/utils/matesUtils.js';
 
 /** @type {import('./$types').PageServerLoad} */
-export const load: PageServerLoad = async ({locals }) =>{
-  const supabaseClient = locals.supabase;
-  const session = await locals.getSession()
-  if (!session) return pageError(401, 'Unauthorized. Please login.')
-  const userId = session.user.id
+export const load: PageServerLoad = async ({ locals }) => {
+	const supabaseClient = locals.supabase;
+	const session = await locals.getSession();
+	if (!session) return pageError(401, 'Unauthorized. Please login.');
+	const userId = session.user.id;
 
-  // get all mates of user
-  const { data, error } = await supabaseClient
-    .from('Users_details')
-    .select('users_mates')
-    .eq('users_id', userId)
+	// get all mates of user
+	const { data, error } = await supabaseClient
+		.from('Users_details')
+		.select('users_mates')
+		.eq('users_id', userId);
 
-  if (error) {
-    return pageError(500, 'Something went wrong.')
-  }
+	if (error) {
+		return pageError(500, 'Something went wrong.');
+	}
 
-  const mates = data[0]?.users_mates || []
+	const mates = data[0]?.users_mates || [];
 
-  if (mates.length === 0) {
-    return {
-      mates: []
-    }
-  }
+	if (mates.length === 0) {
+		return {
+			mates: []
+		};
+	}
 
-  // get all details of mates
-  const { data: matesDetails, error: matesDetailsError } = await supabaseClient
-    .from('Users_details')
-    .select('users_id, users_username')
-    .in('users_id', mates)
+	// get all details of mates
+	const { data: matesDetails, error: matesDetailsError } = await supabaseClient
+		.from('Users_details')
+		.select('users_id, users_username')
+		.in('users_id', mates);
 
-    if (matesDetailsError) {
-      return pageError(500, 'Something went wrong')
-    }
+	if (matesDetailsError) {
+		return pageError(500, 'Something went wrong');
+	}
 
-   const result = createExistingMateProps(matesDetails)
+	const result = createExistingMateProps(matesDetails);
 
-    return {
-      mates: result
-    }
-}
+	return {
+		mates: result
+	};
+};
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-  searchmate: async ({request, locals}) => {
-    const supabaseClient = locals.supabase;
+	searchmate: async ({ request, locals }) => {
+		const supabaseClient = locals.supabase;
 
-    // grab the data
-    const formData = await request.formData()
-    const searchValue = formData.get('search-mate')
-    // validate input
-    if (!searchValue) return
+		// grab the data
+		const formData = await request.formData();
+		const searchValue = formData.get('search-mate');
+		// validate input
+		if (!searchValue) return;
 
-    // search for email
-      const { data: email, error: emailError } = await supabaseClient
-        .from('Users_details')
-        .select('users_id, users_email, users_username')
-        .ilike('users_email', `%${searchValue}%`)
+		// search for email
+		const { data: email, error: emailError } = await supabaseClient
+			.from('Users_details')
+			.select('users_id, users_email, users_username')
+			.ilike('users_email', `%${searchValue}%`);
 
-    // search for email
-      const { data: username, error: usernameError } = await supabaseClient
-        .from('Users_details')
-        .select('users_id, users_email, users_username')
-        .ilike('users_username', `%${searchValue}%`)
+		// search for email
+		const { data: username, error: usernameError } = await supabaseClient
+			.from('Users_details')
+			.select('users_id, users_email, users_username')
+			.ilike('users_username', `%${searchValue}%`);
 
+		// error handling
+		if (emailError || usernameError) {
+			return fail(400, { message: 'Something went wrong' });
+		}
 
-    // error handling
-    if (emailError || usernameError) {
-      return fail(400, {message: 'Something went wrong'})
-    }
+		// merge results from db and remove duplicates
+		const data = email.concat(username);
+		const result = data.filter(
+			(item, index, self) => index === self.findIndex((t) => t.users_id === item.users_id)
+		);
 
-    // merge results from db and remove duplicates
-    const data = email.concat(username)
-    const result = data.filter((item, index, self) => index === self.findIndex((t) => t.users_id === item.users_id)
-    );
+		const searchMates: SearchMatesProps[] = createSearchMateProps(result);
 
-    const searchMates: SearchMatesProps[] = createSearchMateProps(result)
+		return {
+			searchValue,
+			result: searchMates
+		};
+	},
+	addnewmate: async ({ request, locals }) => {
+		const supabaseClient = locals.supabase;
+		const session = await locals.getSession();
+		const userId = session?.user.id;
 
+		const formData = await request.formData();
+		const newMateId = formData.get('new-mate-id')?.toString();
 
-    return {
-      searchValue,
-      result: searchMates
-    }
-  },
-  addnewmate: async ({request, locals}) => {
-    const supabaseClient = locals.supabase;
-    const session = await locals.getSession()
-    const userId = session?.user.id 
+		if (!newMateId) {
+			return fail(400, { message: 'Something went wrong' });
+		}
 
-    const formData = await request.formData()
-    const newMateId = formData.get('new-mate-id')?.toString()
+		// uf user selects itself, return early to prevent adding itself
+		if (userId === newMateId) return;
 
-    if (!newMateId) {
-      return fail(400, {message: 'Something went wrong'})
-    }
-  
-    // uf user selects itself, return early to prevent adding itself
-    if (userId === newMateId) return
+		// get all mates of user
+		const { data, error } = await supabaseClient
+			.from('Users_details')
+			.select('users_mates')
+			.eq('users_id', userId);
 
-    // get all mates of user
-    const { data, error } = await supabaseClient
-      .from('Users_details')
-      .select('users_mates')
-      .eq('users_id', userId)
+		if (error) {
+			return fail(400, { message: 'Something went wrong' });
+		}
 
-    if (error) {
-      return fail(400, {message: 'Something went wrong'})
-    }
+		// arrange all previous mates to flat array (results in empty array if no mates)
+		const prevMates: string[] = data
+			.filter((mate) => mate.users_mates)
+			.flatMap((mate) => mate.users_mates);
 
-    // arrange all previous mates to flat array (results in empty array if no mates)
-    const prevMates: string[] = data.filter((mate) => mate.users_mates ).flatMap((mate) => mate.users_mates)
+		// if previous mates include new mate, return early to prevent adding duplicate
+		if (prevMates.includes(newMateId)) return;
 
-    // if previous mates include new mate, return early to prevent adding duplicate
-    if (prevMates.includes(newMateId)) return
+		// adding new mate to array
+		const newMates = [...prevMates, newMateId];
 
-    // adding new mate to array
-    const newMates = [...prevMates, newMateId]
+		// add new mates to db
+		const { error: newMateError } = await supabaseClient
+			.from('Users_details')
+			.update({ users_mates: newMates })
+			.eq('users_id', userId);
 
-    // add new mates to db
-    const { error: newMateError } = await supabaseClient
-      .from('Users_details')
-      .update({ users_mates: newMates })
-      .eq('users_id', userId)
-
-    if (newMateError) {
-      return fail(400, {message: 'Something went wrong'})
-    }
-
-  }
+		if (newMateError) {
+			return fail(400, { message: 'Something went wrong' });
+		}
+	}
 } satisfies Actions;

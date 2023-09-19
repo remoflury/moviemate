@@ -4,67 +4,68 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply scroll-smooth 
-  }
+	html {
+		@apply scroll-smooth;
+	}
 
-  body {
-    @apply font-body bg-black text-white tracking-wide selection:bg-white selection:text-black
-  }
+	body {
+		@apply font-body bg-black text-white tracking-wide selection:bg-white selection:text-black;
+	}
 
-  /* Typography */
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-heading text-primary 
-  }
+	/* Typography */
+	h1,
+	h2,
+	h3,
+	h4 {
+		@apply font-heading text-primary;
+	}
 
-  h1, h2 {
-    @apply text-2xl mb-8 uppercase
-  }
+	h1,
+	h2 {
+		@apply text-2xl mb-8 uppercase;
+	}
 
-  /* h2 {
+	/* h2 {
     @apply text-xl
   } */
 
-  h3 {
-    @apply text-lg
-  }
+	h3 {
+		@apply text-lg;
+	}
 
-  p,
-  a {
-    @apply text-base
-  }
+	p,
+	a {
+		@apply text-base;
+	}
 
-  button.btn,
-  a.btn {
-    @apply font-heading text-xl uppercase w-full bg-primary px-10 py-2 rounded-full active:opacity-90 transition max-w-max
-  }
+	button.btn,
+	a.btn {
+		@apply font-heading text-xl uppercase w-full bg-primary px-10 py-2 rounded-full active:opacity-90 transition max-w-max;
+	}
 
-  a.link {
-    @apply text-primary
-  }
+	a.link {
+		@apply text-primary;
+	}
 
-  /* Input Fields */
-  input {
-    @apply block placeholder:text-black placeholder:opacity-50 px-4 py-[10px] mt-6 first:mt-0 text-black relative w-full focus:outline-primary focus:outline selection:bg-primary selection:text-white
-  }
+	/* Input Fields */
+	input {
+		@apply block placeholder:text-black placeholder:opacity-50 px-4 py-[10px] mt-6 first:mt-0 text-black relative w-full focus:outline-primary focus:outline selection:bg-primary selection:text-white;
+	}
 
-  input.search {
-    @apply rounded-max py-1 placeholder:text-sm
-  }
+	input.search {
+		@apply rounded-max py-1 placeholder:text-sm;
+	}
 
-  /* Layout Stystem */
-  main section {
-    @apply py-8
-  }
+	/* Layout Stystem */
+	main section {
+		@apply py-8;
+	}
 
-  .container {
-    @apply grid grid-cols-4 gap-x-4
-  }
+	.container {
+		@apply grid grid-cols-4 gap-x-4;
+	}
 
-  .container > * {
-    @apply col-span-full
-  }
+	.container > * {
+		@apply col-span-full;
+	}
 }

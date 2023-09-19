@@ -2,8 +2,6 @@
 	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
-
-	// console.log($page)
 </script>
 
 <section>

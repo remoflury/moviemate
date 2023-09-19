@@ -2,6 +2,13 @@
 
 This is an web-app built with svelte-kit and tailwindcss. It uses the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction) to fetch movie data.
 
+## Tech-Stack
+This repo uses:
+- Svelte & SvelteKit as JS Framework (with TypeScript)
+- Supabase with the according SDK and sveltekit-supabase-auth-helpers
+- Tailwind CSS
+- TMDB API
+
 ## Setup Dev-Environment
 In your Terminal run:
 ```bash
@@ -14,11 +21,11 @@ Afterwards, create an .env file in the root of the project and paste in the nece
 Development takes place on the dev branch.
 
 ### Coding Standards
-- camelCase
-- kebab-case
+- camelCase for JS
+- kebab-case for HTML and CSS
 - use descriptive names for variables, functions, etc.
 - use english for naming
-- intendation with 2 spaces
+- indentation with 2 spaces
 
 To start the dev server:
 

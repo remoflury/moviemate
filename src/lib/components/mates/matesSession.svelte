@@ -19,12 +19,12 @@
 </article>
 
 {#if $mateStore.mates.length}
-	<form action="" transition:slide={{ duration: 250 }}>
+	<div transition:slide={{ duration: 250 }}>
 		<PrimaryLink
 			text="Find Movie"
 			link={`/mate/findmovies?matesids=${$mateStore.mates.map((mate) => `${mate.id},`)}&userid=${
 				$page.data.userId
 			}`}
 		/>
-	</form>
+	</div>
 {/if}

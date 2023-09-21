@@ -14,7 +14,7 @@
 	let error = '';
 	let loading = false;
 
-	$: console.log(mates);
+	// $: console.log(mates);
 
 	const handleFormData = async (resultObject: ActionResult) => {
 		if (resultObject.type === 'error' || resultObject.type === 'failure')
@@ -49,7 +49,7 @@
 <form
 	action="/mate?/searchmate"
 	method="POST"
-	on:submit={() => {
+	on:submit|preventDefault={() => {
 		loading = true;
 		mates = [];
 	}}

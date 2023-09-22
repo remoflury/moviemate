@@ -54,8 +54,12 @@ export const actions = {
 		// grab the data
 		const formData = await request.formData();
 		const searchValue = formData.get('search-mate');
+
 		// validate input
-		if (!searchValue) return;
+		if (!searchValue) return {
+			searchValue: '',
+			result: []
+		};
 
 		// search for email
 		const { data: email, error: emailError } = await supabaseClient

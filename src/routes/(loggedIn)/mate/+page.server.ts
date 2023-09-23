@@ -61,17 +61,19 @@ export const actions = {
 			result: []
 		};
 
+		const searchTerm = searchValue.toString().trim().toLowerCase()
+
 		// search for email
 		const { data: email, error: emailError } = await supabaseClient
 			.from('Users_details')
 			.select('users_id, users_email, users_username')
-			.ilike('users_email', `%${searchValue}%`);
+			.ilike('users_email', `%${searchTerm}%`);
 
 		// search for email
 		const { data: username, error: usernameError } = await supabaseClient
 			.from('Users_details')
 			.select('users_id, users_email, users_username')
-			.ilike('users_username', `%${searchValue}%`);
+			.ilike('users_username', `%${searchTerm}%`);
 
 		// error handling
 		if (emailError || usernameError) {
@@ -87,7 +89,7 @@ export const actions = {
 		const searchMates: SearchMatesProps[] = createSearchMateProps(result);
 
 		return {
-			searchValue,
+			searchValue: searchTerm,
 			result: searchMates
 		};
 	},

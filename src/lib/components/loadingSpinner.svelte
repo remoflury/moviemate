@@ -1,4 +1,8 @@
-<div class="grid place-content-center">
+<script>
+	import { slide } from 'svelte/transition';
+</script>
+
+<div transition:slide={{ duration: 350 }} class="grid place-content-center">
 	<span class="loader" />
 </div>
 

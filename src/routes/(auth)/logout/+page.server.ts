@@ -3,7 +3,7 @@ import { signOut } from '$lib/stores/auth';
 import { redirect, error } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
 	logout: async ({ locals }) => {
 		const supabaseClient = locals.supabase;
 
@@ -16,4 +16,4 @@ export const actions = {
 		// redirect to login page
 		throw redirect(303, '/login');
 	}
-} satisfies Actions;
+};

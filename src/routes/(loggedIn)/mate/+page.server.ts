@@ -8,7 +8,7 @@ import { createExistingMateProps, createSearchMateProps } from '$lib/utils/mates
 export const load: PageServerLoad = async ({ locals }) => {
 	const supabaseClient = locals.supabase;
 	const session = await locals.getSession();
-	if (!session) return pageError(401, 'Unauthorized. Please login.');
+	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 	const userId = session.user.id;
 
 	// get all mates of user
@@ -18,7 +18,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.eq('users_id', userId);
 
 	if (error) {
-		return pageError(500, 'Something went wrong.');
+		throw pageError(500, 'Something went wrong.');
 	}
 
 	const mates = data[0]?.users_mates || [];
@@ -36,7 +36,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.in('users_id', mates);
 
 	if (matesDetailsError) {
-		return pageError(500, 'Something went wrong');
+		throw pageError(500, 'Something went wrong');
 	}
 
 	const result = createExistingMateProps(matesDetails);
@@ -47,7 +47,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 /** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
 	searchmate: async ({ request, locals }) => {
 		const supabaseClient = locals.supabase;
 
@@ -139,4 +139,4 @@ export const actions = {
 			return fail(400, { message: 'Something went wrong' });
 		}
 	}
-} satisfies Actions;
+};

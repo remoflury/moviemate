@@ -11,7 +11,7 @@ import {
 import { redirect, error as pageError } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
 	register: async ({ locals, request }) => {
 		const supabaseClient = locals.supabase;
 
@@ -80,7 +80,7 @@ export const actions = {
 			username
 		};
 	}
-} satisfies Actions;
+};
 
 /** @type {import('./$types').PageServerLoad} */
 export const load: PageServerLoad = async ({ locals: { getSession } }) => {

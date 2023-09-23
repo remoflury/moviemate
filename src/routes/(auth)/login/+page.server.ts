@@ -1,8 +1,9 @@
-import { isEmailValid, isUserExisting, signIn, signInWithPassword } from '$lib/stores/auth';
-import { redirect, error as pageError } from '@sveltejs/kit';
+import { isEmailValid, isUserExisting, signInWithPassword } from '$lib/stores/auth';
+import { redirect } from '@sveltejs/kit';
+import type { Actions } from './$types';
 
 /** @type {import('./$types').Actions} */
-export const actions = {
+export const actions: Actions = {
 	login: async ({ locals, request }) => {
 		const supabaseClient = locals.supabase;
 
@@ -19,6 +20,18 @@ export const actions = {
 				email
 			};
 
+		if (!email || !password) return {
+			success: false,
+			error: 'Please enter a valid email address.',
+			email
+		};
+
+		if (password.toString().length <= 8) return {
+			success: false,
+			error: 'Please enter at least 8 characters for the password',
+			email
+		};
+
 		// check if users exists
 		const isUserExistingResult = await isUserExisting(email, supabaseClient);
 		if (!isUserExistingResult.success)
@@ -32,7 +45,6 @@ export const actions = {
 		const signInWithPasswordResult = await signInWithPassword(email, password, supabaseClient);
 		if (!signInWithPasswordResult.success)
 			return {
-				// throw pageError(500, 'Error logging in.')
 				success: false,
 				error: 'Password and / or email address are wrong. Please try again.',
 				email

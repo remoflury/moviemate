@@ -65,13 +65,13 @@ export const signIn = async (
 };
 
 export const signInWithPassword = async (
-	email: string,
-	password: string,
+	email: string | FormDataEntryValue,
+	password: string | FormDataEntryValue,
 	supabaseClient: SupabaseClient
 ) => {
 	const { data, error } = await supabaseClient.auth.signInWithPassword({
-		email,
-		password
+		email: email.toString(),
+		password: password.toString()
 	});
 
 	if (error)

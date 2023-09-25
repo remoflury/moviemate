@@ -1,5 +1,5 @@
 <script lang="ts">
-	import MatchCard from "$lib/components/cards/matchCard.svelte";
+	import MatchCard from '$lib/components/cards/matchCard.svelte';
 	export let data;
 
 	// $: console.log(data.matches);
@@ -19,8 +19,6 @@
 	<p>{recommendation.original_title}</p>
 {/each} -->
 
-
-
 {#each data.matches as match, index (index)}
-<MatchCard content={match}/>
+	<MatchCard content={match} />
 {/each}

@@ -22,9 +22,9 @@
 	<div transition:fly={{ duration: 250 }}>
 		<PrimaryLink
 			text="Find Movie"
-			link={`/mate/findmovies?matesids=${$mateStore.mates.map((mate) => `${mate.id},`)}&userid=${
-				$page.data.userId
-			}`}
+			link={`/mate/findmovies?matesids=${$mateStore.mates.map(
+				(mate) => `${mate.id},`
+			)}&userid=${$page.data.userId}`}
 		/>
 	</div>
 {/if}

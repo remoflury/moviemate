@@ -6,10 +6,10 @@ This is an web-app built with svelte-kit and tailwindcss. It uses the [TMDB API]
 
 This repo uses:
 
-- Svelte & SvelteKit as JS Framework (with TypeScript)
-- Supabase with the according SDK and sveltekit-supabase-auth-helpers
-- Tailwind CSS
-- TMDB API
+-   Svelte & SvelteKit as JS Framework (with TypeScript)
+-   Supabase with the according SDK and sveltekit-supabase-auth-helpers
+-   Tailwind CSS
+-   TMDB API
 
 ## Setup Dev-Environment
 
@@ -27,11 +27,11 @@ Development takes place on the dev branch.
 
 ### Coding Standards
 
-- camelCase for JS
-- kebab-case for HTML and CSS
-- use descriptive names for variables, functions, etc.
-- use english for naming
-- indentation with 2 spaces
+-   camelCase for JS
+-   kebab-case for HTML and CSS
+-   use descriptive names for variables, functions, etc.
+-   use english for naming
+-   indentation with 2 spaces
 
 To start the dev server:
 

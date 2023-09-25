@@ -1,4 +1,9 @@
-import { isEmailValid, isUserExisting, isUsernameValid, signInWithPassword } from '$lib/utils/authUtils';
+import {
+	isEmailValid,
+	isUserExisting,
+	isUsernameValid,
+	signInWithPassword
+} from '$lib/utils/authUtils';
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
@@ -21,18 +26,20 @@ export const actions: Actions = {
 			};
 
 		// validate password
-		if (!isUsernameValid(password)) return {
-			success: false,
-			error: 'Please enter at least 6 characters for the password',
-			email
-		}
-			
+		if (!isUsernameValid(password))
+			return {
+				success: false,
+				error: 'Please enter at least 6 characters for the password',
+				email
+			};
+
 		// error handling for type safety
-		if (!email || !password) return {
-			success: false,
-			error: 'Please enter a valid email address.',
-			email
-		};
+		if (!email || !password)
+			return {
+				success: false,
+				error: 'Please enter a valid email address.',
+				email
+			};
 
 		// check if users exists
 		const isUserExistingResult = await isUserExisting(email, supabaseClient);

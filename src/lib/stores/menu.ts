@@ -1,3 +1,3 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
-export const activeMenu = writable<"swipe" | "profile" | "mate">('swipe')
+export const activeMenu = writable<'swipe' | 'profile' | 'mate'>('swipe');

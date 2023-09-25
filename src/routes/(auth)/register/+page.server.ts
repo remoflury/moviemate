@@ -29,7 +29,8 @@ export const actions: Actions = {
 
 		// validate username
 		if (!isUsernameValid(username))
-			usernameError = 'Please enter username with at least 3 or more characters and no whitespace';
+			usernameError =
+				'Please enter username with at least 3 or more characters and no whitespace';
 
 		// validate password
 		if (!isPasswordValid(password))

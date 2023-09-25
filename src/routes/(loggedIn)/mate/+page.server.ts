@@ -59,12 +59,13 @@ export const actions: Actions = {
 		const searchValue = formData.get('search-mate');
 
 		// validate input
-		if (!searchValue) return {
-			searchValue: '',
-			result: []
-		};
+		if (!searchValue)
+			return {
+				searchValue: '',
+				result: []
+			};
 
-		const searchTerm = searchValue.toString().trim().toLowerCase()
+		const searchTerm = searchValue.toString().trim().toLowerCase();
 
 		// search for email
 		const { data: email, error: emailError } = await supabaseClient

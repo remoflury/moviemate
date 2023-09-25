@@ -49,11 +49,11 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		}
 	}
 
-	let recommendationsMovieId!: string
+	let recommendationsMovieId!: string;
 	if (matchedMovieIds.length) {
 		// if there is a match, make recommendations on base of matches
 		const randomIndex = generateRandomIndex(matchedMovieIds);
-		recommendationsMovieId = matchedMovieIds[randomIndex]
+		recommendationsMovieId = matchedMovieIds[randomIndex];
 		try {
 			recommendedMovies = await getMovieRecommendationsById(
 				matchedMovieIds[randomIndex],
@@ -61,14 +61,13 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				TMDB_AUTH_KEY,
 				1
 			);
-		} catch(error) {
-			throw pageError(500, { message: 'Error loading recommended movies.'})
+		} catch (error) {
+			throw pageError(500, { message: 'Error loading recommended movies.' });
 		}
-	}
-	else if (matchedMovieIds.length === 0) {
+	} else if (matchedMovieIds.length === 0) {
 		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)
 		const randomIndex = generateRandomIndex(notMatchedMovieIds);
-		recommendationsMovieId = notMatchedMovieIds[randomIndex]
+		recommendationsMovieId = notMatchedMovieIds[randomIndex];
 		try {
 			recommendedMovies = await getMovieRecommendationsById(
 				notMatchedMovieIds[randomIndex],
@@ -76,8 +75,8 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				TMDB_AUTH_KEY,
 				1
 			);
-		} catch(error) {
-			throw pageError(500, { message: 'Error loading recommended movies.'})
+		} catch (error) {
+			throw pageError(500, { message: 'Error loading recommended movies.' });
 		}
 	}
 

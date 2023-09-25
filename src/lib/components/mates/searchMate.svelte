@@ -33,7 +33,8 @@
 		if ($mateStore.mates.some((item) => item.id === id)) return;
 
 		// if users id is equal to selected mate, return early (can not add yourself)
-		if ($page.data.userId === id) return setTimeOutError('Try adding another mate than yourself.');
+		if ($page.data.userId === id)
+			return setTimeOutError('Try adding another mate than yourself.');
 		// else push it to store
 		$mateStore.mates = [...$mateStore.mates, { id, username }];
 	};

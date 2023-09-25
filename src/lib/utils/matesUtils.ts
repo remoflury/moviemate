@@ -1,7 +1,6 @@
 import type { ExistingMateProps, SearchMatesProps } from '$lib/types/contentTypes';
 
 export const createSearchMateProps = (input: Record<string, string>[]): SearchMatesProps[] => {
-
 	// create more usable object of search Mates result object
 	const searchMates: SearchMatesProps[] = input.map((mate: Record<string, string>) => {
 		return {

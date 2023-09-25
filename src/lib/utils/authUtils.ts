@@ -59,7 +59,7 @@ export const signIn = async (
 			emailRedirectTo: redirectUrl
 		}
 	});
-	
+
 	// errr handling
 	if (error) {
 		return {
@@ -124,7 +124,6 @@ export const isEmailAlreadyRegistered = async (
 		.select('users_email')
 		.eq('users_email', email);
 
-
 	// error handling
 	if (error) {
 		return {
@@ -181,7 +180,6 @@ export const isUserExisting = async (
 	email: string | FormDataEntryValue | null,
 	supabaseClient: SupabaseClient
 ) => {
-
 	// check if user even existists, fetch to supabase db
 	const { data, error } = await supabaseClient
 		.from('Users_details')

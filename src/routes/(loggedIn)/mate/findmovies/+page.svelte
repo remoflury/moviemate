@@ -20,5 +20,5 @@
 {/each} -->
 
 {#each data.matches as match, index (index)}
-	<MatchCard content={match} />
+	<MatchCard content={match} isMatch={true}/>
 {/each}

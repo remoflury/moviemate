@@ -9,7 +9,7 @@
 	}
 
 	body {
-		@apply font-body bg-black text-white tracking-wide selection:bg-white selection:text-black;
+		@apply font-body bg-black text-white tracking-wide selection:bg-white selection:text-primary;
 	}
 
 	/* Typography */

@@ -6,14 +6,6 @@ console.log(content);
 </script>
 
 
-<p>
-    Bla Bla Bla <br>
-</p>
-
-
-
-
-<style>
-
-
-</style>
+<figure class="rounded-card overflow-hidden">
+    <img src="https://image.tmdb.org/t/p/original/{content.poster_path}" alt="Movieposter of {content.title}">
+</figure>

@@ -2,10 +2,15 @@
     import MatchCard from '$lib/components/cards/matchCard.svelte';
     export let data;
 
+
     // $: console.log(data.matches);
     // $: console.log(data.recommendations);
 
     // console.log(data);
+
+	// $: console.log(data.matches);
+	// $: console.log(data.recommendations);
+
 </script>
 
 

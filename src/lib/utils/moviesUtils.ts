@@ -1,3 +1,5 @@
+import type { TMDBVideosByIdProps } from "$lib/types/contentTypes";
+
 export const getMatchesAndNotMatchesArray = (array: {movies_watchlist: string}[]) => {
 	// generate an array with matched movie ids and an array with not matched movie ids
 	const counts = array
@@ -28,13 +30,13 @@ export const generateRandomIndex = <T>(array: T[]): number => {
 	return Math.floor(Math.random() * array.length);
 };
 
-export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAutKey: string) => {
+export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAuthKey: string) => {
 	// fetch tmdb movies by id
 	const response = await fetch(`${tmdbUrl}/movie/${movieId}?language=en-US`, {
 		method: 'GET',
 		headers: {
 			accept: 'application/json',
-			Authorization: `Bearer ${tmdbAutKey}`
+			Authorization: `Bearer ${tmdbAuthKey}`
 		}
 	});
 
@@ -46,10 +48,29 @@ export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAutKey:
 	return data;
 };
 
+export const getVideoById = async (movieId: string, tmdbUrl: string, tmdbAuthKey: string): Promise<TMDBVideosByIdProps> => {
+	// fetch tmdb video details of movie id
+	const response = await fetch(`${tmdbUrl}/movie/${movieId}/videos?language=en-US`, {
+		method: 'GET',
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${tmdbAuthKey}`
+		}
+	})
+
+	const data = await response.json()
+
+	if (data?.success === false) {
+		throw new Error('Error loading movies.');
+	}
+
+	return data
+}
+
 export const getMovieRecommendationsById = async (
 	movieId: string,
 	tmdbUrl: string,
-	tmdbAutKey: string,
+	tmdbAuthKey: string,
 	page: number = 1
 ) => {
 	// fetch recommended tmdb movies by movie id
@@ -59,7 +80,7 @@ export const getMovieRecommendationsById = async (
 			method: 'GET',
 			headers: {
 				accept: 'application/json',
-				Authorization: `Bearer ${tmdbAutKey}`
+				Authorization: `Bearer ${tmdbAuthKey}`
 			}
 		}
 	);

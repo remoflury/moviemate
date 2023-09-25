@@ -22,6 +22,8 @@
 	<title>Movie Mate</title>
 </svelte:head>
 
-<main class="container">
-	<slot />
-</main>
+<div class="relative min-h-screen">
+	<main class="container">
+		<slot />
+	</main>
+</div>

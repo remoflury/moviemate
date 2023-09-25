@@ -1,8 +1,8 @@
-export const getMatchesAndNotMatchesArray = <T>(array: T[]) => {
+export const getMatchesAndNotMatchesArray = (array: {movies_watchlist: string}[]) => {
 	// generate an array with matched movie ids and an array with not matched movie ids
 	const counts = array
 		.flatMap((item) => item.movies_watchlist)
-		.reduce((acc, value) => {
+		.reduce((acc: {[key: string]: number}, value: string) => {
 			acc[value] = (acc[value] || 0) + 1;
 			return acc;
 		}, {});

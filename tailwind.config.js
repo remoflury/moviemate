@@ -27,7 +27,6 @@ export default {
 			},
 			borderRadius: {
 				max: '100vmax', 
-				card: '4rem'
 			}
 		}
 	},

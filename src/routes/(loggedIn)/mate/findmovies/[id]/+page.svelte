@@ -11,7 +11,7 @@
 
 <section>
 	<figure>
-		<img
+		<img class="pb-8"
 			src="https://image.tmdb.org/t/p/w500/{movie.backdrop_path}"
 			alt="movie poster of {movie.title}"
 		/>

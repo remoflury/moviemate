@@ -1,24 +1,34 @@
 <script lang="ts">
-	import MatchCard from '$lib/components/cards/matchCard.svelte';
-	export let data;
+    import MatchCard from '$lib/components/cards/matchCard.svelte';
+    export let data;
 
-	// $: console.log(data.matches);
-	// $: console.log(data.recommendations);
+    // $: console.log(data.matches);
+    // $: console.log(data.recommendations);
 
-	// console.log(data);
+    // console.log(data);
 </script>
 
-<!-- <h2>Matches</h2>
 
-{#each data.matches as match, index (index)}
-	<p>{match.original_title}</p>
-{/each}
+<h1>Movies</h1>
 
-<h2>Recommendations</h2>
-{#each data.recommendations as recommendation, index (index)}
-	<p>{recommendation.original_title}</p>
-{/each} -->
+<p>{data.matches.length + data.recommendations.length} Resultate</p>
 
-{#each data.matches as match, index (index)}
-	<MatchCard content={match} isMatch={true}/>
-{/each}
+<div class="grid grid-cols-2 gap-x-6 gap-y-10">
+    {#each data.matches as match, index (index)}
+		{#if match.poster_path !=null}
+            <MatchCard content={match} isMatch={true}/>
+		{/if}
+    {/each}
+
+	{#each data.recommendations as recommendation, index (index)} 
+		{#if recommendation.poster_path !=null}
+		<MatchCard content={recommendation}/>
+		{/if}
+	{/each}
+
+</div>
+
+
+
+
+

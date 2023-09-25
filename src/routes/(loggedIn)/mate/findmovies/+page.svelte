@@ -22,5 +22,5 @@
 
 
 {#each data.matches as match, index (index)}
-<MatchCard content={match} name="remo"/>
+<MatchCard content={match}/>
 {/each}

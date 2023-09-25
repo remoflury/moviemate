@@ -4,8 +4,6 @@
 
 	// $: console.log(data.matches);
 	// $: console.log(data.recommendations);
-
-	// console.log(data);
 </script>
 
 <!-- <h2>Matches</h2>

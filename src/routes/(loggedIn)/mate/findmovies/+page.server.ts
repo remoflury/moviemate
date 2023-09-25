@@ -49,27 +49,42 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		}
 	}
 
-	// TODO: if there is a match, make recommendations on base of matches
-	// TODO: if there is not a match, make recommendations on base of random movie of watchlist (notMatchedMovieIds)
-	// if there is not a match or less than 4 matches
-	if (matchedMovies.length <= 4) {
-		const randomIndex = generateRandomIndex(notMatchedMovieIds);
+	let recommendationsMovieId!: string
+	if (matchedMovieIds.length) {
+		// if there is a match, make recommendations on base of matches
+		const randomIndex = generateRandomIndex(matchedMovieIds);
+		recommendationsMovieId = matchedMovieIds[randomIndex]
 		try {
-			// fetch recommended movie by random movie id, page 1
+			recommendedMovies = await getMovieRecommendationsById(
+				matchedMovieIds[randomIndex],
+				TMDB_BASE_URL,
+				TMDB_AUTH_KEY,
+				1
+			);
+		} catch(error) {
+			throw pageError(500, { message: 'Error loading recommended movies.'})
+		}
+	}
+	else if (matchedMovieIds.length === 0) {
+		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)
+		const randomIndex = generateRandomIndex(notMatchedMovieIds);
+		recommendationsMovieId = notMatchedMovieIds[randomIndex]
+		try {
 			recommendedMovies = await getMovieRecommendationsById(
 				notMatchedMovieIds[randomIndex],
 				TMDB_BASE_URL,
 				TMDB_AUTH_KEY,
 				1
 			);
-		} catch (error) {
-			throw pageError(500, { message: 'Error loading recommended movies.' });
+		} catch(error) {
+			throw pageError(500, { message: 'Error loading recommended movies.'})
 		}
 	}
 
 	return {
 		matches: matchedMovies,
-		recommendations: recommendedMovies
+		recommendations: recommendedMovies,
+		recommendationsMovieId
 	};
 };
 

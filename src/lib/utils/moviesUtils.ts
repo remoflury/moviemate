@@ -48,9 +48,9 @@ export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAuthKey
 	return data;
 };
 
-export const getVideoById = async (movieId: string, tmdbUrl: string, tmdbAuthKey: string) => {
+export const getVideoById = async (movieId: string, tmdbUrl: string, tmdbAuthKey: string): Promise<TMDBVideosByIdProps> => {
 	// fetch tmdb video details of movie id
-	const response = await fetch(`${tmdbUrl}/movie/${movieId}/videoss?language=en-US`, {
+	const response = await fetch(`${tmdbUrl}/movie/${movieId}/videos?language=en-US`, {
 		method: 'GET',
 		headers: {
 			accept: 'application/json',
@@ -58,7 +58,7 @@ export const getVideoById = async (movieId: string, tmdbUrl: string, tmdbAuthKey
 		}
 	})
 
-	const data: TMDBVideosByIdProps = await response.json()
+	const data = await response.json()
 
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');

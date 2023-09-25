@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({ url}) => {
   // get movie id from id
   const movieId = url.pathname.split('/')[3]
 
-  // let movieDetails: TMDBMovieByIdrops
+  let movieDetails: TMDBMovieByIdrops
   let movieVideoDetails: TMDBVideosByIdProps
 
   // if movie id is not provided
@@ -16,24 +16,22 @@ export const load: PageServerLoad = async ({ url}) => {
     throw pageError(500, { message: 'Error loading movie. Please provide correct movie.' })
   }
 
+    // fetch movie details from tmdb api
+    try {
+      movieDetails = await getMovieById(movieId, TMDB_BASE_URL, TMDB_AUTH_KEY)
+    } catch(error) {
+      throw pageError(500, {message: 'There was an error fetching the movie. Please try again later.'})
+    }
 
-  // fetch movie details from tmdb api
-  // try {
-  //   movieDetails = await getMovieById(movieId, TMDB_BASE_URL, TMDB_AUTH_KEY)
-  // } catch(error) {
-  //   throw pageError(500, {message: 'There was an error fetching the movie. Please try again later.'})
-  // }
-  try {
-    movieVideoDetails = await getVideoById(movieId, TMDB_BASE_URL, TMDB_AUTH_KEY)
-  } catch(error) {
-    throw pageError(500, {message: 'There was an error fetching the movie. Please try again later.'})
-  }
-
-
-
+    // fetch video details from tmdb api
+    try {
+      movieVideoDetails = await getVideoById(movieId, TMDB_BASE_URL, TMDB_AUTH_KEY)
+    } catch(error) {
+      throw pageError(500, {message: 'There was an error fetching the video. Please try again later.'})
+    }
 
   return {
-    // movie: movieDetails
-    movieVideoDetails
+    movie: movieDetails,
+    video: movieVideoDetails
   }
 };

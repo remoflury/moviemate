@@ -11,12 +11,6 @@
 </script>
 
 <section>
-
-	<figure>
-		<img class="pb-8"
-			src="https://image.tmdb.org/t/p/w500/{movie.backdrop_path}"
-			alt="movie poster of {movie.title}"
-
 	{#if video.results.length}
 		<iframe
 			class="w-full aspect-video"
@@ -25,7 +19,6 @@
 			title="video of {movie.title}"
 			allowfullscreen
 			allow="accelerometer; gyroscope;"
-
 		/>
 	{:else}
 		<figure>

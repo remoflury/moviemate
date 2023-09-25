@@ -2,6 +2,7 @@ import type { Actions } from './$types';
 import { signOut } from '$lib/utils/authUtils';
 import { redirect, error } from '@sveltejs/kit';
 
+// TODO: change to +server.ts?
 /** @type {import('./$types').Actions} */
 export const actions: Actions = {
 	logout: async ({ locals }) => {

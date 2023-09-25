@@ -48,6 +48,9 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 			throw pageError(500, { message: 'Error loading matching movies.' });
 		}
 	}
+
+	// TODO: if there is a match, make recommendations on base of matches
+	// TODO: if there is not a match, make recommendations on base of random movie of watchlist (notMatchedMovieIds)
 	// if there is not a match or less than 4 matches
 	if (matchedMovies.length <= 4) {
 		const randomIndex = generateRandomIndex(notMatchedMovieIds);

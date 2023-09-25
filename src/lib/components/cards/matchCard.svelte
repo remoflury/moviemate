@@ -10,7 +10,7 @@
 		alt="Movieposter of {content.title}"
 	/>
 
-    <span class="absolute insert-x-0 bottom-0 left-1/2"><p>match</p></span>
+    <span class="absolute inset-x-0 bottom-0 left-1/2"><p>match</p></span>
 
 </figure>
 

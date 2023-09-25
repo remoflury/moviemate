@@ -1,4 +1,5 @@
 export const getMatchesAndNotMatchesArray = <T>(array: T[]) => {
+	// generate an array with matched movie ids and an array with not matched movie ids
 	const counts = array
 		.flatMap((item) => item.movies_watchlist)
 		.reduce((acc, value) => {
@@ -28,6 +29,7 @@ export const generateRandomIndex = <T>(array: T[]): number => {
 };
 
 export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAutKey: string) => {
+	// fetch tmdb movies by id
 	const response = await fetch(`${tmdbUrl}/movie/${movieId}?language=en-US`, {
 		method: 'GET',
 		headers: {
@@ -41,7 +43,6 @@ export const getMovieById = async (movieId: string, tmdbUrl: string, tmdbAutKey:
 		throw new Error('Error loading movies.');
 	}
 
-	// TODO: typing
 	return data;
 };
 
@@ -51,6 +52,7 @@ export const getMovieRecommendationsById = async (
 	tmdbAutKey: string,
 	page: number = 1
 ) => {
+	// fetch recommended tmdb movies by movie id
 	const response = await fetch(
 		`${tmdbUrl}/movie/${movieId}/recommendations?page=${page}&language=en-US`,
 		{
@@ -63,11 +65,11 @@ export const getMovieRecommendationsById = async (
 	);
 
 	const data = await response.json();
-
+	
+	// error handling
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
 
-	// TODO: typing
 	return data.results;
 };

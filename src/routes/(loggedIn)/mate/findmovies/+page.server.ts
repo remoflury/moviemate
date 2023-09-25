@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	const supabaseClient = locals.supabase;
 
 	// get mates ids from url and remove empty strings
-	const matesIdsAsString = url.searchParams.get('matesids');
+	const matesIdsAsString = url.searchParams.get('matesids')?.toString();
 	if (!matesIdsAsString) {
 		throw pageError(500, { message: 'Missing mates ids.' });
 	}

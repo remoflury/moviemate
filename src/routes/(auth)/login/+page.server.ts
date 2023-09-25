@@ -1,4 +1,4 @@
-import { isEmailValid, isUserExisting, signInWithPassword } from '$lib/stores/auth';
+import { isEmailValid, isUserExisting, isUsernameValid, signInWithPassword } from '$lib/utils/authUtils';
 import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
@@ -20,15 +20,17 @@ export const actions: Actions = {
 				email
 			};
 
+		// validate password
+		if (!isUsernameValid(password)) return {
+			success: false,
+			error: 'Please enter at least 6 characters for the password',
+			email
+		}
+			
+		// error handling for type safety
 		if (!email || !password) return {
 			success: false,
 			error: 'Please enter a valid email address.',
-			email
-		};
-
-		if (password.toString().length <= 8) return {
-			success: false,
-			error: 'Please enter at least 8 characters for the password',
 			email
 		};
 
@@ -50,6 +52,7 @@ export const actions: Actions = {
 				email
 			};
 
+		// if user logged in successfully, redirect to /swipe
 		throw redirect(303, '/swipe');
 	}
 };

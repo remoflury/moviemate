@@ -7,7 +7,7 @@ import {
 	isUsernameAlreadyRegistered,
 	signUp,
 	addUserToDB
-} from '$lib/stores/auth';
+} from '$lib/utils/authUtils.js';
 import { redirect, error as pageError } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
@@ -35,6 +35,7 @@ export const actions: Actions = {
 		if (!isPasswordValid(password))
 			passwordError = 'Please enter a password with at least 6 characters.';
 
+		// error handling
 		if (emailError || usernameError || passwordError)
 			return {
 				success: false,
@@ -52,6 +53,7 @@ export const actions: Actions = {
 		// check if users username exists
 		const usernameAlreadyExists = await isUsernameAlreadyRegistered(username, supabaseClient);
 
+		// error handling
 		if (!emailAlreadyExists.success || !usernameAlreadyExists.success)
 			return {
 				success: false,

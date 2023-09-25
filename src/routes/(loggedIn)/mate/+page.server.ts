@@ -17,6 +17,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.select('users_mates')
 		.eq('users_id', userId);
 
+	// error handling
 	if (error) {
 		throw pageError(500, 'Something went wrong.');
 	}
@@ -35,10 +36,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.select('users_id, users_username')
 		.in('users_id', mates);
 
+	// error handling
 	if (matesDetailsError) {
 		throw pageError(500, 'Something went wrong');
 	}
 
+	// create usable results array
 	const result = createExistingMateProps(matesDetails);
 
 	return {

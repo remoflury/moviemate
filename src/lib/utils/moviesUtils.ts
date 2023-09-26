@@ -1,4 +1,5 @@
 import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps, TMDBVideosByIdProps } from '$lib/types/contentTypes';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 
 export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string[] }[]) => {
@@ -115,3 +116,16 @@ export const filterMoviesWithEmptyPoster = <T extends TMDBMovieByIdrops[] | TMDB
 	})
 	return newMoviesArray as T
 }
+
+export const getAllMovieIds = async (supabaseClient: SupabaseClient, userIdsArray: string[]): Promise<{movies_watchlist: string[]}[]> => {
+	const { data, error } = await supabaseClient
+		.from('Users_movies')
+		.select('movies_watchlist')
+		.in('movies_users_id', userIdsArray);
+
+	if (error) {
+		throw Error('Error loading movies.');
+	}
+
+	return data;
+};

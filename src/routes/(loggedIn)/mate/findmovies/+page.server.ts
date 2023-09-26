@@ -1,9 +1,8 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
 import type { PageServerLoad } from './$types';
 import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 import { error as pageError } from '@sveltejs/kit';
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import { getMatchesAndNotMatchesArray, generateRandomIndex, filterMoviesWithEmptyPoster } from '$lib/utils/moviesUtils';
+import { getMatchesAndNotMatchesArray, generateRandomIndex, filterMoviesWithEmptyPoster, getAllMovieIds } from '$lib/utils/moviesUtils';
 import { getMovieById, getMovieRecommendationsById } from '$lib/utils/moviesUtils';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -29,7 +28,12 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	const allIds = matesIds.concat(userId);
 
 	// get all movie ids from all mates and user
-	const allMovieIds = await getAllMovieIds(supabaseClient, allIds);
+	let allMovieIds: { movies_watchlist: string[] }[] = []
+	try {
+		allMovieIds = await getAllMovieIds(supabaseClient, allIds);
+	} catch(error) {
+		throw pageError(500, { message: 'Error loading movie ids.' });
+	}
 
 	// get matching and not matching movie ids
 	const { matchedMovieIds, notMatchedMovieIds } = getMatchesAndNotMatchesArray(allMovieIds);
@@ -101,15 +105,4 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	};
 };
 
-const getAllMovieIds = async (supabaseClient: SupabaseClient, userIdsArray: string[]) => {
-	const { data, error } = await supabaseClient
-		.from('Users_movies')
-		.select('movies_watchlist')
-		.in('movies_users_id', userIdsArray);
 
-	if (error) {
-		throw pageError(500, { message: 'Error loading movies.' });
-	}
-
-	return data;
-};

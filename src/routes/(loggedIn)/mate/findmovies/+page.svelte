@@ -6,7 +6,7 @@
 <section class="container">
 	<h1>Movies</h1>
 
-	<p>{data.matches.length + data.recommendations.length} Resultate</p>
+	<p class="info mb-9 text-center">{data.matches.length + data.recommendations.length} Resultate</p>
 
 	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
 		{#each data.matches as match, index (index)}

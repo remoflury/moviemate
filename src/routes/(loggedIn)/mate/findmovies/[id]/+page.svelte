@@ -29,11 +29,11 @@
 			/>
 		</figure>
 	{/if}
-	<div class="flex justify-between">
-		<h1>{movie.title}</h1>
-		<p class="info">{voteRounded} / 10</p>
+	<div class="flex justify-between mt-4">
+		<h1 class="mb-1">{movie.title}</h1>
+		<p class="info whitespace-nowrap">{voteRounded} / 10</p>
 	</div>
-	<p class="info pb-6">{releaseYear} / {movie.genres[0].name}</p>
+	<p class="info mb-6">{releaseYear} / {movie.genres[0].name}</p>
 	<p>{movie.overview}</p>
 	</article>
 </section>

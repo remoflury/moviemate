@@ -4,6 +4,8 @@
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 
 	export let data;
+
+	console.log(data.movies);
 </script>
 
 <section class="container">

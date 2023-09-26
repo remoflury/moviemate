@@ -60,7 +60,7 @@ export type TMDBMovieByRecommendationProps = {
 	backdrop_path: string;
 	genre_ids: string[];
 	id: number;
-	media_type: string;
+	media_type?: string;
 	original_language: string;
 	original_title: string;
 	overview: string;

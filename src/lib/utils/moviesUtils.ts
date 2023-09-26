@@ -129,3 +129,21 @@ export const getAllMovieIds = async (supabaseClient: SupabaseClient, userIdsArra
 
 	return data;
 };
+
+export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, page: number = 1) => {
+	const response = await fetch(`${tmdbUrl}/movie/popular?page=${page}&language=en-US`, {
+		method: 'GET',
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${tmdbAuthKey}`
+		}
+	})
+
+	const data = await response.json();
+
+	if (data?.success === false) {
+		throw new Error('Error loading movies.');
+	}
+
+	return data.results
+}

@@ -2,6 +2,7 @@
 	import '../css/main.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { bottomNavigationHeight } from '$lib/stores/menu';
 
 	export let data;
 
@@ -22,6 +23,6 @@
 	<title>Movie Mate</title>
 </svelte:head>
 
-<main class="relative min-h-screen">
+<main class="relative min-h-screen" style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}>
 	<slot />
 </main>

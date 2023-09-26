@@ -145,5 +145,8 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 		throw new Error('Error loading movies.');
 	}
 
-	return data.results
+	// filter out movies without poster
+	const results = filterMoviesWithEmptyPoster(data.results)
+
+	return results
 }

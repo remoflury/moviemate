@@ -32,8 +32,10 @@ export const load: PageServerLoad = async ({ locals}) => {
   // if user has some movie-ids in watchlist, fetch recommendations
   else if (movieIds.length) {
     try {
-      const randomIndex = generateRandomIndex(movieIds)
-      movies = await getMovieRecommendationsById(movieIds[randomIndex], TMDB_BASE_URL, TMDB_AUTH_KEY, 1)
+      while (movies.length === 0) {
+        const randomIndex = generateRandomIndex(movieIds)
+        movies = await getMovieRecommendationsById(movieIds[randomIndex], TMDB_BASE_URL, TMDB_AUTH_KEY, 1)
+      }
     } catch(error) {
       throw pageError(500, { message: 'Error loading recommendations.' })
     }

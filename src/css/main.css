@@ -38,6 +38,10 @@
 		@apply text-base;
 	}
 
+	p.info {
+		@apply text-gray-dark text-sm
+	}
+
 	button.btn,
 	a.btn {
 		@apply font-heading text-xl uppercase w-full bg-primary px-10 py-2 rounded-full active:opacity-90 transition max-w-max;

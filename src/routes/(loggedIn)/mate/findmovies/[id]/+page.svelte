@@ -10,7 +10,7 @@
 	const releaseYear: string = movie.release_date.split('-')[0];
 </script>
 
-<section>
+<section class="container">
 	{#if video.results.length}
 		<iframe
 			class="w-full aspect-video"
@@ -29,7 +29,7 @@
 		</figure>
 	{/if}
 	<h1>{movie.title}</h1>
-	<p>{voteRounded} / 10</p>
-	<p>{releaseYear} / {movie.genres[0].name}</p>
+	<p class="info">{voteRounded} / 10</p>
+	<p class="info">{releaseYear} / {movie.genres[0].name}</p>
 	<p>{movie.overview}</p>
 </section>

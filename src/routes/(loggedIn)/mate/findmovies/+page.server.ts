@@ -37,6 +37,8 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	let matchedMovies: TMDBMovieByIdrops[] = [];
 	let recommendedMovies: TMDBMovieByRecommendationProps[] = [];
 
+	console.log('matchedMovieIds', matchedMovieIds);
+	console.log('notMatchedMovieIds', notMatchedMovieIds)
 	// if there is a match
 	if (matchedMovieIds.length) {
 		// fetch each movie individually by movie id
@@ -68,6 +70,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)
 		const randomIndex = generateRandomIndex(notMatchedMovieIds);
 		recommendationsMovieId = notMatchedMovieIds[randomIndex];
+		console.log(randomIndex)
 		try {
 			recommendedMovies = await getMovieRecommendationsById(
 				notMatchedMovieIds[randomIndex],

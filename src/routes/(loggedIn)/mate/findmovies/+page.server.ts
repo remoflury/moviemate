@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 import { error as pageError } from '@sveltejs/kit';
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import { getMatchesAndNotMatchesArray, generateRandomIndex } from '$lib/utils/moviesUtils';
+import { getMatchesAndNotMatchesArray, generateRandomIndex, filterMoviesWithEmptyPoster } from '$lib/utils/moviesUtils';
 import { getMovieById, getMovieRecommendationsById } from '$lib/utils/moviesUtils';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -37,8 +37,6 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	let matchedMovies: TMDBMovieByIdrops[] = [];
 	let recommendedMovies: TMDBMovieByRecommendationProps[] = [];
 
-	console.log('matchedMovieIds', matchedMovieIds);
-	console.log('notMatchedMovieIds', notMatchedMovieIds)
 	// if there is a match
 	if (matchedMovieIds.length) {
 		// fetch each movie individually by movie id
@@ -46,6 +44,8 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 			matchedMovies = await Promise.all(
 				matchedMovieIds.map((id) => getMovieById(id, TMDB_BASE_URL, TMDB_AUTH_KEY))
 			);
+			// filter out movies without poster
+			matchedMovies = filterMoviesWithEmptyPoster(matchedMovies)
 		} catch (error) {
 			throw pageError(500, { message: 'Error loading matching movies.' });
 		}
@@ -63,23 +63,31 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				TMDB_AUTH_KEY,
 				1
 			);
+			// filter out movies without poster
+			recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
 		} catch (error) {
 			throw pageError(500, { message: 'Error loading recommended movies.' });
 		}
 	} else if (matchedMovieIds.length === 0) {
 		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)
-		const randomIndex = generateRandomIndex(notMatchedMovieIds);
-		recommendationsMovieId = notMatchedMovieIds[randomIndex];
-		console.log(randomIndex)
-		try {
-			recommendedMovies = await getMovieRecommendationsById(
-				notMatchedMovieIds[randomIndex],
-				TMDB_BASE_URL,
-				TMDB_AUTH_KEY,
-				1
-			);
-		} catch (error) {
-			throw pageError(500, { message: 'Error loading recommended movies.' });
+		while (recommendedMovies.length === 0) {
+			// fetch until there is a recommendation (somethings tmdb does return an empty array of recommendations)
+			const randomIndex = generateRandomIndex(notMatchedMovieIds);
+			recommendationsMovieId = notMatchedMovieIds[randomIndex];
+			try {
+				recommendedMovies = await getMovieRecommendationsById(
+					notMatchedMovieIds[randomIndex],
+					TMDB_BASE_URL,
+					TMDB_AUTH_KEY,
+					1
+				);
+
+				// filter out movies without poster
+				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
+			} catch (error) {
+				throw pageError(500, { message: 'Error loading recommended movies.' });
+			}
+			
 		}
 	}
 

@@ -1,4 +1,4 @@
-import type { TMDBVideosByIdProps } from '$lib/types/contentTypes';
+import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps, TMDBVideosByIdProps } from '$lib/types/contentTypes';
 
 export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string }[]) => {
 	// generate an array with matched movie ids and an array with not matched movie ids
@@ -98,3 +98,13 @@ export const getMovieRecommendationsById = async (
 
 	return data.results;
 };
+
+export const filterMoviesWithEmptyPoster = <T extends TMDBMovieByIdrops[] | TMDBMovieByRecommendationProps[]>(movies: T): T => {
+	// filter out movies without poster
+	const newMoviesArray = movies.filter((movie: TMDBMovieByIdrops | TMDBMovieByRecommendationProps) => {
+		if (movie.poster_path != null) {
+			return movie;
+		}
+	})
+	return newMoviesArray as T
+}

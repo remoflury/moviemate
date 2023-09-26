@@ -1,14 +1,6 @@
 <script lang="ts">
 	import MatchCard from '$lib/components/cards/matchCard.svelte';
 	export let data;
-
-	// $: console.log(data.matches);
-	// $: console.log(data.recommendations);
-
-	// console.log(data);
-
-	// $: console.log(data.matches);
-	// $: console.log(data.recommendations);
 </script>
 
 <section class="container">
@@ -18,15 +10,11 @@
 
 	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
 		{#each data.matches as match, index (index)}
-			{#if match.poster_path != null}
-				<MatchCard content={match} isMatch={true} />
-			{/if}
+			<MatchCard content={match} isMatch={true} />
 		{/each}
 
 		{#each data.recommendations as recommendation, index (index)}
-			{#if recommendation.poster_path != null}
-				<MatchCard content={recommendation} />
-			{/if}
+			<MatchCard content={recommendation} />
 		{/each}
 	</div>
 </section>

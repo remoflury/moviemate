@@ -15,7 +15,7 @@
 </script>
 
 {#if mates.length}
-	<article class="mb-6 flex items-center gap-x-8">
+	<article class="flex items-center gap-x-8">
 		{#each mates as mate, index (index)}
 			<form
 				action="/mate?/addnewmate"

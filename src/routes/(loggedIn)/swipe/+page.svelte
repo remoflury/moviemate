@@ -4,7 +4,7 @@
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 </script>
 
-<section>
+<section class="container">
 	<h1>Swipe</h1>
 
 	{#if $page.data.session}

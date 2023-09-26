@@ -11,7 +11,7 @@
 	$: if (form) loading = false;
 </script>
 
-<section>
+<section class="container">
 	<h1>Register</h1>
 	<form
 		method="POST"

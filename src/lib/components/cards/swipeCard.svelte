@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 
 	export let movie: TMDBMovieByRecommendationProps;
@@ -49,16 +50,16 @@
 </script>
 
 <article
-	class="overflow-hidden rounded-5xl absolute transform {index !== 0 ? 'pointer-events-none' : ''}"
+	class="rounded-5xl absolute transform {index !== 0 ? 'pointer-events-none' : ''}"
 	style={`z-index: ${index * -1}; 
   transform: 
     translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
     rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
   })`}
-	on:touchstart={setStartPoints}
-	on:touchmove={dragCard}
-	on:touchend={endTouch}
 >
+	<!-- on:touchstart={setStartPoints}
+on:touchmove={dragCard}
+on:touchend={endTouch} -->
 	<figure class="w-full h-full">
 		<img
 			class="object-cover object-center w-full h-full"
@@ -66,4 +67,11 @@
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>
+	<form class="absolute left-0" action="">
+		<button>Swipe left</button>
+	</form>
+	<form class="absolute right-0" action={`?/addmovietowatchlist`} use:enhance method="POST">
+		<input type="hidden" name="movieid" value={movie.id} />
+		<button>Swipe right</button>
+	</form>
 </article>

@@ -150,3 +150,32 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 
 	return results
 }
+
+export const updateMovieIds = async (supabaseClient: SupabaseClient, userId: string, movieId: string) => {
+	// get all movies of user
+	let movieIds: string[] = []
+	try {
+		const response = await getAllMovieIds(supabaseClient, [userId])
+		movieIds  = response[0].movies_watchlist
+	} catch(error) {
+		throw Error("Error loading movies")
+	}
+
+	// if movieId is already in watchlist, return early
+	if (movieIds.includes(movieId)) return
+
+	// add movie to watchlist
+	movieIds.push(movieId)
+	console.log(movieIds)
+
+	// insert movieIds to db
+	const { error } = await supabaseClient
+		.from('Users_movies')
+		.update({'movies_watchlist': movieIds})
+		.eq('movies_users_id', userId)
+
+		if (error) {
+			throw Error("Error updating movies")
+		}
+
+}

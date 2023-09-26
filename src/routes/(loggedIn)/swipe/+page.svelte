@@ -5,7 +5,7 @@
 
 	export let data;
 
-	console.log(data.movies);
+	// console.log(data.movies);
 </script>
 
 <section class="container">

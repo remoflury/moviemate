@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
-import { error as pageError } from '@sveltejs/kit'
-import { generateRandomIndex, getAllMovieIds, getMovieRecommendationsById, getPopularMovies } from "$lib/utils/moviesUtils";
+import { error as pageError, type Actions, fail } from '@sveltejs/kit'
+import { generateRandomIndex, getAllMovieIds, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
 import type { TMDBMovieByRecommendationProps } from "$lib/types/contentTypes";
 
@@ -45,4 +45,51 @@ export const load: PageServerLoad = async ({ locals}) => {
    movieIds,
    movies
   }
+};
+
+export const actions: Actions = {
+  addmovietowatchlist: async ({ request, locals }) => {
+		const supabaseClient = locals.supabase;
+    const userId = await locals.getSession().then(session => session?.user.id);
+
+    const formData = await request.formData();
+    const movieId = formData.get('movieid')?.toString();
+
+    // error handling
+    if (!userId) {
+      return fail(400, {message: 'Missing user id.'})
+    }
+
+    if (!movieId) {
+      return fail(400, {message: 'Missing movie id.'})
+    }
+
+    // update movieIds in db
+    try {
+      const response = await updateMovieIds(supabaseClient, userId, movieId)
+    } catch(error) {
+      console.log(error)
+      return fail(500, {message: error})
+    }
+
+    // // get all movies of user
+    // let movieIds: string[] = []
+    // try {
+    //   const response = await getAllMovieIds(supabaseClient, [userId])
+    //   movieIds  = response[0].movies_watchlist
+    //   console.log(movieIds)
+    // } catch(error) {
+    //   throw fail(500, {message: 'Error loading movies.'})
+    // }
+
+    // // if movieId is already in watchlist, return early
+    // if (movieIds.includes(movieId)) return
+
+    // // add movie to watchlist
+    // movieIds.push(movieId)
+    // console.log(movieIds)
+
+    // // insert movieIds to db
+
+  } 
 };

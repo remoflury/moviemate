@@ -166,7 +166,6 @@ export const updateMovieIds = async (supabaseClient: SupabaseClient, userId: str
 
 	// add movie to watchlist
 	movieIds.push(movieId)
-	console.log(movieIds)
 
 	// insert movieIds to db
 	const { error } = await supabaseClient

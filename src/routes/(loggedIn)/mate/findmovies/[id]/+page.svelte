@@ -11,6 +11,7 @@
 </script>
 
 <section class="container">
+	<article>
 	{#if video.results.length}
 		<iframe
 			class="w-full aspect-video"
@@ -28,8 +29,11 @@
 			/>
 		</figure>
 	{/if}
-	<h1>{movie.title}</h1>
-	<p class="info">{voteRounded} / 10</p>
-	<p class="info">{releaseYear} / {movie.genres[0].name}</p>
+	<div class="flex justify-between">
+		<h1>{movie.title}</h1>
+		<p class="info">{voteRounded} / 10</p>
+	</div>
+	<p class="info pb-6">{releaseYear} / {movie.genres[0].name}</p>
 	<p>{movie.overview}</p>
+	</article>
 </section>

@@ -22,7 +22,7 @@
 
 	h1,
 	h2 {
-		@apply text-2xl mb-8 uppercase;
+		@apply text-2xl mb-4 uppercase;
 	}
 
 	/* h2 {

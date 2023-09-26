@@ -56,17 +56,20 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		// if there is a match, make recommendations on base of matches
 		const randomIndex = generateRandomIndex(matchedMovieIds);
 		recommendationsMovieId = matchedMovieIds[randomIndex];
-		try {
-			recommendedMovies = await getMovieRecommendationsById(
-				matchedMovieIds[randomIndex],
-				TMDB_BASE_URL,
-				TMDB_AUTH_KEY,
-				1
-			);
-			// filter out movies without poster
-			recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
-		} catch (error) {
-			throw pageError(500, { message: 'Error loading recommended movies.' });
+		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)
+		while (recommendedMovies.length === 0) {
+			try {
+				recommendedMovies = await getMovieRecommendationsById(
+					matchedMovieIds[randomIndex],
+					TMDB_BASE_URL,
+					TMDB_AUTH_KEY,
+					1
+				);
+				// filter out movies without poster
+				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
+			} catch (error) {
+				throw pageError(500, { message: 'Error loading recommended movies.' });
+			}
 		}
 	} else if (matchedMovieIds.length === 0) {
 		// if there is not a match, make recommendations on base of random movie of someones watchlist (notMatchedMovieIds)

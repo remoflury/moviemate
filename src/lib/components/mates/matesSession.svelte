@@ -8,7 +8,7 @@
 
 <h2>Movie time with mates</h2>
 
-<article class="bg-white p-4 grid grid-cols-2 gap-x-8">
+<article class="bg-white px-4 py-6 grid grid-cols-2 gap-x-8 gap-y-4">
 	<MovieTimeAvatar name="Me" showDeleteButton={false} />
 
 	{#each $mateStore.mates as mate, index (index)}
@@ -19,12 +19,12 @@
 </article>
 
 {#if $mateStore.mates.length}
-	<div transition:fly={{ duration: 250 }}>
+	<div class="mt-8" transition:fly={{ duration: 250 }}>
 		<PrimaryLink
 			text="Find Movie"
-			link={`/mate/findmovies?matesids=${$mateStore.mates.map(
-				(mate) => `${mate.id},`
-			)}&userid=${$page.data.userId}`}
+			link={`/mate/findmovies?matesids=${$mateStore.mates.map((mate) => `${mate.id},`)}&userid=${
+				$page.data.userId
+			}`}
 		/>
 	</div>
 {/if}

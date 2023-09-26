@@ -15,13 +15,13 @@
 </script>
 
 {#if mates.length}
-	<article class="mb-6 inline-block">
+	<article class="mb-6 flex items-center gap-x-8">
 		{#each mates as mate, index (index)}
 			<form
 				action="/mate?/addnewmate"
 				method="POST"
 				use:enhance
-				class="max-w-[4rem]"
+				class="w-16"
 				transition:slide={{ duration: 250 }}
 			>
 				<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />

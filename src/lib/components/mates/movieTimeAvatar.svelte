@@ -19,7 +19,7 @@
 	};
 </script>
 
-<div class="flex gap-4 {flexCol ? 'flex-col' : ''}">
+<div class="flex gap-4 {flexCol ? 'flex-col ' : 'justify-start items-center'}">
 	<div class="basis-[30%] relative">
 		<Avatar border={true} />
 		{#if showDeleteButton}
@@ -32,7 +32,7 @@
 			</button>
 		{/if}
 	</div>
-	<p class={inversed ? 'text-white' : 'text-black'}>
-		{name}
+	<p class="{inversed ? 'text-gray-dark' : 'text-black'} text-sm hyphens-auto">
+		{name.toLowerCase()}
 	</p>
 </div>

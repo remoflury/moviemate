@@ -23,6 +23,9 @@
 	<title>Movie Mate</title>
 </svelte:head>
 
-<main class="relative min-h-screen" style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}>
+<main
+	class="relative min-h-screen overflow-hidden"
+	style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
+>
 	<slot />
 </main>

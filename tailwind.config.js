@@ -26,7 +26,9 @@ export default {
 				}
 			},
 			borderRadius: {
-				max: '100vmax'
+				max: '100vmax',
+				'4xl': '2rem',
+				'5xl': '2.5rem',
 			},
 			minHeight: {
 				screen: ['100vh /* fallback for Opera, IE and etc. */', '100dvh']

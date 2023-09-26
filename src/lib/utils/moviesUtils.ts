@@ -1,29 +1,36 @@
 import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps, TMDBVideosByIdProps } from '$lib/types/contentTypes';
 
-export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string }[]) => {
-	// generate an array with matched movie ids and an array with not matched movie ids
-	const counts = array
-		.flatMap((item) => item.movies_watchlist)
-		.reduce((acc: { [key: string]: number }, value: string) => {
-			acc[value] = (acc[value] || 0) + 1;
-			return acc;
-		}, {});
 
-	const matchedMovieIds = [];
-	const notMatchedMovieIds = [];
+export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string[] }[]) => {
+  // If the array is empty or contains a single element, we can't find matches
+  if (array.length <= 1) {
+    return { matchedMovieIds: [], notMatchedMovieIds: [] };
+  }
 
-	for (const [key, value] of Object.entries(counts)) {
-		if (value === 1) {
-			notMatchedMovieIds.push(key);
-		} else {
-			matchedMovieIds.push(key);
-		}
-	}
+  // Count occurrences of each movie ID
+  const counts: { [key: string]: number } = {};
+  array.forEach((item) => {
+    item.movies_watchlist.forEach((movieId) => {
+      counts[movieId] = (counts[movieId] || 0) + 1;
+    });
+  });
 
-	return {
-		matchedMovieIds,
-		notMatchedMovieIds
-	};
+  const matchedMovieIds: string[] = [];
+  const notMatchedMovieIds: string[] = [];
+
+  // Check if a movie ID exists in all of the arrays
+  for (const [key, value] of Object.entries(counts)) {
+    if (value === array.length) {
+      matchedMovieIds.push(key);
+    } else {
+      notMatchedMovieIds.push(key);
+    }
+  }
+
+  return {
+    matchedMovieIds,
+    notMatchedMovieIds,
+  };
 };
 
 export const generateRandomIndex = <T>(array: T[]): number => {

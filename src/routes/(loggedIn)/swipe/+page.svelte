@@ -2,8 +2,11 @@
 	import { page } from '$app/stores';
 	import { enhance } from '$app/forms';
 	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data;
+
+	let count = 0;
 
 	// console.log(data.movies);
 </script>
@@ -21,7 +24,16 @@
 		</article> -->
 
 		{#each data.movies as movie, index (index)}
-			<SwipeCard {movie} {index} />
+			{#if index === count}
+				<div transition:fade={{ duration: 350 }}>
+					<SwipeCard
+						{movie}
+						{index}
+						on:swipeRight={() => count++}
+						on:swipeLeft={() => console.log('left')}
+					/>
+				</div>
+			{/if}
 		{/each}
 	</div>
 </section>

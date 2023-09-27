@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error as pageError, type Actions, fail } from '@sveltejs/kit'
-import { generateRandomIndex, getAllMovieIds, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
+import { addMovieToDismissed, generateRandomIndex, getAllMovieIds, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
 import type { TMDBMovieByRecommendationProps } from "$lib/types/contentTypes";
 
@@ -71,25 +71,29 @@ export const actions: Actions = {
       console.log(error)
       return fail(500, {message: JSON.stringify(error)})
     }
+  },
 
-    // // get all movies of user
-    // let movieIds: string[] = []
-    // try {
-    //   const response = await getAllMovieIds(supabaseClient, [userId])
-    //   movieIds  = response[0].movies_watchlist
-    //   console.log(movieIds)
-    // } catch(error) {
-    //   throw fail(500, {message: 'Error loading movies.'})
-    // }
+  addmovietodismissed: async ({request, locals}) => {
+    const supabaseClient = locals.supabase;
+    const userId = await locals.getSession().then(session => session?.user.id);
 
-    // // if movieId is already in watchlist, return early
-    // if (movieIds.includes(movieId)) return
+    const formData = await request.formData();
+    const movieId = formData.get('movieid')?.toString();
 
-    // // add movie to watchlist
-    // movieIds.push(movieId)
-    // console.log(movieIds)
+    // error handling
+    if (!userId) {
+      return fail(400, {message: 'Missing user id.'})
+    }
 
-    // // insert movieIds to db
+    if (!movieId) {
+      return fail(400, {message: 'Missing movie id.'})
+    }
 
-  } 
+    // add movie to dismissed movie list
+    try {
+      await addMovieToDismissed(supabaseClient, userId, movieId)
+    } catch(error) {
+      return fail(500, {message: JSON.stringify(error)})
+    }
+  }
 };

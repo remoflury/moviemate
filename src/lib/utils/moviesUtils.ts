@@ -173,8 +173,49 @@ export const updateMovieIds = async (supabaseClient: SupabaseClient, userId: str
 		.update({'movies_watchlist': movieIds})
 		.eq('movies_users_id', userId)
 
-		if (error) {
-			throw Error("Error updating movies")
-		}
+	if (error) {
+		throw Error("Error updating movies")
+	}
+
+}
+
+export const getDismissedMoviesOfUsers = async (supabaseClient: SupabaseClient, userIdsArray: string[]): Promise<{movies_dismissed: string[]}[]> => {
+	const { data, error } = await supabaseClient
+	.from('Users_movies')
+	.select('movies_dismissed')
+	.in('movies_users_id', userIdsArray);
+
+if (error) {
+	throw Error('Error loading movies.');
+}
+
+return data;
+}
+
+export const addMovieToDismissed = async (supabaseClient: SupabaseClient, userId: string, movieId: string) => {
+	let dismissedMovieIds: string[] = []
+	// get all dismissedMovies 
+	try {
+		const response = await getDismissedMoviesOfUsers(supabaseClient, [userId])
+		dismissedMovieIds  = response[0].movies_dismissed
+	} catch(error) {
+		throw Error("Error loading movies")
+	}
+
+	// if movieId is already in dismissed list, return early
+	if (dismissedMovieIds.includes(movieId)) return
+
+	// add movie to watchlist
+	dismissedMovieIds.push(movieId)
+
+	// insert movieIds to db
+	const { error } = await supabaseClient
+		.from('Users_movies')
+		.update({'movies_dismissed': dismissedMovieIds})
+		.eq('movies_users_id', userId)
+
+	if (error) {
+		throw Error("Error updating movies")
+	}
 
 }

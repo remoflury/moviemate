@@ -1,9 +1,23 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { createEventDispatcher } from 'svelte';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 
 	export let movie: TMDBMovieByRecommendationProps;
 	export let index: number;
+
+	const dispatch = createEventDispatcher();
+
+	const swipeRight = () => {
+		dispatch('swipeRight', {
+			index
+		});
+	};
+	const swipeLeft = () => {
+		dispatch('swipeLeft', {
+			index
+		});
+	};
 
 	const touchStartPosition = {
 		x: 0,
@@ -49,9 +63,10 @@
 	};
 </script>
 
+<!-- z-index: ${index * -1}; -->
 <article
-	class="rounded-5xl absolute transform {index !== 0 ? 'pointer-events-none' : ''}"
-	style={`z-index: ${index * -1}; 
+	class="rounded-5xl absolute transform"
+	style={` 
   transform: 
     translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
     rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
@@ -67,10 +82,24 @@ on:touchend={endTouch} -->
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>
-	<form class="absolute left-0" action="">
+	<form
+		class="absolute left-0"
+		on:submit|preventDefault={swipeLeft}
+		action="?/addmovietodismissed"
+		use:enhance
+		method="POST"
+	>
+		<input type="hidden" name="movieid" value={movie.id} />
 		<button>Swipe left</button>
 	</form>
-	<form class="absolute right-0" action={`?/addmovietowatchlist`} use:enhance method="POST">
+	<!-- <form class="absolute right-0" action={`?/addmovietowatchlist`} use:enhance method="POST"> -->
+	<form
+		class="absolute right-0"
+		on:submit|preventDefault={swipeRight}
+		action={`?/addmovietowatchlist`}
+		use:enhance
+		method="POST"
+	>
 		<input type="hidden" name="movieid" value={movie.id} />
 		<button>Swipe right</button>
 	</form>

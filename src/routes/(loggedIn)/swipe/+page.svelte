@@ -1,39 +1,76 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { enhance } from '$app/forms';
-	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
+	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes.js';
+	import { generateRandomIndex } from '$lib/utils/moviesUtils.js';
+	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { fade } from 'svelte/transition';
+	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
+	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
-
-	let count = 0;
-
+	const movies = data.movies;
 	// console.log(data.movies);
+
+	let moreMovies: TMDBMovieByRecommendationProps[] = [];
+	let loading: boolean = false;
+
+	$: console.log(moreMovies);
+
+	let countIndex = 0;
+
+	const fetchMoreMovies = async () => {
+		const randomIndex = generateRandomIndex(movies);
+		const response = await fetch(
+			`${PUBLIC_APP_URL}/api/recommendations?movieId=${movies[randomIndex].id}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}
+		);
+
+		const data: TMDBMovieByRecommendationProps[] = await response.json();
+
+		return data;
+	};
+
+	const onSwipe = async () => {
+		countIndex++;
+		// if no more movies are available, load more movies
+		if (countIndex + 1 === movies.length) {
+			loading = true;
+			try {
+				moreMovies = await fetchMoreMovies();
+			} catch (error) {
+				throw new Error('An error occured while loading more movies');
+			}
+			loading = false;
+		}
+	};
+
+	$: console.log();
 </script>
 
 <section class="container">
 	<h1 hidden>Swipe</h1>
 	<div class="relative">
-		<!-- <article class="overflow-hidden rounded-5xl absolute" on:touchstart={() => console.log('test')}>
-			<figure>
-				<img
-					src="https://image.tmdb.org/t/p/w500/{data.movies[0].poster_path}"
-					alt="movie poster of {data.movies[0].title}"
-				/>
-			</figure>
-		</article> -->
-
-		{#each data.movies as movie, index (index)}
-			{#if index === count}
-				<div transition:fade={{ duration: 350 }}>
-					<SwipeCard
-						{movie}
-						{index}
-						on:swipeRight={() => count++}
-						on:swipeLeft={() => console.log('left')}
-					/>
+		<!-- for initially loaded movies -->
+		{#each movies as movie, index (index)}
+			{#if index === countIndex}
+				<div in:fade={{ duration: 350 }}>
+					<SwipeCard {movie} {index} on:swipeRight={onSwipe} on:swipeLeft={onSwipe} />
 				</div>
 			{/if}
 		{/each}
+		<!-- for more loaded movies -->
+		{#if moreMovies.length}
+			{#each moreMovies as movie, index (index)}
+				<p>{movie.title}</p>
+			{/each}
+		{/if}
+		{#if loading}
+			<LoadingSpinner />
+		{/if}
 	</div>
 </section>

@@ -103,8 +103,8 @@ export const getMovieRecommendationsById = async (
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
-
-	return data.results;
+	const results = filterMoviesWithEmptyPoster(data.results)
+	return results;
 };
 
 export const filterMoviesWithEmptyPoster = <T extends TMDBMovieByIdrops[] | TMDBMovieByRecommendationProps[]>(movies: T): T => {
@@ -217,5 +217,4 @@ export const addMovieToDismissed = async (supabaseClient: SupabaseClient, userId
 	if (error) {
 		throw Error("Error updating movies")
 	}
-
 }

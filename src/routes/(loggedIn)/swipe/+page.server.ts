@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
 import { error as pageError, type Actions, fail } from '@sveltejs/kit'
-import { addMovieToDismissed, generateRandomIndex, getAllMovieIds, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
+import { addMovieToDismissed, generateRandomIndex, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
 import type { TMDBMovieByRecommendationProps } from "$lib/types/contentTypes";
 
@@ -11,30 +11,48 @@ export const load: PageServerLoad = async ({ locals}) => {
 	const userId = session.user.id;
 
   
-  // get all movie ids from user
-  let movieIds: string[] = []
+  // get all movie ids (watchlist & dismissed) from user
+  let watchlistMovieIds: string[] = []
+  let dismissedMovieIds: string[] = []
   try {
-    const data = await getAllMovieIds(supabaseClient, [userId])
-    movieIds = data[0].movies_watchlist
+    const { data, error } = await supabaseClient
+      .from('Users_movies')
+      .select('movies_watchlist, movies_dismissed') 
+      .eq('movies_users_id', userId);
+
+      if (error) throw Error
+      watchlistMovieIds = data[0].movies_watchlist
+      dismissedMovieIds = data[0].movies_watchlist
+
   } catch(error) {
-    throw pageError(500, { message: 'Error loading movie ids.' });
+    throw pageError(500, 'Error fetching movies.')
   }
 
   let movies: TMDBMovieByRecommendationProps[] = []
   // if user has no movie-ids in watchlist, fetch popular movies
-  if (!movieIds.length) {
+  if (!watchlistMovieIds.length) {
     try {
       movies = await getPopularMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, 1)
+      // filter out movies, which are already in watchlist
+      movies = movies.filter(movie => !watchlistMovieIds.includes(movie.id.toString()));
+
+      // filter out movies, which are in dismissed list
+      movies = movies.filter(movie => !dismissedMovieIds.includes(movie.id.toString()))
     } catch(error) {
       throw pageError(500, { message: 'Error loading popular movies.' })
     }
   } 
-  // if user has some movie-ids in watchlist, fetch recommendations
-  else if (movieIds.length) {
+  // if user has some movie-ids in watchlist, fetch recommendations based on random id of watchlist
+  else if (watchlistMovieIds.length) {
     try {
       while (movies.length === 0) {
-        const randomIndex = generateRandomIndex(movieIds)
-        movies = await getMovieRecommendationsById(movieIds[randomIndex], TMDB_BASE_URL, TMDB_AUTH_KEY, 1)
+        const randomIndex = generateRandomIndex(watchlistMovieIds)
+        movies = await getMovieRecommendationsById(watchlistMovieIds[randomIndex], TMDB_BASE_URL, TMDB_AUTH_KEY, 1)
+        // filter out movies, which are already in watchlist
+        movies = movies.filter(movie => !watchlistMovieIds.includes(movie.id.toString()));
+
+        // filter out movies, which are in dismissed list
+        movies = movies.filter(movie => !dismissedMovieIds.includes(movie.id.toString()))
       }
     } catch(error) {
       throw pageError(500, { message: 'Error loading recommendations.' })
@@ -42,8 +60,9 @@ export const load: PageServerLoad = async ({ locals}) => {
   }
 
   return {
-   movieIds,
-   movies
+   watchlistMovieIds,
+   dismissedMovieIds,
+   movies,
   }
 };
 

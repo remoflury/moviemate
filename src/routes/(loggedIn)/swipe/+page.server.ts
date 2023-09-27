@@ -85,7 +85,8 @@ export const actions: Actions = {
 
     // update movieIds in db
     try {
-      await updateMovieIds(supabaseClient, userId, movieId)
+      const data = await updateMovieIds(supabaseClient, userId, movieId)
+      console.log(data)
     } catch(error) {
       console.log(error)
       return fail(500, {message: JSON.stringify(error)})

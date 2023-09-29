@@ -1,30 +1,50 @@
 <script lang="ts">
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes.js';
-	import { generateRandomIndex } from '$lib/utils/moviesUtils.js';
+	import { generateRandomIndex, getAllMovieIds } from '$lib/utils/moviesUtils.js';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { fade } from 'svelte/transition';
 	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import { onMount } from 'svelte';
 
 	export let data;
-	let movies = data.movies;
+	let movies: TMDBMovieByRecommendationProps[] = data.movies;
+	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 
 	let loading: boolean = false;
 
 	let countIndex = 0;
 
 	const fetchMoreMovies = async () => {
-		const randomIndex = generateRandomIndex(movies);
-		const response = await fetch(
-			`${PUBLIC_APP_URL}/api/recommendations?movieId=${movies[randomIndex].id}`,
-			{
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
+		let randomIndex: number;
+
+		let response!: Response;
+
+		// if user has some matched movies in session
+		if (allMatchedMoviesOfSession.length) {
+			randomIndex = generateRandomIndex(allMatchedMoviesOfSession);
+			response = await fetch(
+				`${PUBLIC_APP_URL}/api/recommendations?movieId=${allMatchedMoviesOfSession[randomIndex].id}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
 				}
-			}
-		);
+			);
+		}
+		// if user does not have some matched movies in session, load from initially loaded movies
+		if (!allMatchedMoviesOfSession.length) {
+			randomIndex = generateRandomIndex(movies);
+			response = await fetch(
+				`${PUBLIC_APP_URL}/api/recommendations?movieId=${movies[randomIndex].id}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+		}
 
 		const data: TMDBMovieByRecommendationProps[] = await response.json();
 
@@ -57,7 +77,15 @@
 		{#each movies as movie, index (index)}
 			{#if index === countIndex}
 				<div in:fade={{ duration: 350 }}>
-					<SwipeCard {movie} {index} on:swipeRight={onSwipe} on:swipeLeft={onSwipe} />
+					<SwipeCard
+						{movie}
+						{index}
+						on:swipeRight={() => {
+							onSwipe();
+							allMatchedMoviesOfSession.push(movie);
+						}}
+						on:swipeLeft={onSwipe}
+					/>
 				</div>
 			{/if}
 		{/each}

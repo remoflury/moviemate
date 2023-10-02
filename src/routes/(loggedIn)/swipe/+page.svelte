@@ -10,6 +10,8 @@
 	let movies: TMDBMovieByRecommendationProps[] = data.movies;
 	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 
+	console.log(movies);
+
 	let loading: boolean = false;
 
 	let countIndex = 0;
@@ -59,7 +61,6 @@
 			loading = true;
 			try {
 				movies = await fetchMoreMovies();
-				console.log(movies);
 			} catch (error) {
 				throw new Error('An error occured while loading more movies');
 			}

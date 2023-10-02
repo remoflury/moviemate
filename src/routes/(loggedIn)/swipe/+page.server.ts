@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
-import { error as pageError, type Actions, fail } from '@sveltejs/kit'
-import { addMovieToDismissed, generateRandomIndex, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
+import { error as pageError } from '@sveltejs/kit'
+import { generateRandomIndex, getMovieRecommendationsById, getPopularMovies} from "$lib/utils/moviesUtils";
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
 import type { TMDBMovieByRecommendationProps } from "$lib/types/contentTypes";
 
@@ -66,54 +66,54 @@ export const load: PageServerLoad = async ({ locals}) => {
   }
 };
 
-export const actions: Actions = {
-  addmovietowatchlist: async ({ request, locals }) => {
-		const supabaseClient = locals.supabase;
-    const userId = await locals.getSession().then(session => session?.user.id);
+// export const actions: Actions = {
+//   addmovietowatchlist: async ({ request, locals }) => {
+// 		const supabaseClient = locals.supabase;
+//     const userId = await locals.getSession().then(session => session?.user.id);
 
-    const formData = await request.formData();
-    const movieId = formData.get('movieid')?.toString();
+//     const formData = await request.formData();
+//     const movieId = formData.get('movieid')?.toString();
 
-    // error handling
-    if (!userId) {
-      return fail(400, {message: 'Missing user id.'})
-    }
+//     // error handling
+//     if (!userId) {
+//       return fail(400, {message: 'Missing user id.'})
+//     }
 
-    if (!movieId) {
-      return fail(400, {message: 'Missing movie id.'})
-    }
+//     if (!movieId) {
+//       return fail(400, {message: 'Missing movie id.'})
+//     }
 
-    // update movieIds in db
-    try {
-      const data = await updateMovieIds(supabaseClient, userId, movieId)
-      console.log(data)
-    } catch(error) {
-      console.log(error)
-      return fail(500, {message: JSON.stringify(error)})
-    }
-  },
+//     // update movieIds in db
+//     try {
+//       const data = await updateMovieIds(supabaseClient, userId, movieId)
+//       console.log(data)
+//     } catch(error) {
+//       console.log(error)
+//       return fail(500, {message: JSON.stringify(error)})
+//     }
+//   },
 
-  addmovietodismissed: async ({request, locals}) => {
-    const supabaseClient = locals.supabase;
-    const userId = await locals.getSession().then(session => session?.user.id);
+//   addmovietodismissed: async ({request, locals}) => {
+//     const supabaseClient = locals.supabase;
+//     const userId = await locals.getSession().then(session => session?.user.id);
 
-    const formData = await request.formData();
-    const movieId = formData.get('movieid')?.toString();
+//     const formData = await request.formData();
+//     const movieId = formData.get('movieid')?.toString();
 
-    // error handling
-    if (!userId) {
-      return fail(400, {message: 'Missing user id.'})
-    }
+//     // error handling
+//     if (!userId) {
+//       return fail(400, {message: 'Missing user id.'})
+//     }
 
-    if (!movieId) {
-      return fail(400, {message: 'Missing movie id.'})
-    }
+//     if (!movieId) {
+//       return fail(400, {message: 'Missing movie id.'})
+//     }
 
-    // add movie to dismissed movie list
-    try {
-      await addMovieToDismissed(supabaseClient, userId, movieId)
-    } catch(error) {
-      return fail(500, {message: JSON.stringify(error)})
-    }
-  }
-};
+//     // add movie to dismissed movie list
+//     try {
+//       await addMovieToDismissed(supabaseClient, userId, movieId)
+//     } catch(error) {
+//       return fail(500, {message: JSON.stringify(error)})
+//     }
+//   }
+// };

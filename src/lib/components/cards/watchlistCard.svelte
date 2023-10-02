@@ -19,7 +19,7 @@
 <a href="/mates/findmovies/{content.id}">
 	<figure class="rounded-3xl overflow-hidden relative">
 		<img
-			src="https://image.tmdb.org/t/p/w500/{content.poster_path}"
+			src="https://image.tmdb.org/t/p/w300/{content.poster_path}"
 			alt="Movieposter of {content.title}"
 			loading="lazy"
 		/>

@@ -2,7 +2,7 @@
 	import { enhance, applyAction } from '$app/forms';
 	import type { ActionResult } from '@sveltejs/kit';
 	import { page } from '$app/stores';
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { mateStore } from '$lib/stores/mates';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import InputMessage from '$lib/components/inputMessage.svelte';
@@ -13,6 +13,7 @@
 	let mates: SearchMatesProps[] = [];
 	let error = '';
 	let loading = false;
+	let searchValue = "";
 
 	// $: console.log(mates);
 
@@ -44,6 +45,11 @@
 			error = '';
 		}, 3000);
 	};
+
+	const clearSearch = () => {
+		searchValue = ""
+		mates = [];
+	};
 </script>
 
 <form
@@ -60,14 +66,24 @@
 	}}
 >
 	<label for="search-mate" hidden>Mate suchen</label>
-	<input
+	<div class="relative">
+		<input
 		class="search mt-0"
 		type="text"
 		name="search-mate"
 		id="search-mate"
 		placeholder="Search mate"
-		value={formData?.searchValue || ''}
-	/>
+		bind:value={searchValue}
+		/>
+		<!-- value={formData?.searchValue || ''} -->
+
+		{#if searchValue}
+		<button transition:fade={{duration:350}} type="button" on:click|preventDefault={clearSearch} class="absolute  top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer">
+			<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path class="fill-black" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+		</button>
+		{/if}
+	</div>
+
 	{#if error}
 		<InputMessage message={error} success={false} />
 	{/if}

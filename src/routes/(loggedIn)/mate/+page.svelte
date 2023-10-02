@@ -15,7 +15,7 @@
 </section>
 
 <section class="container">
-	<h1 class="">Mates</h1>
+	
 	<MatesList mates={data.mates || []} />
 </section>
 

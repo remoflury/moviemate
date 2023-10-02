@@ -4,7 +4,22 @@
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
+	import { onMount } from 'svelte';
 	export let data;
+
+	const fetchWatchlist = async () => {
+		try {
+			const response = await fetch('/api/watchlist');
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	onMount(() => {
+		fetchWatchlist();
+	});
 
 	// console.log(data.movies);
 </script>
@@ -18,9 +33,11 @@
 	<h1>Watchlist</h1>
 
 	<div class="grid grid-cols-3 gap-x-6 gap-y-10">
-		{#each data.movies as movie, index (index)}
-			<WatchlistCard content={movie} />
-		{/each}
+		{#if data.movies}
+			{#each data.movies as movie, index (index)}
+				<WatchlistCard content={movie} />
+			{/each}
+		{/if}
 	</div>
 
 	<form method="POST" action="/logout?/logout" use:enhance class="mt-8">

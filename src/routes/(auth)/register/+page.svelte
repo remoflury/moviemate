@@ -62,7 +62,7 @@
 		{/if}
 
 		{#if !loading && !form?.success}
-			<div class="mt-8">
+			<div class="fixed bottom-12 left-0 w-full mt-8">
 				<PrimaryButton text="Register" />
 				<Link message="Already have an account? Login here." link="/login" />
 			</div>

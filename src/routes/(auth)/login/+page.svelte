@@ -49,8 +49,8 @@
     {/if} -->
 
 		{#if !loading && !form?.success}
-			<div class="mt-8">
-				<PrimaryButton text="Login" />
+			<div class="fixed bottom-12 left-0 w-full t-8">
+				<PrimaryButton  text="Login" />
 				<Link message="Don't have an account? Sign up here." link="/register" />
 			</div>
 		{/if}

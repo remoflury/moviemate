@@ -8,5 +8,5 @@ export const GET: RequestHandler = async ({ locals }) => {
   const userId = session?.user.id
 
   if (!userId) throw pageError(500, 'Could not load watchlist.')
-  return new Response("test");
+  return new Response(JSON.stringify("test"));
 };

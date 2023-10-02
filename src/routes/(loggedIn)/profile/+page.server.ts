@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({locals}) => {
 
   // fetch movie details for each movieId
   const count = 0
-  let movies!: TMDBMovieByIdrops[];
+  const movies: TMDBMovieByIdrops[] = []
   
   // console.log(movieIds.length)
   // while (count <= movieIds.length) {

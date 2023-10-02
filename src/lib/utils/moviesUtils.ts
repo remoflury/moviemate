@@ -151,6 +151,7 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 	return results
 }
 
+// update all watchlist movie ids (liked movies)
 export const updateMovieIds = async (supabaseClient: SupabaseClient, userId: string, movieId: string) => {
 	// get all movies of user
 	let movieIds: string[] = []

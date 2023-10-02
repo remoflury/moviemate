@@ -6,7 +6,7 @@
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	export let data;
 
-	console.log(data);
+	console.log(data.movies);
 </script>
 
 <section class="container">
@@ -23,9 +23,7 @@
 		{/each}
 	</div> -->
 
-
-		<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
-			<PrimaryButton text="Logout" />
-		</form>
-
+	<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
+		<PrimaryButton text="Logout" />
+	</form>
 </section>

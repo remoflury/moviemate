@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBVideosByIdProps } from '$lib/types/contentTypes';
+	import { showSettings } from '$lib/stores/menu.js';
+	$showSettings = false;
 
 	export let data;
 

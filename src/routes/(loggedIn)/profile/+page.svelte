@@ -5,6 +5,9 @@
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import { onMount } from 'svelte';
+	import { showSettings } from '$lib/stores/menu.js';
+	$showSettings = true;
+	
 	export let data;
 
 	const fetchWatchlist = async () => {

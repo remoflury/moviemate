@@ -5,6 +5,8 @@
 	import { fade } from 'svelte/transition';
 	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
+	import { showSettings } from '$lib/stores/menu.js';
+	$showSettings = false;
 
 	export let data;
 	let movies: TMDBMovieByRecommendationProps[] = data.movies;

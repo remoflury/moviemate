@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { showSettings } from '$lib/stores/menu.js';
+	$showSettings = false;
+
 	export let data;
 
 	// redirect to swipe page if user is logged in

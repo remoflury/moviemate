@@ -6,6 +6,7 @@
 	import LogoHeader from '$lib/components/logoHeader.svelte';
 	import { goto, afterNavigate } from '$app/navigation';
 
+
 import { base } from '$app/paths'
 
 	export let data;

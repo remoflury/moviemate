@@ -89,24 +89,24 @@
 	{/if}
 </form>
 {#if mates.length}
-<div class="mt-4">
-	{#each mates as mate, index (index)}
-		<form action="/mate?/addnewmate" method="POST" use:enhance>
-			<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />
-			<button 
-				transition:slide={{ duration: 250 }}
-				class="grid grid-cols-4 gap-4 items-center"
-				aria-label="add mate to session"
-				on:click={() => addMateToStore(mate.id, mate.username)}
-			>
-				<div class="col-span-1 m-2">
-					<Avatar />
-				</div>
+	<div class="mt-4">
+		{#each mates as mate, index (index)}
+			<form action="/mate?/addnewmate" method="POST" use:enhance>
+				<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />
+				<button
+					transition:slide={{ duration: 250 }}
+					class="grid grid-cols-4 gap-4 items-center"
+					aria-label="add mate to session"
+					on:click={() => addMateToStore(mate.id, mate.username)}
+				>
+					<div class="col-span-1 m-2">
+						<Avatar />
+					</div>
 					<p class="">{mate.username}</p>
-			</button>
-		</form>
-	{/each}
-</div>
+				</button>
+			</form>
+		{/each}
+	</div>
 {:else if mates.length === 0 && formData?.searchValue}
 	<p transition:slide={{ duration: 250 }}>No mates found. Try again.</p>
 {:else if loading}

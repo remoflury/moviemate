@@ -8,12 +8,24 @@
 
 	const dispatch = createEventDispatcher();
 
-	const swipeRight = () => {
+	const swipeRight = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 		dispatch('swipeRight', {
 			index
 		});
 	};
-	const swipeLeft = () => {
+	const swipeLeft = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 		dispatch('swipeLeft', {
 			index
 		});
@@ -82,25 +94,14 @@ on:touchend={endTouch} -->
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>
-	<form
-		class="absolute left-0"
-		on:submit|preventDefault={swipeLeft}
-		action="?/addmovietodismissed"
-		use:enhance
-		method="POST"
-	>
+	<!-- <form class="absolute left-0" on:submit|preventDefault={swipeLeft} use:enhance method="POST">
 		<input type="hidden" name="movieid" value={movie.id} />
 		<button>Swipe left</button>
 	</form>
-	<!-- <form class="absolute right-0" action={`?/addmovietowatchlist`} use:enhance method="POST"> -->
-	<form
-		class="absolute right-0"
-		on:submit|preventDefault={swipeRight}
-		action={`?/addmovietowatchlist`}
-		use:enhance
-		method="POST"
-	>
+	<form class="absolute right-0" on:submit|preventDefault={swipeRight} use:enhance method="POST">
 		<input type="hidden" name="movieid" value={movie.id} />
 		<button>Swipe right</button>
-	</form>
+	</form> -->
+	<button class="absolute left-0" on:click={() => swipeLeft(movie.id)}>Swipe left</button>
+	<button class="absolute right-0" on:click={() => swipeRight(movie.id)}>Swipe right</button>
 </article>

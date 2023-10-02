@@ -2,7 +2,11 @@
 	import '../css/main.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { bottomNavigationHeight } from '$lib/stores/menu';
+	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
+	import LogoHeader from '$lib/components/logoHeader.svelte';
+	import { goto, afterNavigate } from '$app/navigation';
+
+import { base } from '$app/paths'
 
 	export let data;
 
@@ -17,6 +21,15 @@
 
 		return () => data.subscription.unsubscribe();
 	});
+
+
+$previousPath = base ;
+
+afterNavigate(({from}) => {
+   $previousPath = from?.url.pathname || $previousPath
+}) 
+
+
 </script>
 
 <svelte:head>
@@ -28,5 +41,7 @@
 	class="relative min-h-screen overflow-hidden"
 	style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
 >	
+
+	<LogoHeader/>
 	<slot />
 </main>

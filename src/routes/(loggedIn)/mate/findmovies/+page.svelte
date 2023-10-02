@@ -1,6 +1,8 @@
 <script lang="ts">
 	import MatchCard from '$lib/components/cards/matchCard.svelte';
+	import { showGoBack } from '$lib/stores/menu.js';
 	export let data;
+	$showGoBack = true;
 </script>
 
 <section class="container">

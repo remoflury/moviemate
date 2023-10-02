@@ -17,11 +17,11 @@
 
 	<h1>Watchlist</h1>
 
-	<!-- <div class="grid grid-cols-3 gap-x-6 gap-y-10">
+	<div class="grid grid-cols-3 gap-x-6 gap-y-10">
 		{#each data.movies as movie, index (index)}
 			<WatchlistCard content={movie} />
 		{/each}
-	</div> -->
+	</div>
 
 	<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
 		<PrimaryButton text="Logout" />

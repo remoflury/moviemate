@@ -1,17 +1,10 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
-    import {movieStore} from '$lib/stores/movieStore';
 	export let showDeleteButton: boolean = true;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
 
-    const removeMovieFromWatchlist = (id: string) => {
-		// find index of movie in store
-		const index = $movieStore.movies.findIndex((movie) => movie.id === id);
-
-		// if movie is in store, remove it
-		if (index !== -1) {
-			$movieStore.movies.splice(index, 1);
-		}
+    const removeMovieFromWatchlist = (id: number) => {
+		console.log("To Do Remo");
 	};
 
 </script>
@@ -35,4 +28,4 @@
 		{/if}
 	</figure>
     
-</a> -->
+</a>

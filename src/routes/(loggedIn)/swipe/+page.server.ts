@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
-import { error as pageError, type Actions, fail } from '@sveltejs/kit'
-import { addMovieToDismissed, generateRandomIndex, getMovieRecommendationsById, getPopularMovies, updateMovieIds } from "$lib/utils/moviesUtils";
+import { error as pageError } from '@sveltejs/kit'
+import { generateRandomIndex, getMovieRecommendationsById, getPopularMovies} from "$lib/utils/moviesUtils";
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
 import type { TMDBMovieByRecommendationProps } from "$lib/types/contentTypes";
 

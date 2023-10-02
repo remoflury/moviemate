@@ -65,7 +65,7 @@
 
 <!-- z-index: ${index * -1}; -->
 <article
-	class="rounded-5xl absolute transform"
+	class="rounded-5xl absolute transform left-0 right-0"
 	style={` 
   transform: 
     translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
@@ -78,7 +78,7 @@ on:touchend={endTouch} -->
 	<figure class="w-full h-full">
 		<img
 			class="object-cover object-center w-full h-full"
-			src="https://image.tmdb.org/t/p/w500/{movie.poster_path}"
+			src="https://image.tmdb.org/t/p/w300/{movie.poster_path}"
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>

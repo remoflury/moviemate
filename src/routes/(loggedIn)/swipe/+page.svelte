@@ -59,7 +59,6 @@
 			loading = true;
 			try {
 				movies = await fetchMoreMovies();
-				console.log(movies);
 			} catch (error) {
 				throw new Error('An error occured while loading more movies');
 			}

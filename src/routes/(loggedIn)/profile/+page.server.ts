@@ -24,17 +24,22 @@ export const load: PageServerLoad = async ({locals}) => {
   }
 
   // fetch movie details for each movieId
-  let count = 0
-  // console.log(movieIds[count])
-  const movies: TMDBMovieByIdrops[]  = []
-  try {
-        const movie = await getMovieById(movieIds[count], TMDB_BASE_URL, TMDB_AUTH_KEY)
-        movies.push(movie)
-        count++
-      } catch(error) {
-        console.error(error)
-        // throw pageError(500, 'Error loading the watchlist movies')
-      }
+  // let count = 0
+  // // console.log(movieIds[count])
+  // const movies: TMDBMovieByIdrops[]  = []
+  
+  // console.log(movieIds.length)
+  // while (count <= movieIds.length) {
+  //   try {
+  //     const movie = await getMovieById(movieIds[count], TMDB_BASE_URL, TMDB_AUTH_KEY)
+  //     movies.push(movie)
+  //     count++
+  //   } catch(error) {
+  //     console.error(error)
+  //     // throw pageError(500, 'Error loading the watchlist movies')
+  //   }
+  //   console.log(count)
+  // }
   // while (count <= movieIds.length) {
   //   try {
   //     const movie = await getMovieById(movieIds[count], TMDB_BASE_URL, TMDB_AUTH_KEY)
@@ -46,7 +51,7 @@ export const load: PageServerLoad = async ({locals}) => {
   //   }
   // }
 
-  return {
-    movies
-  }
+  // return {
+  //   movies
+  // }
 };

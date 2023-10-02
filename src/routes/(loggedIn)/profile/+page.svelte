@@ -6,7 +6,7 @@
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	export let data;
 
-	console.log(data.movies);
+	// console.log(data.movies);
 </script>
 
 <section class="container">

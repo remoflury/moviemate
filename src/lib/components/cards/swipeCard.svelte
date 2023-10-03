@@ -8,29 +8,6 @@
 
 	const dispatch = createEventDispatcher();
 
-	const swipeRight = async (movieId: number) => {
-		try {
-			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
-			const data = await response.json();
-		} catch (error) {
-			console.error(error);
-		}
-		dispatch('swipeRight', {
-			index
-		});
-	};
-	const swipeLeft = async (movieId: number) => {
-		try {
-			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
-			const data = await response.json();
-		} catch (error) {
-			console.error(error);
-		}
-		dispatch('swipeLeft', {
-			index
-		});
-	};
-
 	const touchStartPosition = {
 		x: 0,
 		y: 0
@@ -73,6 +50,31 @@
 		touchCurrentPosition.x = 0;
 		touchCurrentPosition.y = 0;
 	};
+	// on swipe right, add movie to watchlist
+	const swipeRight = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		dispatch('swipeRight', {
+			index
+		});
+	};
+
+	// on swipe left, add movie to dismissed list
+	const swipeLeft = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		dispatch('swipeLeft', {
+			index
+		});
+	};
 </script>
 
 <!-- z-index: ${index * -1}; -->
@@ -83,10 +85,10 @@
     translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
     rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
   })`}
+	on:touchstart={setStartPoints}
+	on:touchmove={dragCard}
+	on:touchend={endTouch}
 >
-	<!-- on:touchstart={setStartPoints}
-on:touchmove={dragCard}
-on:touchend={endTouch} -->
 	<figure class="w-full h-full">
 		<img
 			class="object-cover object-center w-full h-full"

@@ -15,15 +15,19 @@
 	let limit = 9;
 	let offset = 0;
 	let movies: TMDBMovieByIdrops[] = [];
+	let isLoadMoreAvailable: boolean = false;
 
 	const fetchWatchlist = async () => {
 		try {
 			const response = await fetch(
 				`${PUBLIC_APP_URL}/api/watchlist?limit=${limit}&offset=${offset}`
 			);
-			const data = await response.json();
-			movies = [...movies, ...data];
-			console.log(movies);
+			const data: {
+				isLoadMoreAvailable: boolean;
+				movies: TMDBMovieByIdrops[];
+			} = await response.json();
+			isLoadMoreAvailable = data.isLoadMoreAvailable;
+			movies = [...movies, ...data.movies];
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -31,8 +35,7 @@
 	};
 
 	const loadMoreMovies = async () => {
-		limit += 12;
-		console.log(offset);
+		offset += 9;
 		await fetchWatchlist();
 	};
 </script>
@@ -49,14 +52,16 @@
 	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}
 		<LoadingSpinner />
-	{:then data}
-		{#if movies.length}
+	{:then}
+		{#if movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
 				{#each movies as movie, index (index)}
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>
-			<button class="mt-8" on:click={loadMoreMovies}>Load more</button>
+			{#if isLoadMoreAvailable}
+				<button class="mt-8" on:click={loadMoreMovies}>Load more</button>
+			{/if}
 		{/if}
 	{/await}
 </section>

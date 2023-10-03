@@ -14,21 +14,30 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 
   // get limit for fetch
   const limit = Number(url.searchParams.get('limit'))
+  const offset = Number(url.searchParams.get('offset')) || 0
   // error handling
   if (limit == 0 || !limit) {
     return new Response(JSON.stringify({error: 'Please provide the params.'}), { status: 500 });
   }
 
   let movieIds: string[] = []
-
+  let isLoadMoreAvailable: boolean = true
   // get all movie Ids from database
   try {
     const response = await getAllMovieIds(supabaseClient, [userId])
     movieIds = response[0].movies_watchlist
+    // safe last item, for check if more movies are available
+    const lastItem = movieIds[movieIds.length-1]
+    // splide array, so that load more is available
+    movieIds = movieIds.splice(offset, limit)
+    
+    // check if more movies are available or not
+    if (lastItem == movieIds[movieIds.length - 1]) {
+      isLoadMoreAvailable = false
+    }
   } catch(error) {
     console.error(error)
     return new Response(JSON.stringify({error: 'Error while fetching the movie ids.'}), { status: 500 });
-
   }
 
   // get movie details
@@ -48,7 +57,12 @@ export const GET: RequestHandler = async ({ locals, url }) => {
     count++
   }
 
+  const response = {
+    isLoadMoreAvailable,
+    movies
+  }
+
 
   // return data
-  return new Response(JSON.stringify(movies));
+  return new Response(JSON.stringify(response));
 };

@@ -17,7 +17,9 @@
 	let offset = 0;
 	let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
+	let loading: boolean = false;
 
+	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
 		try {
 			const response = await fetch(
@@ -28,6 +30,7 @@
 				movies: TMDBMovieByIdrops[];
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
+			// spread existing movies and new movies into same movies array
 			movies = [...movies, ...data.movies];
 			return movies;
 		} catch (error) {
@@ -36,8 +39,10 @@
 	};
 
 	const loadMoreMovies = async () => {
+		loading = true;
 		offset += 9;
 		await fetchWatchlist();
+		loading = false;
 	};
 </script>
 
@@ -61,9 +66,12 @@
 				{/each}
 			</div>
 			{#if isLoadMoreAvailable}
-				<button transition:fade={{ duration: 350 }} class="mt-8" on:click={loadMoreMovies}
-					>Load more</button
-				>
+				<button class="mt-8" transition:fade={{ duration: 350 }} on:click={loadMoreMovies}>
+					Load more
+				</button>
+			{/if}
+			{#if loading}
+				<LoadingSpinner />
 			{/if}
 		{/if}
 	{/await}

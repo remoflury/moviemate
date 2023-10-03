@@ -13,7 +13,7 @@
 <a href="/mate/findmovies/{content.id}" transition:fly={{ duration: 350, delay: index * 150 }}>
 	<figure class="rounded-3xl overflow-hidden relative">
 		<img
-			src="https://image.tmdb.org/t/p/w185/{content.poster_path}"
+			src="https://image.tmdb.org/t/p/w154/{content.poster_path}"
 			alt="Movieposter of {content.title}"
 			loading="lazy"
 		/>

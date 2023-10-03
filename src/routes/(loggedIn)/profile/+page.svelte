@@ -11,6 +11,7 @@
 	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes.js';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import { PUBLIC_APP_URL } from '$env/static/public';
+	import { fade } from 'svelte/transition';
 
 	let limit = 9;
 	let offset = 0;
@@ -60,7 +61,9 @@
 				{/each}
 			</div>
 			{#if isLoadMoreAvailable}
-				<button class="mt-8" on:click={loadMoreMovies}>Load more</button>
+				<button transition:fade={{ duration: 350 }} class="mt-8" on:click={loadMoreMovies}
+					>Load more</button
+				>
 			{/if}
 		{/if}
 	{/await}

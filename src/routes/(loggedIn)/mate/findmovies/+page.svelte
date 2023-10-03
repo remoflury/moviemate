@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import MatchCard from '$lib/components/cards/matchCard.svelte';
-	import { showGoBack, showSettings } from '$lib/stores/menu.js';
+	import { showGoBack, showSettings, previousPath } from '$lib/stores/menu';
 	export let data;
 	$showGoBack = true;
 	$showSettings = false;
+
+	$previousPath.params = $page.url.search;
 </script>
 
 <section class="container">

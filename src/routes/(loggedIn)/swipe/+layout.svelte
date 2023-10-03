@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { activeMenu } from '$lib/stores/menu';
+	import { activeMenu, previousPath } from '$lib/stores/menu';
 
 	$activeMenu = 'swipe';
+	$previousPath.params = '';
 </script>
 
 <slot />

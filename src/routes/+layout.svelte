@@ -4,10 +4,10 @@
 	import { onMount } from 'svelte';
 	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
 	import LogoHeader from '$lib/components/logoHeader.svelte';
-	import { goto, afterNavigate } from '$app/navigation';
+	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 
-
-import { base } from '$app/paths'
+	import { base } from '$app/paths';
 
 	export let data;
 
@@ -23,26 +23,30 @@ import { base } from '$app/paths'
 		return () => data.subscription.unsubscribe();
 	});
 
+	$previousPath.path = base;
+	$: console.log($previousPath.params);
 
-$previousPath = base ;
+	afterNavigate(({ from }) => {
+		$previousPath.path = from?.url.pathname || $previousPath.path;
 
-afterNavigate(({from}) => {
-   $previousPath = from?.url.pathname || $previousPath
-}) 
-
-
+		// if ($page.url.pathname != '/mate/findmovies') {
+		// 	$previousPath.params = '';
+		// }
+		// const regex = /^\/mate\/findmovies\/\d+$/;
+		// if (!regex.test($page.url.pathname)) {
+		// 	$previousPath.params = '';
+		// }
+	});
 </script>
 
 <svelte:head>
 	<title>Movie Mate</title>
-	
 </svelte:head>
 
 <main
 	class="relative min-h-screen overflow-hidden"
 	style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
->	
-
-	<LogoHeader/>
+>
+	<LogoHeader />
 	<slot />
 </main>

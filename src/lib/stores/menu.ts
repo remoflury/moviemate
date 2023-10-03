@@ -8,4 +8,7 @@ export const showGoBack = writable(false);
 
 export const showSettings = writable(false);
 
-export const previousPath = writable('/');
+export const previousPath = writable({
+  path: '/',
+  params: ''
+});

@@ -2,7 +2,12 @@ import type { PageServerLoad } from './$types';
 import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 import { error as pageError } from '@sveltejs/kit';
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import { getMatchesAndNotMatchesArray, generateRandomIndex, filterMoviesWithEmptyPoster, getAllMovieIds } from '$lib/utils/moviesUtils';
+import {
+	getMatchesAndNotMatchesArray,
+	generateRandomIndex,
+	filterMoviesWithEmptyPoster,
+	getAllMovieIds
+} from '$lib/utils/moviesUtils';
 import { getMovieById, getMovieRecommendationsById } from '$lib/utils/moviesUtils';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -28,10 +33,10 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 	const allIds = matesIds.concat(userId);
 
 	// get all movie ids from all mates and user
-	let allMovieIds: { movies_watchlist: string[] }[] = []
+	let allMovieIds: { movies_watchlist: string[] }[] = [];
 	try {
 		allMovieIds = await getAllMovieIds(supabaseClient, allIds);
-	} catch(error) {
+	} catch (error) {
 		throw pageError(500, { message: 'Error loading movie ids.' });
 	}
 
@@ -49,7 +54,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				matchedMovieIds.map((id) => getMovieById(id, TMDB_BASE_URL, TMDB_AUTH_KEY))
 			);
 			// filter out movies without poster
-			matchedMovies = filterMoviesWithEmptyPoster(matchedMovies)
+			matchedMovies = filterMoviesWithEmptyPoster(matchedMovies);
 		} catch (error) {
 			throw pageError(500, { message: 'Error loading matching movies.' });
 		}
@@ -70,7 +75,7 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 					1
 				);
 				// filter out movies without poster
-				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
+				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies);
 			} catch (error) {
 				throw pageError(500, { message: 'Error loading recommended movies.' });
 			}
@@ -90,11 +95,10 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 				);
 
 				// filter out movies without poster
-				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies)
+				recommendedMovies = filterMoviesWithEmptyPoster(recommendedMovies);
 			} catch (error) {
 				throw pageError(500, { message: 'Error loading recommended movies.' });
 			}
-			
 		}
 	}
 
@@ -104,5 +108,3 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		recommendationsMovieId
 	};
 };
-
-

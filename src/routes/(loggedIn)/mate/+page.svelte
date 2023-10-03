@@ -19,7 +19,6 @@
 </section>
 
 <section class="container">
-	
 	<MatesList mates={data.mates || []} />
 </section>
 

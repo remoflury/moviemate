@@ -39,7 +39,7 @@
 	}
 
 	p.info {
-		@apply text-gray-dark text-sm
+		@apply text-gray-dark text-sm;
 	}
 
 	button.btn,
@@ -66,11 +66,11 @@
 	}
 
 	main section:not(section:first-of-type) {
-		@apply pt-8
+		@apply pt-8;
 	}
 
 	main section:last-of-type {
-		@apply pb-8
+		@apply pb-8;
 	}
 
 	/* main section */

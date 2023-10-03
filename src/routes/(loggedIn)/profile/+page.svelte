@@ -11,14 +11,16 @@
 	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes.js';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import { PUBLIC_APP_URL } from '$env/static/public';
-	// export let data;
 
-	let limit = 12;
+	let limit = 9;
+	let offset = 0;
 	let movies: TMDBMovieByIdrops[] = [];
 
 	const fetchWatchlist = async () => {
 		try {
-			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist?limit=${limit}`);
+			const response = await fetch(
+				`${PUBLIC_APP_URL}/api/watchlist?limit=${limit}&offset=${offset}`
+			);
 			const data = await response.json();
 			movies = [...movies, ...data];
 			console.log(movies);
@@ -28,11 +30,11 @@
 		}
 	};
 
-	onMount(async () => {
-		// movies = await fetchWatchlist();
-	});
-
-	// console.log(data.movies);
+	const loadMoreMovies = async () => {
+		limit += 12;
+		console.log(offset);
+		await fetchWatchlist();
+	};
 </script>
 
 <section class="container">
@@ -41,7 +43,7 @@
 	</form>
 	<div class="flex flex-col items-center px-32 pb-10">
 		<Avatar />
-		<p class="info mt-4">Username??</p>
+		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
 
 	<h1>Watchlist</h1>
@@ -54,6 +56,7 @@
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>
+			<button class="mt-8" on:click={loadMoreMovies}>Load more</button>
 		{/if}
 	{/await}
 </section>

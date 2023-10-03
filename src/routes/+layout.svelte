@@ -24,7 +24,6 @@
 	});
 
 	$previousPath.path = base;
-	$: console.log($previousPath.params);
 
 	afterNavigate(({ from }) => {
 		$previousPath.path = from?.url.pathname || $previousPath.path;

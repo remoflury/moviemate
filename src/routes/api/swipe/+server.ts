@@ -17,10 +17,7 @@ export const GET: RequestHandler = async ({locals, url}) => {
   // if swipe direction was to right
   if (direction == 'right') {
     try {
-      const data = await updateMovieIds(supabaseClient, userId, movieId)
-      // const data = await response.json()
-  
-      console.log('right response: ', data)
+      await updateMovieIds(supabaseClient, userId, movieId)
 
     } catch (error) {
       console.error(error)
@@ -30,8 +27,7 @@ export const GET: RequestHandler = async ({locals, url}) => {
 
   if (direction == 'left') {
     try {
-      const data = await addMovieToDismissed(supabaseClient, userId, movieId)
-      console.log('left response: ', data)
+      await addMovieToDismissed(supabaseClient, userId, movieId)
     } catch (error) {
       console.error(error)
       throw pageError(500, 'Error updating dismissed movies')

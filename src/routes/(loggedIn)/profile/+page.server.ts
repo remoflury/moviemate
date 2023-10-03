@@ -9,8 +9,7 @@ export const load: PageServerLoad = async ({locals}) => {
 	const session = await locals.getSession();
 	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 	const userId = session.user.id;
-
-
+  
   // get all movie ids of users watchlist
   let movieIds: string[] = []
   try {

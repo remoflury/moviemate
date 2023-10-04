@@ -1,17 +1,15 @@
 <script lang="ts">
+	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
+	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
+	import { showSettings } from '$lib/stores/menu';
 	import { page } from '$app/stores';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
-	import { onMount } from 'svelte';
-	import { showSettings } from '$lib/stores/menu.js';
-	$showSettings = true;
-
-	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes.js';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import { PUBLIC_APP_URL } from '$env/static/public';
-	import { fade } from 'svelte/transition';
+
+	$showSettings = true;
 
 	let limit = 9;
 	let offset = 0;
@@ -57,7 +55,9 @@
 
 	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}
-		<LoadingSpinner />
+		<div class="mt-4">
+			<LoadingSpinner />
+		</div>
 	{:then}
 		{#if movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
@@ -65,13 +65,13 @@
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>
-			{#if isLoadMoreAvailable}
-				<button class="mt-8" transition:fade={{ duration: 350 }} on:click={loadMoreMovies}>
-					Load more
-				</button>
+			{#if isLoadMoreAvailable && !loading}
+				<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
 			{/if}
 			{#if loading}
-				<LoadingSpinner />
+				<div class="mt-4">
+					<LoadingSpinner />
+				</div>
 			{/if}
 		{/if}
 	{/await}

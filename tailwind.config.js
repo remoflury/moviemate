@@ -32,6 +32,9 @@ export default {
 			},
 			minHeight: {
 				screen: ['100vh /* fallback for Opera, IE and etc. */', '100dvh']
+			},
+			aspectRatio: {
+				'3/4': '3/4'
 			}
 		}
 	},

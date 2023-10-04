@@ -11,13 +11,13 @@
 </script>
 
 <a href="/mate/findmovies/{content.id}" transition:fly={{ duration: 350, delay: index * 150 }}>
-	<figure class="rounded-3xl overflow-hidden relative">
+	<figure class="rounded-3xl overflow-hidden aspect-3/4">
 		<img
+			class="object-center object-cover w-full h-full"
 			src="https://image.tmdb.org/t/p/w154/{content.poster_path}"
 			alt="Movieposter of {content.title}"
 			loading="lazy"
 		/>
-
 		{#if showDeleteButton}
 			<button
 				aria-label="remove movie"

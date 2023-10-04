@@ -85,6 +85,7 @@
 						{index}
 						on:swipeRight={() => {
 							onSwipe();
+							console.log('riiiight ');
 							allMatchedMoviesOfSession.push(movie);
 						}}
 						on:swipeLeft={onSwipe}

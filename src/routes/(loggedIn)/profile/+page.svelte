@@ -2,8 +2,8 @@
 	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
-	import { showSettings } from '$lib/stores/menu';
 	import { page } from '$app/stores';
+	import { showSettings } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';

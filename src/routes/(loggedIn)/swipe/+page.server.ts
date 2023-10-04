@@ -11,6 +11,8 @@ import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 export const load: PageServerLoad = async ({ locals }) => {
 	const supabaseClient = locals.supabase;
 	const session = await locals.getSession();
+
+	// if not authorized
 	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 	const userId = session.user.id;
 

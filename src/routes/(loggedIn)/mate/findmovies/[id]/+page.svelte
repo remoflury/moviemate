@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBVideosByIdProps } from '$lib/types/contentTypes';
-	import { showGoBack, showSettings } from '$lib/stores/menu.js';
+	import { showGoBack, showSettings } from '$lib/stores/menu';
 	$showGoBack = true;
 	$showSettings = false;
 

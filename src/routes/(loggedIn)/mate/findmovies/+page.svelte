@@ -3,7 +3,7 @@
 	import MatchCard from '$lib/components/cards/matchCard.svelte';
 	import { showGoBack, showSettings, previousPath } from '$lib/stores/menu';
 	export let data;
-	$showGoBack = true;
+	$showGoBack = false;
 	$showSettings = false;
 
 	$previousPath.params = $page.url.search;

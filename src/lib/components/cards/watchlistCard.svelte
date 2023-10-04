@@ -10,7 +10,11 @@
 	};
 </script>
 
-<a href="/mate/findmovies/{content.id}" transition:fly={{ duration: 350, delay: index * 150 }}>
+<a
+	class="relative"
+	href="/mate/findmovies/{content.id}"
+	transition:fly={{ duration: 350, delay: index * 150 }}
+>
 	<figure class="rounded-3xl overflow-hidden aspect-3/4">
 		<img
 			class="object-center object-cover w-full h-full"
@@ -22,7 +26,7 @@
 			<button
 				aria-label="remove movie"
 				class="absolute bottom-0 right-0 border border-gray-dark rounded-max p-[6px] aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
-				on:click={() => removeMovieFromWatchlist(content.id)}
+				on:click|preventDefault={() => removeMovieFromWatchlist(content.id)}
 			>
 				<p class="text-gray-dark leading-none -translate-y-[1px]">-</p>
 			</button>

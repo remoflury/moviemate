@@ -1,29 +1,35 @@
 <script lang="ts">
+	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
+	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { showSettings } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
-	import { onMount } from 'svelte';
-	import { showSettings } from '$lib/stores/menu.js';
-	$showSettings = true;
-
-	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes.js';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import { PUBLIC_APP_URL } from '$env/static/public';
+
+	$showSettings = true;
 
 	let limit = 9;
 	let offset = 0;
 	let movies: TMDBMovieByIdrops[] = [];
+	let isLoadMoreAvailable: boolean = false;
+	let loading: boolean = false;
 
+	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
 		try {
 			const response = await fetch(
 				`${PUBLIC_APP_URL}/api/watchlist?limit=${limit}&offset=${offset}`
 			);
-			const data = await response.json();
-			movies = [...movies, ...data];
-			console.log(movies);
+			const data: {
+				isLoadMoreAvailable: boolean;
+				movies: TMDBMovieByIdrops[];
+			} = await response.json();
+			isLoadMoreAvailable = data.isLoadMoreAvailable;
+			// spread existing movies and new movies into same movies array
+			movies = [...movies, ...data.movies];
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -31,9 +37,10 @@
 	};
 
 	const loadMoreMovies = async () => {
-		limit += 12;
-		console.log(offset);
+		loading = true;
+		offset += 9;
 		await fetchWatchlist();
+		loading = false;
 	};
 </script>
 
@@ -48,15 +55,24 @@
 
 	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}
-		<LoadingSpinner />
-	{:then data}
-		{#if movies.length}
+		<div class="mt-4">
+			<LoadingSpinner />
+		</div>
+	{:then}
+		{#if movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
 				{#each movies as movie, index (index)}
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>
-			<button class="mt-8" on:click={loadMoreMovies}>Load more</button>
+			{#if isLoadMoreAvailable && !loading}
+				<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
+			{/if}
+			{#if loading}
+				<div class="mt-4">
+					<LoadingSpinner />
+				</div>
+			{/if}
 		{/if}
 	{/await}
 </section>

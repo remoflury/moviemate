@@ -15,7 +15,7 @@
 </script>
 
 {#if mates.length}
-<h1 class="">Mates</h1>
+	<h1 class="">Mates</h1>
 	<article class="flex items-start gap-x-8">
 		{#each mates as mate, index (index)}
 			<form

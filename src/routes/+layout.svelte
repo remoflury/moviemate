@@ -5,7 +5,6 @@
 	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
 	import LogoHeader from '$lib/components/logoHeader.svelte';
 	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
 
 	import { base } from '$app/paths';
 
@@ -27,14 +26,6 @@
 
 	afterNavigate(({ from }) => {
 		$previousPath.path = from?.url.pathname || $previousPath.path;
-
-		// if ($page.url.pathname != '/mate/findmovies') {
-		// 	$previousPath.params = '';
-		// }
-		// const regex = /^\/mate\/findmovies\/\d+$/;
-		// if (!regex.test($page.url.pathname)) {
-		// 	$previousPath.params = '';
-		// }
 	});
 </script>
 

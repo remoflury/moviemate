@@ -4,7 +4,7 @@
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import Link from '$lib/components/link.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import { showSettings } from '$lib/stores/menu.js';
+	import { showSettings } from '$lib/stores/menu';
 	$showSettings = false;
 
 	export let form;

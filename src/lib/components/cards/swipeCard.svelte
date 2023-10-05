@@ -5,31 +5,9 @@
 
 	export let movie: TMDBMovieByRecommendationProps;
 	export let index: number;
+	let fadeOut = false;
 
 	const dispatch = createEventDispatcher();
-
-	const swipeRight = async (movieId: number) => {
-		try {
-			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
-			const data = await response.json();
-		} catch (error) {
-			console.error(error);
-		}
-		dispatch('swipeRight', {
-			index
-		});
-	};
-	const swipeLeft = async (movieId: number) => {
-		try {
-			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
-			const data = await response.json();
-		} catch (error) {
-			console.error(error);
-		}
-		dispatch('swipeLeft', {
-			index
-		});
-	};
 
 	const touchStartPosition = {
 		x: 0,
@@ -40,28 +18,34 @@
 		y: 0
 	};
 
+	let offsetX = 0;
+
 	const setStartPoints = (event: TouchEvent) => {
-		// console.log(event);
-		touchStartPosition.x = event.touches[0].clientX;
-		touchStartPosition.y = event.touches[0].clientY;
+		touchStartPosition.x = event.touches[0].clientX - event.target?.x;
+		touchStartPosition.y = event.touches[0].clientY - event.target?.y;
+		// touchStartPosition.x = event.touches[0].clientX;
+		// touchStartPosition.y = event.touches[0].clientY;
 	};
 
 	const dragCard = (event: TouchEvent) => {
 		// console.log(event);
-		touchCurrentPosition.x = event.touches[0].clientX;
-		touchCurrentPosition.y = event.touches[0].clientY;
+		touchCurrentPosition.x = event.touches[0].clientX - event.target?.x;
+		touchCurrentPosition.y = event.touches[0].clientY - event.target?.y;
+		// touchCurrentPosition.x = event.touches[0].clientX;
+		// touchCurrentPosition.y = event.touches[0].clientY;
 
 		const xDiff = touchCurrentPosition.x - touchStartPosition.x;
 		// console.log(xDiff);
 	};
 
-	const endTouch = (event: TouchEvent) => {
+	const endTouch = async (event: TouchEvent) => {
 		//@ts-ignore
 		const widthElem = event.target.offsetWidth;
 
-		if (touchCurrentPosition.x - touchStartPosition.x > widthElem / 2) {
-			console.log('swipe right');
-		} else if (touchCurrentPosition.x - touchStartPosition.x < widthElem / 2) {
+		if (touchCurrentPosition.x - touchStartPosition.x > widthElem / 3) {
+			// console.log('swipe right');
+			await swipeRight(movie.id);
+		} else if (touchCurrentPosition.x - touchStartPosition.x < widthElem / 3) {
 			console.log('swipe left');
 		} else {
 			console.log('no swipe');
@@ -73,20 +57,47 @@
 		touchCurrentPosition.x = 0;
 		touchCurrentPosition.y = 0;
 	};
+	// on swipe right, add movie to watchlist
+	const swipeRight = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		fadeOut = true;
+		dispatch('swipeRight', {
+			index
+		});
+	};
+
+	// on swipe left, add movie to dismissed list
+	const swipeLeft = async (movieId: number) => {
+		try {
+			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
+		dispatch('swipeLeft', {
+			index
+		});
+	};
 </script>
 
 <!-- z-index: ${index * -1}; -->
 <article
-	class="rounded-5xl absolute transform left-0 right-0"
+	class="rounded-5xl absolute transform left-0 right-0 transition"
+	class:fadeOut
 	style={` 
   transform: 
     translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
     rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
   })`}
+	on:touchstart={setStartPoints}
+	on:touchmove={dragCard}
+	on:touchend={endTouch}
 >
-	<!-- on:touchstart={setStartPoints}
-on:touchmove={dragCard}
-on:touchend={endTouch} -->
 	<figure class="w-full h-full">
 		<img
 			class="object-cover object-center w-full h-full"
@@ -94,14 +105,12 @@ on:touchend={endTouch} -->
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>
-	<!-- <form class="absolute left-0" on:submit|preventDefault={swipeLeft} use:enhance method="POST">
-		<input type="hidden" name="movieid" value={movie.id} />
-		<button>Swipe left</button>
-	</form>
-	<form class="absolute right-0" on:submit|preventDefault={swipeRight} use:enhance method="POST">
-		<input type="hidden" name="movieid" value={movie.id} />
-		<button>Swipe right</button>
-	</form> -->
 	<button class="absolute left-0" on:click={() => swipeLeft(movie.id)}>Swipe left</button>
 	<button class="absolute right-0" on:click={() => swipeRight(movie.id)}>Swipe right</button>
 </article>
+
+<style lang="postcss">
+	.fadeOut {
+		@apply opacity-0;
+	}
+</style>

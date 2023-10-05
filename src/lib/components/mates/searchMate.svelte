@@ -13,7 +13,7 @@
 	let mates: SearchMatesProps[] = [];
 	let error = '';
 	let loading = false;
-	let searchValue = "";
+	let searchValue = '';
 
 	// $: console.log(mates);
 
@@ -47,7 +47,7 @@
 	};
 
 	const clearSearch = () => {
-		searchValue = ""
+		searchValue = '';
 		mates = [];
 	};
 </script>
@@ -68,19 +68,29 @@
 	<label for="search-mate" hidden>Mate suchen</label>
 	<div class="relative">
 		<input
-		class="search mt-0"
-		type="text"
-		name="search-mate"
-		id="search-mate"
-		placeholder="Search mate"
-		bind:value={searchValue}
+			class="search mt-0"
+			type="text"
+			name="search-mate"
+			id="search-mate"
+			placeholder="Search mate"
+			bind:value={searchValue}
 		/>
 		<!-- value={formData?.searchValue || ''} -->
 
 		{#if searchValue}
-		<button transition:fade={{duration:350}} type="button" on:click|preventDefault={clearSearch} class="absolute  top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer">
-			<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path class="fill-black" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-		</button>
+			<button
+				transition:fade={{ duration: 350 }}
+				type="button"
+				on:click|preventDefault={clearSearch}
+				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
+					><path
+						class="fill-black"
+						d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+					/></svg
+				>
+			</button>
 		{/if}
 	</div>
 

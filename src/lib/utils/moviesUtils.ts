@@ -1,37 +1,40 @@
-import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps, TMDBVideosByIdProps } from '$lib/types/contentTypes';
+import type {
+	TMDBMovieByIdrops,
+	TMDBMovieByRecommendationProps,
+	TMDBVideosByIdProps
+} from '$lib/types/contentTypes';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-
 export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string[] }[]) => {
-  // If the array is empty or contains a single element, we can't find matches
-  if (array.length <= 1) {
-    return { matchedMovieIds: [], notMatchedMovieIds: [] };
-  }
+	// If the array is empty or contains a single element, we can't find matches
+	if (array.length <= 1) {
+		return { matchedMovieIds: [], notMatchedMovieIds: [] };
+	}
 
-  // Count occurrences of each movie ID
-  const counts: { [key: string]: number } = {};
-  array.forEach((item) => {
-    item.movies_watchlist.forEach((movieId) => {
-      counts[movieId] = (counts[movieId] || 0) + 1;
-    });
-  });
+	// Count occurrences of each movie ID
+	const counts: { [key: string]: number } = {};
+	array.forEach((item) => {
+		item.movies_watchlist.forEach((movieId) => {
+			counts[movieId] = (counts[movieId] || 0) + 1;
+		});
+	});
 
-  const matchedMovieIds: string[] = [];
-  const notMatchedMovieIds: string[] = [];
+	const matchedMovieIds: string[] = [];
+	const notMatchedMovieIds: string[] = [];
 
-  // Check if a movie ID exists in all of the arrays
-  for (const [key, value] of Object.entries(counts)) {
-    if (value === array.length) {
-      matchedMovieIds.push(key);
-    } else {
-      notMatchedMovieIds.push(key);
-    }
-  }
+	// Check if a movie ID exists in all of the arrays
+	for (const [key, value] of Object.entries(counts)) {
+		if (value === array.length) {
+			matchedMovieIds.push(key);
+		} else {
+			notMatchedMovieIds.push(key);
+		}
+	}
 
-  return {
-    matchedMovieIds,
-    notMatchedMovieIds,
-  };
+	return {
+		matchedMovieIds,
+		notMatchedMovieIds
+	};
 };
 
 export const generateRandomIndex = <T>(array: T[]): number => {
@@ -103,21 +106,30 @@ export const getMovieRecommendationsById = async (
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
-	const results = filterMoviesWithEmptyPoster(data.results)
+	const results = filterMoviesWithEmptyPoster(data.results);
 	return results;
 };
 
-export const filterMoviesWithEmptyPoster = <T extends TMDBMovieByIdrops[] | TMDBMovieByRecommendationProps[]>(movies: T): T => {
+export const filterMoviesWithEmptyPoster = <
+	T extends TMDBMovieByIdrops[] | TMDBMovieByRecommendationProps[]
+>(
+	movies: T
+): T => {
 	// filter out movies without poster
-	const newMoviesArray = movies.filter((movie: TMDBMovieByIdrops | TMDBMovieByRecommendationProps) => {
-		if (movie.poster_path != null) {
-			return movie;
+	const newMoviesArray = movies.filter(
+		(movie: TMDBMovieByIdrops | TMDBMovieByRecommendationProps) => {
+			if (movie.poster_path != null) {
+				return movie;
+			}
 		}
-	})
-	return newMoviesArray as T
-}
+	);
+	return newMoviesArray as T;
+};
 
-export const getAllMovieIds = async (supabaseClient: SupabaseClient, userIdsArray: string[]): Promise<{movies_watchlist: string[]}[]> => {
+export const getAllMovieIds = async (
+	supabaseClient: SupabaseClient,
+	userIdsArray: string[]
+): Promise<{ movies_watchlist: string[] }[]> => {
 	const { data, error } = await supabaseClient
 		.from('Users_movies')
 		.select('movies_watchlist')
@@ -137,7 +149,7 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 			accept: 'application/json',
 			Authorization: `Bearer ${tmdbAuthKey}`
 		}
-	})
+	});
 
 	const data = await response.json();
 
@@ -146,76 +158,86 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 	}
 
 	// filter out movies without poster
-	const results = filterMoviesWithEmptyPoster(data.results)
+	const results = filterMoviesWithEmptyPoster(data.results);
 
-	return results
-}
+	return results;
+};
 
 // update all watchlist movie ids (liked movies)
-export const updateMovieIds = async (supabaseClient: SupabaseClient, userId: string, movieId: string) => {
+export const updateMovieIds = async (
+	supabaseClient: SupabaseClient,
+	userId: string,
+	movieId: string
+) => {
 	// get all movies of user
-	let movieIds: string[] = []
+	let movieIds: string[] = [];
 	try {
-		const response = await getAllMovieIds(supabaseClient, [userId])
-		movieIds  = response[0].movies_watchlist
-	} catch(error) {
-		throw Error("Error loading movies")
+		const response = await getAllMovieIds(supabaseClient, [userId]);
+		movieIds = response[0].movies_watchlist;
+	} catch (error) {
+		throw Error('Error loading movies');
 	}
 
 	// if movieId is already in watchlist, return early
-	if (movieIds.includes(movieId)) return
+	if (movieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	movieIds.push(movieId)
+	movieIds.push(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient
 		.from('Users_movies')
-		.update({'movies_watchlist': movieIds})
-		.eq('movies_users_id', userId)
+		.update({ movies_watchlist: movieIds })
+		.eq('movies_users_id', userId);
 
 	if (error) {
-		throw Error("Error updating movies")
+		throw Error('Error updating movies');
+	}
+};
+
+export const getDismissedMoviesOfUsers = async (
+	supabaseClient: SupabaseClient,
+	userIdsArray: string[]
+): Promise<{ movies_dismissed: string[] }[]> => {
+	const { data, error } = await supabaseClient
+		.from('Users_movies')
+		.select('movies_dismissed')
+		.in('movies_users_id', userIdsArray);
+
+	if (error) {
+		throw Error('Error loading movies.');
 	}
 
-}
+	return data;
+};
 
-export const getDismissedMoviesOfUsers = async (supabaseClient: SupabaseClient, userIdsArray: string[]): Promise<{movies_dismissed: string[]}[]> => {
-	const { data, error } = await supabaseClient
-	.from('Users_movies')
-	.select('movies_dismissed')
-	.in('movies_users_id', userIdsArray);
-
-if (error) {
-	throw Error('Error loading movies.');
-}
-
-return data;
-}
-
-export const addMovieToDismissed = async (supabaseClient: SupabaseClient, userId: string, movieId: string) => {
-	let dismissedMovieIds: string[] = []
-	// get all dismissedMovies 
+export const addMovieToDismissed = async (
+	supabaseClient: SupabaseClient,
+	userId: string,
+	movieId: string
+) => {
+	let dismissedMovieIds: string[] = [];
+	// get all dismissedMovies
 	try {
-		const response = await getDismissedMoviesOfUsers(supabaseClient, [userId])
-		dismissedMovieIds  = response[0].movies_dismissed
-	} catch(error) {
-		throw Error("Error loading movies")
+		const response = await getDismissedMoviesOfUsers(supabaseClient, [userId]);
+		dismissedMovieIds = response[0].movies_dismissed;
+	} catch (error) {
+		throw Error('Error loading movies');
 	}
 
 	// if movieId is already in dismissed list, return early
-	if (dismissedMovieIds.includes(movieId)) return
+	if (dismissedMovieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	dismissedMovieIds.push(movieId)
+	dismissedMovieIds.push(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient
 		.from('Users_movies')
-		.update({'movies_dismissed': dismissedMovieIds})
-		.eq('movies_users_id', userId)
+		.update({ movies_dismissed: dismissedMovieIds })
+		.eq('movies_users_id', userId);
 
 	if (error) {
-		throw Error("Error updating movies")
+		throw Error('Error updating movies');
 	}
-}
+};

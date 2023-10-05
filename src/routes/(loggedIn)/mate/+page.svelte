@@ -2,16 +2,12 @@
 	import SearchMate from '$lib/components/mates/searchMate.svelte';
 	import MatesSession from '$lib/components/mates/matesSession.svelte';
 	import MatesList from '$lib/components/mates/matesList.svelte';
-	import { showGoBack, showSettings } from '$lib/stores/menu.js';
+	import { showGoBack, showSettings } from '$lib/stores/menu';
 
 	export let data;
 
 	$showGoBack = false;
 	$showSettings = false;
-
-	// $: console.log(data)
-	// console.log(data);
-	// console.log(data.mates);
 </script>
 
 <section class="container">
@@ -19,7 +15,6 @@
 </section>
 
 <section class="container">
-	
 	<MatesList mates={data.mates || []} />
 </section>
 

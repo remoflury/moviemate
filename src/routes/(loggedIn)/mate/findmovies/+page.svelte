@@ -23,4 +23,7 @@
 			<MatchCard content={recommendation} />
 		{/each}
 	</div>
+
+	<button class="link text-sm mt-8"
+	> show more </button>
 </section>

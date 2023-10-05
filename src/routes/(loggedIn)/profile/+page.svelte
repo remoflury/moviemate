@@ -70,7 +70,7 @@
 				{/each}
 			</div>
 			{#if isLoadMoreAvailable && !loading}
-				<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
+				<button class="link text-sm mt-8" on:click={loadMoreMovies}> Load more </button>
 			{/if}
 			{#if loading}
 				<div class="mt-4">

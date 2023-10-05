@@ -2,10 +2,14 @@
 	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
+	import LikeIcon from '../icons/likeIcon.svelte';
+	import { fade } from 'svelte/transition';
+	import DismissIcon from '../icons/dismissIcon.svelte';
 
 	export let movie: TMDBMovieByRecommendationProps;
 	export let index: number;
 	let fadeOut = false;
+	let swipeDirection: 'left' | 'right' | '';
 
 	const dispatch = createEventDispatcher();
 
@@ -18,40 +22,50 @@
 		y: 0
 	};
 
-	let offsetX = 0;
-
 	const setStartPoints = (event: TouchEvent) => {
+		//@ts-ignore
 		touchStartPosition.x = event.touches[0].clientX - event.target?.x;
+		//@ts-ignore
 		touchStartPosition.y = event.touches[0].clientY - event.target?.y;
-		// touchStartPosition.x = event.touches[0].clientX;
-		// touchStartPosition.y = event.touches[0].clientY;
 	};
 
 	const dragCard = (event: TouchEvent) => {
-		// console.log(event);
+		//@ts-ignore
 		touchCurrentPosition.x = event.touches[0].clientX - event.target?.x;
+		//@ts-ignore
 		touchCurrentPosition.y = event.touches[0].clientY - event.target?.y;
-		// touchCurrentPosition.x = event.touches[0].clientX;
-		// touchCurrentPosition.y = event.touches[0].clientY;
 
 		const xDiff = touchCurrentPosition.x - touchStartPosition.x;
-		// console.log(xDiff);
+		console.log(xDiff);
+
+		if (xDiff < 0) {
+			swipeDirection = 'left';
+		} else {
+			swipeDirection = 'right';
+		}
 	};
 
 	const endTouch = async (event: TouchEvent) => {
+		swipeDirection = '';
 		//@ts-ignore
 		const widthElem = event.target.offsetWidth;
+		console.log(Math.abs(touchCurrentPosition.x - touchStartPosition.x));
 
-		if (touchCurrentPosition.x - touchStartPosition.x > widthElem / 3) {
-			// console.log('swipe right');
+		// check for threshold of swipe
+		if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) > widthElem / 3) {
+			resetPositions();
 			await swipeRight(movie.id);
-		} else if (touchCurrentPosition.x - touchStartPosition.x < widthElem / 3) {
-			console.log('swipe left');
+		} else if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) < widthElem / 3) {
+			resetPositions();
+			await swipeLeft(movie.id);
 		} else {
+			resetPositions();
 			console.log('no swipe');
 		}
+	};
 
-		// console.log('end');
+	//reset swiping positions
+	const resetPositions = () => {
 		touchStartPosition.x = 0;
 		touchStartPosition.y = 0;
 		touchCurrentPosition.x = 0;
@@ -66,6 +80,8 @@
 			console.error(error);
 		}
 		fadeOut = true;
+
+		// dispatch event to parent component
 		dispatch('swipeRight', {
 			index
 		});
@@ -79,15 +95,15 @@
 		} catch (error) {
 			console.error(error);
 		}
+		// dispatch event to parent component
 		dispatch('swipeLeft', {
 			index
 		});
 	};
 </script>
 
-<!-- z-index: ${index * -1}; -->
 <article
-	class="rounded-5xl absolute transform left-0 right-0 transition"
+	class="rounded-3xl absolute transform inset-0 transition overflow-hidden"
 	class:fadeOut
 	style={` 
   transform: 
@@ -98,6 +114,15 @@
 	on:touchmove={dragCard}
 	on:touchend={endTouch}
 >
+	{#if swipeDirection == 'right'}
+		<div transition:fade={{ duration: 350 }} class="absolute left-6 top-4 w-12 aspect-square">
+			<LikeIcon />
+		</div>
+	{:else if swipeDirection == 'left'}
+		<div transition:fade={{ duration: 350 }} class="absolute left-6 top-4 w-12 aspect-square">
+			<DismissIcon />
+		</div>
+	{/if}
 	<figure class="w-full h-full">
 		<img
 			class="object-cover object-center w-full h-full"
@@ -105,8 +130,6 @@
 			alt="movie poster of {movie.title}"
 		/>
 	</figure>
-	<button class="absolute left-0" on:click={() => swipeLeft(movie.id)}>Swipe left</button>
-	<button class="absolute right-0" on:click={() => swipeRight(movie.id)}>Swipe right</button>
 </article>
 
 <style lang="postcss">

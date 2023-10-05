@@ -3,13 +3,14 @@
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { showSettings } from '$lib/stores/menu';
+	import { showSettings, showGoBack } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 
 	$showSettings = true;
+	$showGoBack = false;
 
 	let limit = 9;
 	let offset = 0;

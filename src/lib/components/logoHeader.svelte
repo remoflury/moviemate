@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showGoBack, previousPath, showSettings } from '$lib/stores/menu';
+	import { showGoBack, previousPath, showSettings } from '$lib/stores/menu.ts';
 
 	import { goto } from '$app/navigation';
 	const goBackTo = () => {
@@ -7,8 +7,10 @@
 	};
 </script>
 
-<div class="mx-auto text-center mt-5 flex justify-between gap-x-4 items-center container pb-2">
-	<div class="max-w-[2rem]">
+
+
+<!-- <div class="mx-auto mt-5 grid grid-cols-3 gap-x-3 items-center container pb-2"></div> -->
+	<div class="max-w-[2rem] m-5">
 		{#if $showGoBack == true}
 			<svg
 				on:click={goBackTo}
@@ -29,7 +31,7 @@
 		{/if}
 	</div>
 
-	<div class="max-w-[2rem]">
+	<div class="mx-5">
 		{#if $showSettings == true}
 			<svg class="max-w-full fill-gray-dark" viewBox="0 0 50 50" width="512px">
 				<path
@@ -39,8 +41,9 @@
 		{/if}
 	</div>
 
-	<a href="/" class="basis-1/2 flex justify-start">
-		<svg class="w-[5rem] -translate-x-1/2" id="Layer_1" viewBox="0 0 701.13 273.31"
+
+	<a href="/" class="mx-auto m-5">
+		<svg class="w-[5rem]" id="Layer_1" viewBox="0 0 701.13 273.31">
 			><defs
 				><style>
 					.cls-1 {
@@ -110,6 +113,7 @@
 			/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg
 		>
 	</a>
-</div>
+
+<!-- </div> -->
 
 <hr class="w-100 border-t border-gray-dark mt-2" />

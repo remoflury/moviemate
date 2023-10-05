@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { showSettings } from '$lib/stores/menu.js';
+	import { showSettings } from '$lib/stores/menu';
 	$showSettings = false;
 
 	export let data;

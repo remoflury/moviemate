@@ -45,12 +45,15 @@
 </script>
 
 <section class="container">
+
+	<div class="flex flex-col items-center px-28 pb-5">
+		<Avatar />
+		<p class="info mt-4">{$page.data.user.username}</p>
+	</div>
+	<div class="pb-10">
 	<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
 		<PrimaryButton text="Logout" />
 	</form>
-	<div class="flex flex-col items-center px-32 pb-10">
-		<Avatar />
-		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
 
 	<h1>Watchlist</h1>

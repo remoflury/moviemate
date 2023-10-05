@@ -1,33 +1,29 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import MatchCard from '$lib/components/cards/matchCard.svelte';
+	import { showGoBack, showSettings, previousPath } from '$lib/stores/menu';
 	export let data;
+	$showGoBack = true;
+	$showSettings = false;
 
-	// $: console.log(data.matches);
-	// $: console.log(data.recommendations);
-
-	// console.log(data.data)
-	// 1008042  Talk to Me
-	// 385687 Fast X
-	// 346698 Barbie
-	// 615656 Meg 2: The Trench
-	// 968051 The Nun II
-
-	// const movies1 = [
-	// '1008042'
-	// 	'385687',
-	// 	'346698',
-	// 	'615656',
-	// 	'968051'
-	// ] // Spiderpig
-
-	// const movies2 = ['1008042', '615656', '968051'] // Spiderman
+	$previousPath.params = $page.url.search;
 </script>
 
-<h2>Matches</h2>
-{#each data.matches as match, index (index)}
-	<p>{match.original_title}</p>
-{/each}
+<section class="container">
+	<h1>Movies</h1>
 
-<h2>Recommendations</h2>
-{#each data.recommendations as recommendation, index (index)}
-	<p>{recommendation.original_title}</p>
-{/each}
+	<p class="info mb-9 text-center">{data.matches.length + data.recommendations.length} Resultate</p>
+
+	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
+		{#each data.matches as match, index (index)}
+			<MatchCard content={match} isMatch={true} />
+		{/each}
+
+		{#each data.recommendations as recommendation, index (index)}
+			<MatchCard content={recommendation} />
+		{/each}
+	</div>
+
+	<button class="link text-sm mt-8"
+	> show more </button>
+</section>

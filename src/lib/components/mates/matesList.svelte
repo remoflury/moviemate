@@ -15,13 +15,14 @@
 </script>
 
 {#if mates.length}
-	<article class="mb-6 inline-block">
+	<h1 class="">Mates</h1>
+	<article class="avatar-container overflow-x-scroll flex items-start gap-x-8">
 		{#each mates as mate, index (index)}
 			<form
 				action="/mate?/addnewmate"
 				method="POST"
 				use:enhance
-				class="max-w-[4rem]"
+				class="w-16"
 				transition:slide={{ duration: 250 }}
 			>
 				<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />
@@ -41,3 +42,12 @@
 		{/each}
 	</article>
 {/if}
+
+
+
+<style>
+	.avatar-container {
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+</style>

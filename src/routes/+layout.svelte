@@ -2,6 +2,11 @@
 	import '../css/main.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
+	import LogoHeader from '$lib/components/logoHeader.svelte';
+	import { afterNavigate } from '$app/navigation';
+
+	import { base } from '$app/paths';
 
 	export let data;
 
@@ -16,12 +21,22 @@
 
 		return () => data.subscription.unsubscribe();
 	});
+
+	$previousPath.path = base;
+
+	afterNavigate(({ from }) => {
+		$previousPath.path = from?.url.pathname || $previousPath.path;
+	});
 </script>
 
 <svelte:head>
 	<title>Movie Mate</title>
 </svelte:head>
 
-<main class="container">
+<main
+	class="relative min-h-screen overflow-hidden"
+	style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
+>
+	<LogoHeader />
 	<slot />
 </main>

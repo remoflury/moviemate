@@ -25,7 +25,7 @@
 		{#if showDeleteButton}
 			<button
 				aria-label="remove movie"
-				class="absolute bottom-0 right-0 border border-gray-dark rounded-max p-[6px] aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
+				class="absolute bottom-0 right-0 border border-gray-dark rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 				on:click|preventDefault={() => removeMovieFromWatchlist(content.id)}
 			>
 				<p class="text-gray-dark leading-none -translate-y-[1px]">-</p>

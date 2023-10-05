@@ -36,7 +36,6 @@
 		touchCurrentPosition.y = event.touches[0].clientY - event.target?.y;
 
 		const xDiff = touchCurrentPosition.x - touchStartPosition.x;
-		console.log(xDiff);
 
 		if (xDiff < 0) {
 			swipeDirection = 'left';
@@ -49,7 +48,6 @@
 		swipeDirection = '';
 		//@ts-ignore
 		const widthElem = event.target.offsetWidth;
-		console.log(Math.abs(touchCurrentPosition.x - touchStartPosition.x));
 
 		// check for threshold of swipe
 		if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) > widthElem / 3) {

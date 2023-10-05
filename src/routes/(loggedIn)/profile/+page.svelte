@@ -8,6 +8,7 @@
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
+	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
 	$showSettings = true;
 	$showGoBack = false;
@@ -45,7 +46,7 @@
 	};
 </script>
 
-<section class="container">
+<section class="container relative">
 	<div class="flex flex-col items-center px-28 pb-5">
 		<Avatar />
 		<p class="info mt-4">{$page.data.user.username}</p>
@@ -80,4 +81,5 @@
 			<p>To add movies to your watchlist, let's swipe some movies!</p>
 		{/if}
 	{/await}
+	<RemoveModal />
 </section>

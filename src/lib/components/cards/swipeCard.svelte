@@ -73,6 +73,10 @@
 	};
 	// on swipe right, add movie to watchlist
 	const swipeRight = async (movieId: number) => {
+		// dispatch event to parent component
+		dispatch('swipeRight', {
+			index
+		});
 		try {
 			const response = await fetch(`/api/swipe?direction=right&movieId=${movieId}`);
 			const data = await response.json();
@@ -80,25 +84,20 @@
 			console.error(error);
 		}
 		fadeOut = true;
-
-		// dispatch event to parent component
-		dispatch('swipeRight', {
-			index
-		});
 	};
 
 	// on swipe left, add movie to dismissed list
 	const swipeLeft = async (movieId: number) => {
+		// dispatch event to parent component
+		dispatch('swipeLeft', {
+			index
+		});
 		try {
 			const response = await fetch(`/api/swipe?direction=left&movieId=${movieId}`);
 			const data = await response.json();
 		} catch (error) {
 			console.error(error);
 		}
-		// dispatch event to parent component
-		dispatch('swipeLeft', {
-			index
-		});
 	};
 </script>
 
@@ -119,7 +118,7 @@
 			<LikeIcon />
 		</div>
 	{:else if swipeDirection == 'left'}
-		<div transition:fade={{ duration: 350 }} class="absolute left-6 top-4 w-12 aspect-square">
+		<div transition:fade={{ duration: 50 }} class="absolute right-6 top-4 w-12 aspect-square">
 			<DismissIcon />
 		</div>
 	{/if}

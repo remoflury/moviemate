@@ -28,9 +28,11 @@
 				isLoadMoreAvailable: boolean;
 				movies: TMDBMovieByIdrops[];
 			} = await response.json();
+			console.log(data);
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 			// spread existing movies and new movies into same movies array
 			movies = [...movies, ...data.movies];
+			console.log(movies);
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -46,15 +48,14 @@
 </script>
 
 <section class="container">
-
 	<div class="flex flex-col items-center px-28 pb-5">
 		<Avatar />
 		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
 	<div class="pb-10">
-	<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
-		<PrimaryButton text="Logout" />
-	</form>
+		<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
+			<PrimaryButton text="Logout" />
+		</form>
 	</div>
 
 	<h1>Watchlist</h1>
@@ -63,20 +64,18 @@
 			<LoadingSpinner />
 		</div>
 	{:then}
-		{#if movies?.length}
-			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
-				{#each movies as movie, index (index)}
-					<WatchlistCard content={movie} {index} />
-				{/each}
+		<div class="grid grid-cols-3 gap-x-6 gap-y-10">
+			{#each movies as movie, index (index)}
+				<WatchlistCard content={movie} {index} />
+			{/each}
+		</div>
+		{#if isLoadMoreAvailable && !loading}
+			<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
+		{/if}
+		{#if loading}
+			<div class="mt-4">
+				<LoadingSpinner />
 			</div>
-			{#if isLoadMoreAvailable && !loading}
-				<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
-			{/if}
-			{#if loading}
-				<div class="mt-4">
-					<LoadingSpinner />
-				</div>
-			{/if}
 		{/if}
 	{/await}
 </section>

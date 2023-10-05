@@ -28,11 +28,9 @@
 				isLoadMoreAvailable: boolean;
 				movies: TMDBMovieByIdrops[];
 			} = await response.json();
-			console.log(data);
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 			// spread existing movies and new movies into same movies array
 			movies = [...movies, ...data.movies];
-			console.log(movies);
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -64,18 +62,22 @@
 			<LoadingSpinner />
 		</div>
 	{:then}
-		<div class="grid grid-cols-3 gap-x-6 gap-y-10">
-			{#each movies as movie, index (index)}
-				<WatchlistCard content={movie} {index} />
-			{/each}
-		</div>
-		{#if isLoadMoreAvailable && !loading}
-			<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
-		{/if}
-		{#if loading}
-			<div class="mt-4">
-				<LoadingSpinner />
+		{#if movies?.length}
+			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
+				{#each movies as movie, index (index)}
+					<WatchlistCard content={movie} {index} />
+				{/each}
 			</div>
+			{#if isLoadMoreAvailable && !loading}
+				<button class="mt-8" on:click={loadMoreMovies}> Load more </button>
+			{/if}
+			{#if loading}
+				<div class="mt-4">
+					<LoadingSpinner />
+				</div>
+			{/if}
+		{:else}
+			<p>To add movies to your watchlist, let's swipe some movies!</p>
 		{/if}
 	{/await}
 </section>

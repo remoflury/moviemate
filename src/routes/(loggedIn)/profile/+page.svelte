@@ -51,11 +51,7 @@
 		<Avatar />
 		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
-	<div class="pb-10">
-		<form method="POST" action="/logout?/logout" use:enhance class="mt-8">
-			<PrimaryButton text="Logout" />
-		</form>
-	</div>
+
 
 	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}

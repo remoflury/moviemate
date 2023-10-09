@@ -35,6 +35,10 @@ export default {
 			},
 			aspectRatio: {
 				'3/4': '3/4'
+			},
+			boxShadow: {
+				'swipe-left': '0 0 20px 5px rgba(224,46,39, 0.3)',
+				'swipe-right': '0 0 20px 5px rgba(45,183,34, 0.3)'
 			}
 		}
 	},

@@ -13,6 +13,7 @@
 	$: ({ supabase, session } = data);
 
 	onMount(() => {
+		// check supabase state of auth
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -22,8 +23,8 @@
 		return () => data.subscription.unsubscribe();
 	});
 
+	// set previous path, for back navigation on some pages
 	$previousPath.path = base;
-
 	afterNavigate(({ from }) => {
 		$previousPath.path = from?.url.pathname || $previousPath.path;
 	});

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import LikeIcon from '../icons/likeIcon.svelte';
@@ -8,67 +7,56 @@
 
 	export let movie: TMDBMovieByRecommendationProps;
 	export let index: number;
-	let fadeOut = false;
-	let swipeDirection: 'left' | 'right' | '';
 
 	const dispatch = createEventDispatcher();
 
-	const touchStartPosition = {
-		x: 0,
-		y: 0
-	};
-	const touchCurrentPosition = {
-		x: 0,
-		y: 0
-	};
+	let startX: number | null = null;
+	let currentX: number | null = null;
+	let offsetX: number = 0;
+	let isDragging: boolean = false;
+	let cardElem: HTMLElement;
+	let fadeOut = false;
+	let swipeDirection: 'left' | 'right' | '';
 
-	const setStartPoints = (event: TouchEvent) => {
-		//@ts-ignore
-		touchStartPosition.x = event.touches[0].clientX - event.target?.x;
-		//@ts-ignore
-		touchStartPosition.y = event.touches[0].clientY - event.target?.y;
+	const handleTouchStart = (event: TouchEvent) => {
+		const evt = event.touches[0];
+		startX = evt.pageX;
+		isDragging = true;
 	};
 
-	const dragCard = (event: TouchEvent) => {
-		//@ts-ignore
-		touchCurrentPosition.x = event.touches[0].clientX - event.target?.x;
-		//@ts-ignore
-		touchCurrentPosition.y = event.touches[0].clientY - event.target?.y;
-
-		const xDiff = touchCurrentPosition.x - touchStartPosition.x;
-
-		if (xDiff < 0) {
-			swipeDirection = 'left';
-		} else {
-			swipeDirection = 'right';
-		}
+	const handleTouchMove = (event: TouchEvent) => {
+		if (!isDragging || startX === null) return;
+		const evt = 'touches' in event ? event.touches[0] : event;
+		currentX = evt.pageX;
+		offsetX = currentX - startX;
+		cardElem.style.transform = `translateX(${offsetX}px)`;
+		if (offsetX <= 0) swipeDirection = 'left';
+		if (offsetX > 0) swipeDirection = 'right';
 	};
 
-	const endTouch = async (event: TouchEvent) => {
+	const handleTouchEnd = async (event: TouchEvent) => {
+		if (!isDragging || startX === null || currentX === null) return;
+		isDragging = false;
 		swipeDirection = '';
-		//@ts-ignore
-		const widthElem = event.target.offsetWidth;
 
-		// check for threshold of swipe
-		if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) > widthElem / 3) {
-			resetPositions();
-			await swipeRight(movie.id);
-		} else if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) < widthElem / 3) {
-			resetPositions();
-			await swipeLeft(movie.id);
+		const threshold: number = cardElem.clientWidth / 4;
+
+		// if swipe exceeds a certain threshold, romove
+		if (Math.abs(currentX - startX) >= threshold) {
+			// if swipe is left
+			if (currentX - startX <= 0) {
+				cardElem.style.transform = `translateX(-150%)`;
+				await swipeLeft(movie.id);
+			} else {
+				// if swipe is right
+				cardElem.style.transform = `translateX(150%)`;
+				await swipeRight(movie.id);
+			}
 		} else {
-			resetPositions();
-			console.log('no swipe');
+			cardElem.style.transform = `translateX(0px)`;
 		}
 	};
 
-	//reset swiping positions
-	const resetPositions = () => {
-		touchStartPosition.x = 0;
-		touchStartPosition.y = 0;
-		touchCurrentPosition.x = 0;
-		touchCurrentPosition.y = 0;
-	};
 	// on swipe right, add movie to watchlist
 	const swipeRight = async (movieId: number) => {
 		// dispatch event to parent component
@@ -100,19 +88,23 @@
 </script>
 
 <article
-	class="rounded-3xl absolute transform inset-0 transition overflow-hidden"
-	class:fadeOut
-	style={` 
-  transform: 
-    translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
-    rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
-  })`}
-	on:touchstart={setStartPoints}
-	on:touchmove={dragCard}
-	on:touchend={endTouch}
+	class="rounded-3xl absolute transform inset-0 transition-shadow overflow-hidden {swipeDirection ==
+	'left'
+		? 'shadow-swipe-left'
+		: swipeDirection == 'right'
+		? 'shadow-swipe-right'
+		: ''}"
+	bind:this={cardElem}
+	on:touchstart={handleTouchStart}
+	on:touchmove={handleTouchMove}
+	on:touchend={handleTouchEnd}
 >
 	{#if swipeDirection == 'right'}
-		<div transition:fade={{ duration: 350 }} class="absolute left-6 top-4 w-12 aspect-square">
+		<div
+			in:fade={{ duration: 150 }}
+			out:fade={{ duration: 250 }}
+			class="absolute left-6 top-4 w-12 aspect-square"
+		>
 			<LikeIcon />
 		</div>
 	{:else if swipeDirection == 'left'}
@@ -128,9 +120,3 @@
 		/>
 	</figure>
 </article>
-
-<style lang="postcss">
-	.fadeOut {
-		@apply opacity-0;
-	}
-</style>

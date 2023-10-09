@@ -9,7 +9,7 @@
 	$showGoBack = true;
 </script>
 
-<section class="container relative">
+<section class="container relative text-center">
 	<h1>Settings</h1>
 	<div class="flex flex-col items-center px-28 pb-5">
 		<Avatar />
@@ -21,7 +21,7 @@
 		</form>
 	</div>
 
-	<div class="pb-10">
+	<article class="pb-10">
 		<h2>Credits</h2>
 		<p>
 			This product uses the <a
@@ -30,15 +30,23 @@
 				class="underline underline-offset-2">TMDb API</a
 			> but is not endorsed or certified by TMDb.
 		</p>
-	</div>
+		<a
+			class="max-w-[30%] block mt-4"
+			href="https://www.themoviedb.org/"
+			target="_blank"
+			aria-label="go to themoviedb.org"
+		>
+			<img src="/logo/tmdb-logo.svg" alt="Logo of the Movie Database" />
+		</a>
+	</article>
 
-	<div class="pb-10">
+	<article class="pb-10">
 		<h2>Privacy</h2>
 		<p>Text Text Text</p>
-	</div>
+	</article>
 
-	<div class="pb-10">
+	<article class="pb-10">
 		<h2>Legal Notice</h2>
 		<p>Text Text Text</p>
-	</div>
+	</article>
 </section>

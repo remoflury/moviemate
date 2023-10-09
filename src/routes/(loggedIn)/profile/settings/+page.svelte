@@ -23,15 +23,13 @@
 	</div>
 
 	<div class="pb-10">
-		<h2>Reference</h2>
-
+		<h2>Credits</h2>
 		<p>
-			We used <a
-				class="underline underline-offset-2"
+			This product uses the <a
 				href="https://developers.themoviedb.org/3"
-				target="blank"
-				>The Movie Database API
-			</a>
+				target="_blank"
+				class="underline underline-offset-2">TMDb API</a
+			> but is not endorsed or certified by TMDb.
 		</p>
 	</div>
 

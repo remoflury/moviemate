@@ -9,8 +9,8 @@
 	$showGoBack = true;
 </script>
 
-<section class="container relative text-center">
-	<h1>Settings</h1>
+<section class="container relative">
+	<h1 class="text-center">Settings</h1>
 	<div class="flex flex-col items-center px-28 pb-5">
 		<Avatar />
 		<p class="info mt-4">{$page.data.user.username}</p>

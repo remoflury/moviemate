@@ -79,7 +79,7 @@
 	<div class="relative aspect-3/4">
 		{#each movies as movie, index (index)}
 			{#if index === countIndex}
-				<div in:fade={{ duration: 350 }}>
+				<div class="w-full h-full" in:fade={{ duration: 350 }}>
 					<SwipeCard
 						{movie}
 						{index}

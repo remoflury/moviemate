@@ -19,8 +19,6 @@
 	let fadeOut = false;
 	let swipeDirection: 'left' | 'right' | '';
 
-	$: console.log(isFlipped);
-
 	const handleTouchStart = (event: TouchEvent) => {
 		if (isFlipped) return; // Disable swipe when flipped
 		const evt = event.touches[0];

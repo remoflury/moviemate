@@ -76,7 +76,7 @@
 
 <section class="container">
 	<h1 hidden>Swipe</h1>
-	<div class="relative aspect-3/4">
+	<div class="relative aspect-[9/16]">
 		{#each movies as movie, index (index)}
 			{#if index === countIndex}
 				<div class="w-full h-full" in:fade={{ duration: 350 }}>

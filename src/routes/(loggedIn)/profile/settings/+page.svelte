@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { showSettings, showGoBack } from '$lib/stores/menu';

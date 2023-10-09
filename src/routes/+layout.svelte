@@ -1,12 +1,12 @@
 <script lang="ts">
 	import '../css/main.css';
-	import { invalidate } from '$app/navigation';
+	import { base } from '$app/paths';
+	import { fade } from 'svelte/transition';
+	import { invalidate, afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
 	import LogoHeader from '$lib/components/logoHeader.svelte';
-	import { afterNavigate } from '$app/navigation';
-
-	import { base } from '$app/paths';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -33,10 +33,13 @@
 	<title>Movie Mate</title>
 </svelte:head>
 
-<main
-	class="relative min-h-screen overflow-hidden"
-	style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
->
-	<LogoHeader />
-	<slot />
-</main>
+{#key $page.url.pathname}
+	<main
+		in:fade={{ duration: 250 }}
+		class="relative min-h-screen overflow-hidden"
+		style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
+	>
+		<LogoHeader />
+		<slot />
+	</main>
+{/key}

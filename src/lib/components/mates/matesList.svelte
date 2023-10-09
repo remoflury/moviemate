@@ -16,7 +16,7 @@
 
 {#if mates.length}
 	<h1 class="">Mates</h1>
-	<article class="avatar-container overflow-x-scroll flex items-start gap-x-8">
+	<article class="whitespace-nowrap overflow-x-scroll flex items-start gap-x-8 pb-2">
 		{#each mates as mate, index (index)}
 			<form
 				action="/mate?/addnewmate"
@@ -43,11 +43,23 @@
 	</article>
 {/if}
 
+<style lang="postcss">
+	::-webkit-scrollbar {
+		@apply h-1;
+	}
 
+	/* Track */
+	::-webkit-scrollbar-track {
+		@apply bg-transparent;
+	}
 
-<style>
-	.avatar-container {
-		overflow-x: auto;
-		white-space: nowrap;
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		@apply bg-primary rounded-max;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-primary;
 	}
 </style>

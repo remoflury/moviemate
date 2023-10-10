@@ -47,8 +47,6 @@ export const GET: RequestHandler = async ({ locals, url}) => {
 
 		 if (error) throw new Error('Error fetching movies')
 
-		 console.log(data)
-
 	 } catch(error) {
 		console.error(error)
 		return new Response(JSON.stringify({ error}))

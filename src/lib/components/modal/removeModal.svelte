@@ -15,8 +15,6 @@
 			window.scrollTo(0, $removeMovie.pageYOffset);
 
 			$watchlist = $watchlist.filter((movie) => movie.id != $removeMovie.id);
-
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}

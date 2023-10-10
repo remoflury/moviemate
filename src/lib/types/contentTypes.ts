@@ -9,6 +9,7 @@ export type ExistingMateProps = {
 };
 
 export type TMDBMovieByIdrops = {
+	match?: boolean,
 	adult: boolean;
 	backdrop_path: string;
 	belongs_to_collection: {
@@ -56,6 +57,7 @@ export type TMDBMovieByIdrops = {
 };
 
 export type TMDBMovieByRecommendationProps = {
+	match?: boolean,
 	adult: boolean;
 	backdrop_path: string;
 	genre_ids: string[];

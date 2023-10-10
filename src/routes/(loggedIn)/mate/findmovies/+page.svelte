@@ -6,7 +6,18 @@
 	$showGoBack = true;
 	$showSettings = false;
 
+	let showMoreCount = 8;
+
 	$previousPath.params = $page.url.search;
+
+	const matches = data.matches.map((movie) => {
+		return { ...movie, match: true };
+	});
+	const recommendations = data.recommendations.map((movie) => {
+		return { ...movie, match: false };
+	});
+
+	const movies = [...matches, ...recommendations];
 </script>
 
 <section class="container">
@@ -15,15 +26,14 @@
 	<p class="info mb-9 text-center">{data.matches.length + data.recommendations.length} Resultate</p>
 
 	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
-		{#each data.matches as match, index (index)}
-			<MatchCard content={match} isMatch={true} />
-		{/each}
-
-		{#each data.recommendations as recommendation, index (index)}
-			<MatchCard content={recommendation} />
+		{#each movies.slice(0, showMoreCount) as movie, index (index)}
+			<MatchCard content={movie} isMatch={movie.match} />
 		{/each}
 	</div>
 
-	<button class="link text-sm mt-8"
-	> show more </button>
+	{#if showMoreCount <= movies.length}
+		<button class="link text-sm mt-8" on:click={() => (showMoreCount += 8)}> show more </button>
+	{:else}
+		<p class="text-sm mt-8 text-center">No more movies available.</p>
+	{/if}
 </section>

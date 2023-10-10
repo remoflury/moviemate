@@ -3,19 +3,26 @@
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import { watchlist as movies } from '$lib/utils/profile';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
+	onMount(() => {
+		// reset movies watchlist, for page reloads
+		$movies = [];
+	});
+
 	$showSettings = true;
 	$showGoBack = false;
 
 	let limit = 9;
 	let offset = 0;
-	let movies: TMDBMovieByIdrops[] = [];
+	// let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
 	let loading: boolean = false;
 
@@ -31,7 +38,7 @@
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 			// spread existing movies and new movies into same movies array
-			movies = [...movies, ...data.movies];
+			$movies = [...$movies, ...data.movies];
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -63,9 +70,9 @@
 			<LoadingSpinner />
 		</div>
 	{:then}
-		{#if movies?.length}
+		{#if $movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
-				{#each movies as movie, index (index)}
+				{#each $movies as movie, index (index)}
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>

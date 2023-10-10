@@ -3,6 +3,8 @@
 	import { fly } from 'svelte/transition';
 	import ModalButton from './modalButton.svelte';
 	import { PUBLIC_APP_URL } from '$env/static/public';
+	import { watchlist } from '$lib/utils/profile';
+	$: console.log($watchlist);
 
 	const confirm = async () => {
 		try {
@@ -12,6 +14,8 @@
 			const data = await response.json();
 			$removeMovie.showModal = false;
 			window.scrollTo(0, $removeMovie.pageYOffset);
+
+			$watchlist = $watchlist.filter((movie) => movie.id != $removeMovie.id);
 
 			console.log(data);
 		} catch (error) {

@@ -10,14 +10,7 @@
 
 	$previousPath.params = $page.url.search;
 
-	const matches = data.matches.map((movie) => {
-		return { ...movie, match: true };
-	});
-	const recommendations = data.recommendations.map((movie) => {
-		return { ...movie, match: false };
-	});
-
-	const movies = [...matches, ...recommendations];
+	const movies = [...data.matches, ...data.recommendations];
 </script>
 
 <section class="container">

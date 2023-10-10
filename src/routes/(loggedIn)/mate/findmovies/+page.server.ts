@@ -102,6 +102,15 @@ export const load: PageServerLoad = async ({ url, locals }) => {
 		}
 	}
 
+	// set match flag
+	matchedMovies = matchedMovies.map((movie) => {
+		return { ...movie, match: true };
+	});
+
+	// set recommendation flag
+	recommendedMovies = recommendedMovies.map((movie) => {
+		return { ...movie, match: false };
+	});
 	return {
 		matches: matchedMovies,
 		recommendations: recommendedMovies,

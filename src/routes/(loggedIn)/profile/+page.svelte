@@ -1,21 +1,21 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
 	import { PUBLIC_APP_URL } from '$env/static/public';
-	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
-	import PrimaryButton from '$lib/components/primaryButton.svelte';
+	import { watchlist as movies } from '$lib/utils/profile';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
+	import { onMount } from 'svelte';
 
 	$showSettings = true;
 	$showGoBack = false;
 
 	let limit = 9;
 	let offset = 0;
-	let movies: TMDBMovieByIdrops[] = [];
+	// let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
 	let loading: boolean = false;
 
@@ -31,7 +31,7 @@
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 			// spread existing movies and new movies into same movies array
-			movies = [...movies, ...data.movies];
+			$movies = [...$movies, ...data.movies];
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -44,6 +44,11 @@
 		await fetchWatchlist();
 		loading = false;
 	};
+
+	onMount(() => {
+		// reset store on new page load
+		$movies = [];
+	});
 </script>
 
 <section class="container relative">
@@ -52,16 +57,15 @@
 		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
 
-
 	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}
 		<div class="mt-4">
 			<LoadingSpinner />
 		</div>
 	{:then}
-		{#if movies?.length}
+		{#if $movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
-				{#each movies as movie, index (index)}
+				{#each $movies as movie, index (index)}
 					<WatchlistCard content={movie} {index} />
 				{/each}
 			</div>
@@ -69,7 +73,7 @@
 				<button class="link text-sm mt-8" on:click={loadMoreMovies}> Load more </button>
 			{/if}
 			{#if loading}
-				<div class="mt-4">
+				<div class="mt-8">
 					<LoadingSpinner />
 				</div>
 			{/if}

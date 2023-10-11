@@ -26,7 +26,7 @@
 			<p class="info whitespace-nowrap">{voteRounded} / 10</p>
 		</div>
 		<p class="info mb-6">{releaseYear}</p>
-		<p class="text-black">{movie.overview}</p>
+		<p class="text-black line-clamp-[9]">{movie.overview}</p>
 	</article>
 </div>
 

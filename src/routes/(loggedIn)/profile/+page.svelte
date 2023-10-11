@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
+	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { page } from '$app/stores';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
@@ -32,6 +32,7 @@
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 			// spread existing movies and new movies into same movies array
 			$movies = [...$movies, ...data.movies];
+			$movies = [...removeDuplicates($movies)];
 			return movies;
 		} catch (error) {
 			console.error(error);
@@ -43,6 +44,21 @@
 		offset += 9;
 		await fetchWatchlist();
 		loading = false;
+	};
+
+	// if movies are removed from watchlist, there is a chance, that some movies will appear as duplicates
+	// remove duplicates
+	const removeDuplicates = <T extends TMDBMovieByIdrops | TMDBMovieByRecommendationProps>(
+		array: T[]
+	): T[] => {
+		return array.reduce((acc: T[], current: T) => {
+			const x = acc.find((item) => item.id === current.id);
+			if (!x) {
+				return acc.concat([current]);
+			} else {
+				return acc;
+			}
+		}, []);
 	};
 
 	onMount(() => {

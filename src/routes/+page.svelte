@@ -9,9 +9,9 @@
 	$: if (data.session) goto('/swipe');
 </script>
 
-<section class="flex items-center">
-	<div class="flex-1 justify-center items-center">
-		<svg class="max-h-20" id="Layer_1" viewBox="0 0 701.13 273.31"
+<!-- Wie kann ich den oberen Logo Balken ignorieren? -->
+<section class="flex flex-row h-screen w-screen justify-center items-center absolute">
+		<svg class="basis-1/4 max-h-20" id="Layer_1" viewBox="0 0 701.13 273.31"
 			><defs
 				><style>
 					.cls-1 {
@@ -80,11 +80,10 @@
 				d="m678.64,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
 			/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg
 		>
-	</div>
-	<div class="pl-20 flex-1">
-		<h1>Hi Mate!</h1>
-		<p>Please open this page on a mobile device and download it.</p>
-		<p>You can download the app in the following stores.</p>
+	<div class="pl-20 basis-3/4">
+		<h1 class="text-5xl">Hi Mate!</h1>
+		<p class="text-2xl py-8">Please open this page on a mobile device and download it.</p>
+		<p class="text-2xl py-8">You can download the app in the following stores.</p>
 
 		<div class="mt-4 flex gap-x-4">
 			<a class="underline" href="/login">Login</a>
@@ -92,3 +91,20 @@
 		</div>
 	</div>
 </section>
+
+
+<!-- Wie füge ich schon wieder die richtige Farbe zu? -->
+
+<footer class="fixed inset-x-0 bottom-5 text-white py-4"> 
+    <div class="container mx-auto justify-between items-center"> 
+        <div class="absolute left-10">
+           <p>© MovieMate 2023</p>
+        </div>
+        <div class="absolute right-10">
+            <a href="/privacy" class="text-white hover:text-gray-300">Privacy</a>
+            <span>|</span>
+            <a href="/legal-notice" class="text-white hover:text-gray-300">Legal Notice</a>
+        </div>
+    </div>
+</footer>
+

@@ -1,4 +1,15 @@
 <script lang="ts">
+
+	import { onMount } from 'svelte';
+
+	let isMobile = true;
+
+	onMount(() => {
+		const mq = window.matchMedia('(max-width: 768px)');
+		isMobile = mq.matches;
+		mq.addListener(e => isMobile = e.matches);
+	});
+
 	import { goto } from '$app/navigation';
 	import { showSettings } from '$lib/stores/menu';
 	$showSettings = false;
@@ -10,6 +21,10 @@
 </script>
 
 <!-- Wie kann ich den oberen Logo Balken ignorieren? -->
+{#if isMobile}
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, rerum.</p>
+
+{:else}
 <section class="flex flex-row h-screen w-screen justify-center items-center absolute">
 		<svg class="basis-1/4 max-h-20" id="Layer_1" viewBox="0 0 701.13 273.31"
 			><defs
@@ -101,10 +116,10 @@
            <p>© MovieMate 2023</p>
         </div>
         <div class="absolute right-10">
-            <a href="/privacy" class="text-white hover:text-gray-300">Privacy</a>
-            <span>|</span>
-            <a href="/legal-notice" class="text-white hover:text-gray-300">Legal Notice</a>
+            <a href="/legal" class="text-white hover:text-gray-300">Privacy | Legal Notice</a>
         </div>
     </div>
 </footer>
+{/if}
+
 

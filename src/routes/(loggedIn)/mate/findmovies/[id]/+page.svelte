@@ -25,8 +25,9 @@
 				allow="accelerometer; gyroscope;"
 			/>
 		{:else}
-			<figure>
+			<figure class="aspect-video overflow-hidden w-full">
 				<img
+					class="object-center object-cover w-full h-full"
 					src="https://image.tmdb.org/t/p/w300/{movie.backdrop_path}"
 					alt="movie poster of {movie.title}"
 				/>

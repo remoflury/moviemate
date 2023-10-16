@@ -16,7 +16,6 @@
 
 	const voteRounded: number = parseFloat(movie.vote_average.toFixed(2));
 	const releaseYear: string = movie.release_date.split('-')[0];
-	let movieDetails: BackCard;
 	$: if (isFlipped) {
 		console.log(isFlipped);
 	}
@@ -36,7 +35,9 @@
 >
 	{#if isFlipped}
 		{#await getMovieDetails(movie.id)}
-			<LoadingSpinner />
+			<div class="py-4">
+				<LoadingSpinner />
+			</div>
 		{:then movieDetails}
 			{#if movieDetails.videoDetails.results.length}
 				<iframe
@@ -51,7 +52,8 @@
 				<figure class="aspect-video overflow-hidden">
 					<img
 						class="object-cover object-center w-full h-full"
-						src="https://image.tmdb.org/t/p/w300/{movieDetails.movieDetails.backdrop_path}"
+						src="https://image.tmdb.org/t/p/w300/{movieDetails.movieDetails.backdrop_path ||
+							movieDetails.movieDetails.poster_path}"
 						alt="movie poster of {movieDetails.movieDetails.title}"
 					/>
 				</figure>

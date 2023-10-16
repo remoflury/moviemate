@@ -5,7 +5,7 @@
 	let isMobile = true;
 
 	onMount(() => {
-		const mq = window.matchMedia('(max-width: 768px)');
+		const mq = window.matchMedia('(max-width: 490px)');
 		isMobile = mq.matches;
 		mq.addListener(e => isMobile = e.matches);
 	});
@@ -26,8 +26,24 @@
 </header>
 
 
+<section class="flex flex-col justify-center items-center">
+	<h1 class="pt-10">Hi Mate!</h1>
+	<p class="text-2xl mx-10 text-center">MovieMate is a web app that lets you create your own watchlist, discover new films and team up with friends to find movies for your movie nights.</p>
+</section>
 
-<h1>Hi Mate!</h1>
+<footer class="fixed inset-x-0 bottom-5 text-white py-4"> 
+    <div class="container mx-auto justify-between items-center"> 
+        <div class="absolute left-5">
+           <p>© MovieMate 2023</p>
+        </div>
+        <div class="absolute right-5">
+			<a href="/privacy" class="text-white hover:text-gray-300">Privacy</a>
+			<span> | </span>
+            <a href="/legalNotice" class="text-white hover:text-gray-300">Legal Notice</a>
+        </div>
+    </div>
+</footer>
+
 
 
 {:else}
@@ -104,7 +120,7 @@
 	<div class="pl-20 basis-3/4">
 		<h1 class="text-5xl">Hi Mate!</h1>
 		<p class="text-2xl">MovieMate is a web app that lets you create your own watchlist, discover new films and team up with friends to find movies for your movie nights.</p>
-		<p class="text-2xl py-12">Please open this page on a mobile device and download it.</p>
+		<p class="text-2xl py-12">Please open this page on a <span class="text-primary"><b>mobile device</b></span> and download it.</p>
 
 
 		<div class="mt-4 flex gap-x-4">
@@ -114,8 +130,6 @@
 	</div>
 </section>
 
-
-<!-- Wie füge ich schon wieder die richtige Farbe zu? -->
 
 <footer class="fixed inset-x-0 bottom-5 text-white py-4"> 
     <div class="container mx-auto justify-between items-center"> 

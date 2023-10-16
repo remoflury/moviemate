@@ -76,16 +76,15 @@
 
 <section class="container">
 	<h1 hidden>Swipe</h1>
-	<div class="relative aspect-3/4">
+	<div class="relative aspect-[9/16]">
 		{#each movies as movie, index (index)}
 			{#if index === countIndex}
-				<div in:fade={{ duration: 350 }}>
+				<div class="w-full h-full" in:fade={{ duration: 350 }}>
 					<SwipeCard
 						{movie}
 						{index}
 						on:swipeRight={() => {
 							onSwipe();
-							console.log('riiiight ');
 							allMatchedMoviesOfSession.push(movie);
 						}}
 						on:swipeLeft={onSwipe}

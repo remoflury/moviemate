@@ -1,46 +1,38 @@
 {
-  "short_name": "Moviemate",
-  "name": "Moviemate",
+  "short_name": "moviemate",
+  "name": "moviemate",
   "start_url": "/",
-  "scope": "/",
-  "background_color": "#0C011A",
-  "display": "standalone",
-  "theme_color": "#2EC4B6",
- "prefer_related_applications": true,
   "icons": [
     {
-      "src": "./favicons/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "icons-pwa/Logo_64x64.png",
+      "type": "image/png",
+      "sizes": "64x64"
     },
     {
-      "src": "./favicons/android-chrome-384x384.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "icons-pwa/Logo_144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "icons-pwa/Logo_192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icons-pwa/Logo_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icons-pwa/Logo_512x512.png",
+      "type": "image/png",
+			"purpose": "maskable",
+      "sizes": "512x512"
     }
   ],
-  "shortcuts": [
-    {
-      "name": "my Watchlist",
-      "short_name": "watchlist",
-      "description": "view and manage your movie watchlist",
-      "url": "/watchlist?source=pwa",
-      "icons": [{ "src": "./favicons/android-chrome-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "login",
-      "short_name": "login",
-      "description": "login to moviemate",
-      "url": "/login?source=pwa",
-      "icons": [{ "src": "./favicons/android-chrome-192x192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "start a session",
-      "short_name": "session",
-      "description": "start a session with your mates",
-      "url": "/login?source=pwa",
-      "icons": [{ "src": "./favicons/android-chrome-192x192.png", "sizes": "192x192" }]
-    }
-  ],
-  "description": "Moviemate is your go-to platform to discover movies, create watchlists, and start sessions with friends to find matching movies to watch."
+  "background_color": "#0C011A",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#2EC4B6",
+  "description": "Moviemate is a progressive web app, which allows users to create a watchlist of movies and find suitable movies with mates."
 }

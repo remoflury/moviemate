@@ -4,7 +4,6 @@
 	import ModalButton from './modalButton.svelte';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { watchlist } from '$lib/utils/profile';
-	$: console.log($watchlist);
 
 	const confirm = async () => {
 		try {
@@ -16,8 +15,6 @@
 			window.scrollTo(0, $removeMovie.pageYOffset);
 
 			$watchlist = $watchlist.filter((movie) => movie.id != $removeMovie.id);
-
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}

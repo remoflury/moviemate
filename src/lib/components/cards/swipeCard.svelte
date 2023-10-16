@@ -1,74 +1,70 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
-	import LikeIcon from '../icons/likeIcon.svelte';
-	import { fade } from 'svelte/transition';
-	import DismissIcon from '../icons/dismissIcon.svelte';
+	import SwipeCardFront from './swipeCardFront.svelte';
+	import SwipeCardBack from './swipeCardBack.svelte';
 
 	export let movie: TMDBMovieByRecommendationProps;
 	export let index: number;
-	let fadeOut = false;
-	let swipeDirection: 'left' | 'right' | '';
 
 	const dispatch = createEventDispatcher();
 
-	const touchStartPosition = {
-		x: 0,
-		y: 0
-	};
-	const touchCurrentPosition = {
-		x: 0,
-		y: 0
-	};
+	let startX: number | null = null;
+	let currentX: number | null = null;
+	let offsetX: number = 0;
+	let isDragging: boolean = false;
+	let isFlipped: boolean = false;
+	let isTapped: boolean = false;
+	let cardElem: HTMLElement;
+	let fadeOut = false;
+	let swipeDirection: 'left' | 'right' | '';
 
-	const setStartPoints = (event: TouchEvent) => {
-		//@ts-ignore
-		touchStartPosition.x = event.touches[0].clientX - event.target?.x;
-		//@ts-ignore
-		touchStartPosition.y = event.touches[0].clientY - event.target?.y;
-	};
-
-	const dragCard = (event: TouchEvent) => {
-		//@ts-ignore
-		touchCurrentPosition.x = event.touches[0].clientX - event.target?.x;
-		//@ts-ignore
-		touchCurrentPosition.y = event.touches[0].clientY - event.target?.y;
-
-		const xDiff = touchCurrentPosition.x - touchStartPosition.x;
-
-		if (xDiff < 0) {
-			swipeDirection = 'left';
-		} else {
-			swipeDirection = 'right';
-		}
+	const handleTouchStart = (event: TouchEvent) => {
+		if (isFlipped) return; // Disable swipe when flipped
+		const evt = event.touches[0];
+		startX = evt.pageX;
+		isDragging = true;
+		isTapped = true;
 	};
 
-	const endTouch = async (event: TouchEvent) => {
+	const handleTouchMove = (event: TouchEvent) => {
+		if (isFlipped) return; // Disable swipe when flipped
+		if (!isDragging || startX === null) return;
+		const evt = 'touches' in event ? event.touches[0] : event;
+		currentX = evt.pageX;
+		offsetX = currentX - startX;
+		cardElem.style.transform = `translateX(${offsetX}px)`;
+		if (offsetX <= 0) swipeDirection = 'left';
+		if (offsetX > 0) swipeDirection = 'right';
+		isTapped = false;
+	};
+
+	const handleTouchEnd = async (event: TouchEvent) => {
+		if (isTapped) isFlipped = !isFlipped;
+		if (isFlipped) return; // Disable swipe when flipped
+
+		if (!isDragging || startX === null || currentX === null) return;
+		isDragging = false;
 		swipeDirection = '';
-		//@ts-ignore
-		const widthElem = event.target.offsetWidth;
 
-		// check for threshold of swipe
-		if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) > widthElem / 3) {
-			resetPositions();
-			await swipeRight(movie.id);
-		} else if (Math.abs(touchCurrentPosition.x - touchStartPosition.x) < widthElem / 3) {
-			resetPositions();
-			await swipeLeft(movie.id);
+		const threshold: number = cardElem.clientWidth / 4;
+
+		// if swipe exceeds a certain threshold, romove
+		if (Math.abs(currentX - startX) >= threshold) {
+			// if swipe is left
+			if (currentX - startX <= 0) {
+				cardElem.style.transform = `translateX(-150%)`;
+				await swipeLeft(movie.id);
+			} else {
+				// if swipe is right
+				cardElem.style.transform = `translateX(150%)`;
+				await swipeRight(movie.id);
+			}
 		} else {
-			resetPositions();
-			console.log('no swipe');
+			cardElem.style.transform = `translateX(0px)`;
 		}
 	};
 
-	//reset swiping positions
-	const resetPositions = () => {
-		touchStartPosition.x = 0;
-		touchStartPosition.y = 0;
-		touchCurrentPosition.x = 0;
-		touchCurrentPosition.y = 0;
-	};
 	// on swipe right, add movie to watchlist
 	const swipeRight = async (movieId: number) => {
 		// dispatch event to parent component
@@ -99,38 +95,37 @@
 	};
 </script>
 
-<article
-	class="rounded-3xl absolute transform inset-0 transition overflow-hidden"
-	class:fadeOut
-	style={` 
-  transform: 
-    translateX(${touchCurrentPosition.x - touchStartPosition.x}px) 
-    rotate(${(touchCurrentPosition.x - touchStartPosition.x) / 80}deg);
-  })`}
-	on:touchstart={setStartPoints}
-	on:touchmove={dragCard}
-	on:touchend={endTouch}
->
-	{#if swipeDirection == 'right'}
-		<div transition:fade={{ duration: 350 }} class="absolute left-6 top-4 w-12 aspect-square">
-			<LikeIcon />
-		</div>
-	{:else if swipeDirection == 'left'}
-		<div transition:fade={{ duration: 50 }} class="absolute right-6 top-4 w-12 aspect-square">
-			<DismissIcon />
-		</div>
-	{/if}
-	<figure class="w-full h-full">
-		<img
-			class="object-cover object-center w-full h-full"
-			src="https://image.tmdb.org/t/p/w300/{movie.poster_path}"
-			alt="movie poster of {movie.title}"
-		/>
-	</figure>
-</article>
+<div class="card-container h-full w-full">
+	<article
+		class="card rounded-3xl absolute transform inset-0 transition-shadow overflow-hidden {swipeDirection ==
+		'left'
+			? 'shadow-swipe-left'
+			: swipeDirection == 'right'
+			? 'shadow-swipe-right'
+			: ''}
+		{isFlipped ? 'flipped' : ''}"
+		bind:this={cardElem}
+		on:touchstart={handleTouchStart}
+		on:touchmove={handleTouchMove}
+		on:touchend={handleTouchEnd}
+	>
+		<SwipeCardFront {movie} {swipeDirection} {isFlipped} />
+		<SwipeCardBack {movie} {isFlipped} />
+	</article>
+</div>
 
-<style lang="postcss">
-	.fadeOut {
-		@apply opacity-0;
+<style>
+	.card-container {
+		perspective: 1000px;
+	}
+
+	.card {
+		transition: transform 0.5s;
+		transform-style: preserve-3d;
+		/* position: relative; */
+	}
+
+	.flipped {
+		transform: rotateY(180deg);
 	}
 </style>

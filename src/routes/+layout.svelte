@@ -5,7 +5,6 @@
 	import { invalidate, afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
-	import LogoHeader from '$lib/components/logoHeader.svelte';
 	import { page } from '$app/stores';
 
 	export let data;
@@ -40,7 +39,7 @@
 		class="relative min-h-screen overflow-hidden"
 		style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
 	>
-		<LogoHeader />
+
 		<slot />
 	</main>
 {/key}

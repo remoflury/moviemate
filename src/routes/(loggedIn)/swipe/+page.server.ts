@@ -50,9 +50,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw pageError(500, 'Error fetching movies.');
 	}
 
+	// console.log('watchlistMovieIds ', watchlistMovieIds)
+	// console.log('!watchlistMovieIds.length ', !watchlistMovieIds.length)
+
 	let movies: TMDBMovieByRecommendationProps[] = [];
 	// if user has no movie-ids in watchlist, fetch popular movies
-	if (!watchlistMovieIds.length) {
+	if (watchlistMovieIds.length === 0) {
 		try {
 			movies = await getPopularMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, 1);
 			// filter out movies, which are already in watchlist
@@ -64,10 +67,13 @@ export const load: PageServerLoad = async ({ locals }) => {
 			throw pageError(500, { message: 'Error loading popular movies.' });
 		}
 	}
+
+	// console.log(movies)
 	// if user has some movie-ids in watchlist, fetch recommendations based on random id of watchlist
 	else if (watchlistMovieIds.length) {
 		try {
 			while (movies.length === 0) {
+
 				const randomIndex = generateRandomIndex(watchlistMovieIds);
 				movies = await getMovieRecommendationsById(
 					watchlistMovieIds[randomIndex],
@@ -75,13 +81,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 					TMDB_AUTH_KEY,
 					1
 				);
-				// filter out movies, which are already in watchlist
-				movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id.toString()));
 
-				// filter out movies, which are in dismissed list
-				movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id.toString()));
+			
 			}
+			// filter out movies, which are already in watchlist
+			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id?.toString()));
+
+			// filter out movies, which are in dismissed list
+			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id?.toString()));
 		} catch (error) {
+			console.error(error)
 			throw pageError(500, { message: 'Error loading recommendations.' });
 		}
 	}

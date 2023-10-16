@@ -2,13 +2,20 @@
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
 	import { watchlist as movies } from '$lib/utils/profile';
+	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 	import { onMount } from 'svelte';
+
+	onMount(() => {
+		// reset movies watchlist, for page reloads
+		$movies = [];
+	});
 
 	$showSettings = true;
 	$showGoBack = false;

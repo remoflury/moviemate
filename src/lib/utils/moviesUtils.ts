@@ -101,13 +101,29 @@ export const getMovieRecommendationsById = async (
 	);
 
 	const data = await response.json();
-
 	// error handling
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
-	const results = filterMoviesWithEmptyPoster(data.results);
+
+	let results: TMDBMovieByRecommendationProps[] = []
+
+	// if api has no recommendations for this movie, get popular movies
+	if (!data.results.length) {
+		try {
+			results = await getPopularMovies(tmdbUrl, tmdbAuthKey, 1);
+			results = filterMoviesWithEmptyPoster(results as TMDBMovieByRecommendationProps[]);
+			// return results;
+		} catch (error) {
+			throw new Error('Error loading popular movies.' );
+		}
+	} 
+	// if api has recommendations,
+	if (data.results.length) {
+		results = filterMoviesWithEmptyPoster(data.results as TMDBMovieByRecommendationProps[]);
+	}
 	return results;
+
 };
 
 export const filterMoviesWithEmptyPoster = <

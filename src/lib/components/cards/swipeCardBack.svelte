@@ -43,7 +43,7 @@
 					class="w-full aspect-video"
 					src="https://www.youtube.com/embed/{movieDetails.videoDetails.results[0].key}"
 					frameborder="0"
-					title="video of {movie.title}"
+					title="video of {movieDetails.movieDetails.title}"
 					allowfullscreen
 					allow="accelerometer; gyroscope;"
 				/>
@@ -51,36 +51,21 @@
 				<figure class="aspect-video overflow-hidden">
 					<img
 						class="object-cover object-center w-full h-full"
-						src="https://image.tmdb.org/t/p/w300/{movie.backdrop_path}"
-						alt="movie poster of {movie.title}"
+						src="https://image.tmdb.org/t/p/w300/{movieDetails.movieDetails.backdrop_path}"
+						alt="movie poster of {movieDetails.movieDetails.title}"
 					/>
 				</figure>
 			{/if}
 			<article class="p-6">
 				<div class="flex justify-between mt-4">
-					<h2 class="mb-1">{movie.title}</h2>
+					<h2 class="mb-1">{movieDetails.movieDetails.title}</h2>
 					<p class="info whitespace-nowrap">{voteRounded} / 10</p>
 				</div>
-				<p class="info mb-6">{releaseYear}</p>
-				<p class="text-black line-clamp-[9]">{movie.overview}</p>
+				<p class="info mb-6">{releaseYear} / {movieDetails.movieDetails.genres[0].name}</p>
+				<p class="text-black line-clamp-[9]">{movieDetails.movieDetails.overview}</p>
 			</article>
 		{/await}
 	{/if}
-	<!-- <figure class="aspect-video">
-		<img
-			class="object-cover object-center w-full h-full"
-			src="https://image.tmdb.org/t/p/w300/{movie.backdrop_path}"
-			alt=""
-		/>
-	</figure>
-	<article class="p-6">
-		<div class="flex justify-between mt-4">
-			<h2 class="mb-1">{movie.title}</h2>
-			<p class="info whitespace-nowrap">{voteRounded} / 10</p>
-		</div>
-		<p class="info mb-6">{releaseYear}</p>
-		<p class="text-black line-clamp-[9]">{movie.overview}</p>
-	</article> -->
 </div>
 
 <style>

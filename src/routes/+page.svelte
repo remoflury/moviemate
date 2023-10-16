@@ -116,7 +116,9 @@
            <p>© MovieMate 2023</p>
         </div>
         <div class="absolute right-10">
-            <a href="/legal" class="text-white hover:text-gray-300">Privacy | Legal Notice</a>
+			<a href="/privacy" class="text-white hover:text-gray-300">Privacy</a>
+			<span> | </span>
+            <a href="/legalNotice" class="text-white hover:text-gray-300">Legal Notice</a>
         </div>
     </div>
 </footer>

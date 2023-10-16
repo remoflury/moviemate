@@ -6,7 +6,7 @@
 <section class="container grid place-items-center">
     <div class="text-center">
         <h1 class="mb-4">Privacy</h1>
-        <p class="text-justify mx-20"><br/>
+        <p class="text-justify"><br/>
         Fachhochschule Graubünden<br/>
         Pulvermühlestrasse 57<br/>
         7000 Chur<br/>

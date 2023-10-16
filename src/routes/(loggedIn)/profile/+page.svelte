@@ -5,12 +5,10 @@
 	import { onMount } from 'svelte';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
 	import { watchlist as movies } from '$lib/utils/profile';
-	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
-	import { onMount } from 'svelte';
 
 	onMount(() => {
 		// reset movies watchlist, for page reloads
@@ -89,7 +87,7 @@
 		{#if $movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
 				{#each $movies as movie, index (index)}
-					<WatchlistCard content={movie} {index} />
+					<WatchlistCard content={movie} />
 				{/each}
 			</div>
 			{#if isLoadMoreAvailable && !loading}

@@ -6,12 +6,16 @@
 	import { onMount } from 'svelte';
 	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
 	import { page } from '$app/stores';
+	import { dev } from '$app/environment';
 
 	export let data;
 
 	$: ({ supabase, session } = data);
 
 	onMount(() => {
+		navigator.serviceWorker.register('/service-worker.js', {
+			type: dev ? 'module' : 'classic'
+		});
 		// check supabase state of auth
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {

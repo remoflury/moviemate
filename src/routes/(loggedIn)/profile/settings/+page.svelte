@@ -22,6 +22,21 @@
 	</div>
 
 	<article class="pb-10">
+		<h2>Tutorial</h2>
+		<p>How to use the app. Click <a href="/profile/settings/how-to" target="_blank" class="underline underline-offset-2">here</a> for a tutorial.</p>
+	</article>
+
+	<article class="pb-10">
+		<h2>Privacy</h2>
+		<p>Text Text Text</p>
+	</article>
+
+	<article class="pb-10">
+		<h2>Legal Notice</h2>
+		<p>Text Text Tex</p>
+	</article>
+
+	<article class="pb-10">
 		<h2>Credits</h2>
 		<p>
 			This product uses the <a
@@ -38,15 +53,5 @@
 		>
 			<img src="/logo/tmdb-logo.svg" alt="Logo of the Movie Database" />
 		</a>
-	</article>
-
-	<article class="pb-10">
-		<h2>Privacy</h2>
-		<p>Text Text Text</p>
-	</article>
-
-	<article class="pb-10">
-		<h2>Legal Notice</h2>
-		<p>Text Text Text</p>
 	</article>
 </section>

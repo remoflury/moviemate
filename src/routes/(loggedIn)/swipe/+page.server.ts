@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { error as pageError } from '@sveltejs/kit';
+import { error as pageError, redirect } from '@sveltejs/kit';
 import {
 	generateRandomIndex,
 	getMovieRecommendationsById,
@@ -15,6 +15,24 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// if not authorized
 	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 	const userId = session.user.id;
+
+
+	// check if user is logged in for the first time
+	const { data, error } = await supabaseClient
+		.from('Users_details')
+		.select('users_first_login')
+		.eq('users_id', userId);
+
+	if (error) {
+		throw pageError(500, 'Error fetching user.');
+	}
+
+	const { users_first_login: firstLogin } = data[0];
+
+	// if the user is logged in for the first time, redirect to tutorial sit
+	if (firstLogin) {
+		throw redirect(302, '/profile/settings/how-to')
+	}
 
 	// get all movie ids (watchlist & dismissed) from user
 	let watchlistMovieIds: string[] = [];

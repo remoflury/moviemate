@@ -39,7 +39,6 @@
 		class="relative min-h-screen overflow-hidden"
 		style={`padding-bottom: ${$bottomNavigationHeight + 20}px`}
 	>
-
 		<slot />
 	</main>
 {/key}

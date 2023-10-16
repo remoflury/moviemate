@@ -5,7 +5,7 @@
 
 	export let showDeleteButton: boolean = true;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
-	export let index: number;
+	// export let index: number;
 
 	let y: number;
 

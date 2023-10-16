@@ -37,7 +37,7 @@ export const GET: RequestHandler = async ({ locals, url}) => {
 
 	// update db with new values
 	 try {
-		 const { data, error } = await supabaseClient
+		 const { error } = await supabaseClient
 		 .from('Users_movies')
 		 .update({
 			 movies_watchlist: watchlist,

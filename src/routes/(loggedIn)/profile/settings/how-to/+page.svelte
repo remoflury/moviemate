@@ -4,9 +4,7 @@
 	$previousPath.params = $page.url.search;
 	import { page } from '$app/stores';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
-	import { showGoBack } from '$lib/stores/menu';
 	import { enhance } from '$app/forms';
-	$showGoBack = true;
 </script>
 
 <section class="container text-center flex flex-col items-center">

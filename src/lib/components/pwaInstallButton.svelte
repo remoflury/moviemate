@@ -24,4 +24,4 @@
 	}}
 />
 
-<button class="btn" bind:this={btnElem}> Install App </button>
+<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>

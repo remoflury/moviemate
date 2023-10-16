@@ -9,16 +9,6 @@
     $showSettings = false;
     $showGoBack = false;
 
-    function toggleContent(event) {
-        const content = event.target.nextElementSibling;
-        content.classList.toggle('hidden');
-    }
-
-    function handleKeyPress(event) {
-        if (event.key === 'Enter') {
-            toggleContent(event);
-        }
-    }
 </script>
 
 <section class="container relative">
@@ -78,11 +68,32 @@
 </Accordion>
 
 <Accordion title="Privacy">
-	<p>Test</p>
+	<p><br/>
+        Fachhochschule Graubünden<br/>
+        Pulvermühlestrasse 57<br/>
+        7000 Chur<br/>
+        Switzerland<br/>
+        <strong>Email</strong>: christina.benz@stud.fhgr.ch<br/><br/>
+        <strong>Authorized Representatives</strong><br/>
+        Christina Benz, Remo Flury, and Tina Frauenknecht<br/><br/>
+        <strong>Company Name</strong>: Fachhochschule Graubünden<br/><br>
+        <strong>Data Protection Officer:</strong><br/>Christina Benz<br/>
+        078 900 86 66<br/>christina.benz@stud.fhgr.ch<br/><br/><strong>General / Introduction</strong><br/>Based on Article 13 of the Swiss Federal Constitution and the data protection provisions of the Federal Data Protection Act (DSG), every person is entitled to the protection of their privacy and protection against the misuse of their personal data. The operators of these pages take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the legal data protection regulations and this privacy policy.<br/><br/>In collaboration with our hosting providers, we strive to protect databases as best as possible from unauthorized access, loss, misuse, or alteration.<br/><br/>We would like to point out that data transmission over the Internet (e.g., when communicating via email) can have security vulnerabilities. Complete protection of data against access by third parties is not possible.<br/><br/>By using this website, you agree to the collection, processing, and use of data as described below. This website can generally be visited without registration. Data such as pages accessed or names of accessed files, date, and time are stored on the server for statistical purposes without this data being directly related to your person. If personal data (e.g., name, address, or email addresses) is collected on our pages, this is always done on a voluntary basis as far as possible. This data will not be disclosed to third parties without your express consent.<br/>
+        <br><strong>Scope and Purpose</strong><br>
+        MovieMate is a Progressive Web App (PWA) that allows users to create a watchlist of movies. This can be done in two ways: either by discovering new movies or by manually adding movies. However, the main purpose of the PWA is for users, along with their friends who also use MovieMate, to find movies that everyone will enjoy.<br>
+        <br/><strong>Processing of Personal Data</strong><br/>MovieMate is a platform that processes personal data as part of registration and use. Personal data includes all information that relates to an identified or identifiable person. The following explains how MovieMate processes personal data:<br/><br>
+        1.	Registration: To use MovieMate, users must register. During registration, personal data is collected, especially email addresses. The email address serves as an identifier and allows users to log into their account. <br><br>
+        2.	Legal Basis: MovieMate processes personal data in accordance with Swiss data protection law. If the EU General Data Protection Regulation (GDPR) applies, processing is based on the legal grounds specified in Art. 6 (1) of the GDPR. This includes, among other things, processing based on the consent of the data subject. <br><br>
+        3.	Purpose of Data Processing: The collected personal data, especially email addresses, are used for user identification and the provision of personalized services on MovieMate. This allows users to manage their watchlists and share movies with friends. <br><br>
+        4.	Duration of Data Processing: MovieMate stores personal data for the duration necessary for the respective purpose(s). If there are longer retention obligations due to legal requirements, the data will be restricted accordingly. <br><br>
+        MovieMate is committed to treating personal data confidentially and protecting it in accordance with applicable data protection regulations. The provision of email addresses during registration is solely for the purpose of enabling user identification and providing the platform's functions. Data will not be disclosed to third parties without the consent of users. <br>
+        <br/><br/><strong>Cookies</strong><br/>This website uses cookies. These are small text files that allow specific, user-related information to be stored on the user's device while the user is using the website. Cookies, in particular, enable us to determine the frequency of use and the number of users of the pages, analyze user behavior patterns, but also to make our offer more customer-friendly. Cookies are stored beyond the end of a browser session and can be retrieved when the user visits the site again. If you do not wish this to happen, you should set your Internet browser to refuse the acceptance of cookies.<br/><br/>A general objection to the use of cookies for online marketing purposes can be made for a variety of services, especially in the case of tracking, via the US site http://www.aboutads.info/choices/ or the EU site http://www.youronlinechoices.com/. In addition, the storage of cookies can be achieved by disabling them in the browser settings. Please note that in this case, not all functions of this online offer can be used.<br/><br/><strong>With SSL/TLS Encryption</strong><br/>This website uses SSL/TLS encryption for security reasons and to protect the transmission of confidential content, such as requests you send to us as the site operator. You can recognize an encrypted connection by the fact that the address line of the browser changes from "http://" to "https://" and by the lock symbol in your browser line.<br/><br/>When SSL or TLS encryption is activated, the data you transmit to us cannot be read by third parties.<br/><br/><strong>Server Log Files</strong><br/>The provider of this website automatically collects and stores information in so-called server log files that your browser automatically transmits to us. These are:<br/>Browser type and browser version<br/>Operating system used<br/>Referrer URL<br/>Host name of the accessing computer<br/>Time of the server request<br/><br/>These data cannot be assigned to specific persons. A merging of this data with other data sources is not carried out. We reserve the right to check this data subsequently if we become aware of specific indications of illegal use.<br/><br/><strong>Third-Party Services</strong><br/>This website may use Google Maps for embedding maps, Google Invisible reCAPTCHA for protection against bots and spam, and YouTube for embedding videos.<br/><br/>These services from the American Google LLC use cookies, among other things, which means that data is transferred to Google in the USA. We assume that, in this context, no personal tracking takes place solely through the use of our website. <br/><br/>Google has committed to ensuring adequate data protection in accordance with the US-European and US-Swiss Privacy Shield agreements.<br/><br/>Further information can be found in Google's privacy policy.<br/><br/><strong>Rights of the Data Subject</strong><br/>Right to Confirmation<br/>Every data subject has the right to request confirmation from the website operator as to whether personal data concerning them is being processed. If you wish to exercise this right to confirmation, you can contact the data protection officer at any time.</p>
+
 </Accordion>
 
 <Accordion title="Legal Notice">
-	<p>Test</p>
+	<p><b>Responsible Authority:</b><br/>Fachhochschule Graubünden<br/>Pulvermühlestrasse 57<br/>7000 Chur<br/>Switzerland<br/><strong>Email</strong>: christina.benz@stud.fhgr.ch<br/><br/><strong>Authorized Individuals</strong><br/>Christina Benz, Remo Flury, and Tina Frauenknecht<br/><br/><strong>Company Name</strong>: Fachhochschule Graubünden<br/><strong>Registration Number</strong>: CHE-113.457.088<br/><strong>VAT Identification Number</strong>: CHE-113.457.088 MWST<br/><br/><strong>Disclaimer</strong><br/>The author assumes no liability for the accuracy, precision, timeliness, reliability, or completeness of the information.<br/>Liability claims against the author for material or immaterial damage resulting from access or use or non-use of the published information, from misuse of the connection, or from technical faults are excluded.<br/><br/>All offers are non-binding. The author expressly reserves the right to change, supplement, delete parts of the pages, or the entire offer without separate notice or to cease publication temporarily or permanently.<br/><br/><strong>Disclaimer for Contents and Links</strong><br/>References and links to third-party websites lie outside our area of responsibility. Any responsibility for such websites is rejected. Access and use of such websites are at the user's own risk.<br/><br/><strong>Copyright Statement</strong><br/>The copyright and all other rights to content, images, photos, or other files on this website belong exclusively to Fachhochschule Graubünden or the specifically named copyright holders. The written consent of the copyright holder must be obtained in advance for the reproduction of any elements.<br/><br/><strong>Source</strong>: <a style='color:inherit;text-decoration:none;' rel='nofollow' href='https://brainbox.swiss/'>BrainBox Solutions</a></p>
+
 </Accordion>
 
 <Accordion title="Credits">
@@ -105,58 +116,4 @@
 
 
 
-    <!-- <article class="pb-10">
-        <div class="flex items-center cursor-pointer">
-            <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="8.576" height="15" viewBox="0 0 8.576 15"><path id="Icon_Pfeil_gerade" data-name="Icon Pfeil gerade" d="M13.836,13.692l5.676-5.671a1.072,1.072,0,0,0-1.518-1.514l-6.43,6.426a1.07,1.07,0,0,0-.031,1.478l6.457,6.47a1.072,1.072,0,0,0,1.518-1.514Z" transform="translate(19.826 21.194) rotate(180)" fill="#2ec4b6"/></svg>
-            </div>
-            <h2 tabindex="0" class="ml-3 cursor-pointer" on:click={toggleContent} on:keydown={handleKeyPress}>Tutorial</h2>
-        </div>
-        <p class="hidden">How to use the app. Click <a href="/profile/settings/how-to" class="underline underline-offset-2">here</a> for a tutorial.</p>
-    </article> -->
-
-    <!-- <article class="pb-10">
-        <div class="flex items-center cursor-pointer">
-            <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="8.576" height="15" viewBox="0 0 8.576 15"><path id="Icon_Pfeil_gerade" data-name="Icon Pfeil gerade" d="M13.836,13.692l5.676-5.671a1.072,1.072,0,0,0-1.518-1.514l-6.43,6.426a1.07,1.07,0,0,0-.031,1.478l6.457,6.47a1.072,1.072,0,0,0,1.518-1.514Z" transform="translate(19.826 21.194) rotate(180)" fill="#2ec4b6"/></svg>
-            </div>
-            <h2 tabindex="0" class="ml-3 cursor-pointer" on:click={toggleContent} on:keydown={handleKeyPress}>Privacy</h2>
-        </div>
-        <p class="hidden">Click <a href="/profile/settings/how-to" class="underline underline-offset-2">here</a> to see the Privacy</p>
-    </article> -->
-
-    <!-- <article class="pb-10">
-        <div class="flex items-center cursor-pointer">
-            <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="8.576" height="15" viewBox="0 0 8.576 15"><path id="Icon_Pfeil_gerade" data-name="Icon Pfeil gerade" d="M13.836,13.692l5.676-5.671a1.072,1.072,0,0,0-1.518-1.514l-6.43,6.426a1.07,1.07,0,0,0-.031,1.478l6.457,6.47a1.072,1.072,0,0,0,1.518-1.514Z" transform="translate(19.826 21.194) rotate(180)" fill="#2ec4b6"/></svg>
-            </div>
-            <h2 tabindex="0" class="ml-3 cursor-pointer" on:click={toggleContent} on:keydown={handleKeyPress}>Legal Notice</h2>
-        </div>
-        <p class="hidden">Click <a href="/profile/settings/how-to" class="underline underline-offset-2">here</a> to see the Legal Notice</p>
-    </article> -->
-
-    <!-- <article class="pb-10">
-        <div class="flex items-center cursor-pointer">
-            <div class="mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="8.576" height="15" viewBox="0 0 8.576 15"><path id="Icon_Pfeil_gerade" data-name="Icon Pfeil gerade" d="M13.836,13.692l5.676-5.671a1.072,1.072,0,0,0-1.518-1.514l-6.43,6.426a1.07,1.07,0,0,0-.031,1.478l6.457,6.47a1.072,1.072,0,0,0,1.518-1.514Z" transform="translate(19.826 21.194) rotate(180)" fill="#2ec4b6"/></svg>
-            </div>
-            <h2 tabindex="0" class="ml-3 cursor-pointer" on:click={toggleContent} on:keydown={handleKeyPress}>Credits</h2>
-        </div>
-        <p class="hidden">
-            This product uses the <a
-                href="https://developers.themoviedb.org/3"
-                target="_blank"
-                class="underline underline-offset-2">TMDb API</a
-            > but is not endorsed or certified by TMDb.
-        
-        <a
-            class="max-w-[30%] block mt-4"
-            href="https://www.themoviedb.org/"
-            target="_blank"
-            aria-label="go to themoviedb.org"
-        >
-            <img src="/logo/tmdb-logo.svg" alt="Logo of the Movie Database" />
-        </a>
-        </p>
-    </article> -->
 </section>

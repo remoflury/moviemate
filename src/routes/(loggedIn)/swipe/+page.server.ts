@@ -16,7 +16,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 	const userId = session.user.id;
 
-
 	// check if user is logged in for the first time
 	const { data, error } = await supabaseClient
 		.from('Users_details')
@@ -31,7 +30,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	// if the user is logged in for the first time, redirect to tutorial sit
 	if (firstLogin) {
-		throw redirect(302, '/profile/settings/how-to')
+		throw redirect(302, '/profile/settings/how-to');
 	}
 
 	// get all movie ids (watchlist & dismissed) from user
@@ -69,7 +68,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 	else if (watchlistMovieIds.length) {
 		try {
 			while (movies.length === 0) {
-
 				const randomIndex = generateRandomIndex(watchlistMovieIds);
 				movies = await getMovieRecommendationsById(
 					watchlistMovieIds[randomIndex],
@@ -77,8 +75,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 					TMDB_AUTH_KEY,
 					1
 				);
-
-			
 			}
 			// filter out movies, which are already in watchlist
 			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id?.toString()));
@@ -86,7 +82,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			// filter out movies, which are in dismissed list
 			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id?.toString()));
 		} catch (error) {
-			console.error(error)
+			console.error(error);
 			throw pageError(500, { message: 'Error loading recommendations.' });
 		}
 	}
@@ -97,4 +93,3 @@ export const load: PageServerLoad = async ({ locals }) => {
 		movies
 	};
 };
-

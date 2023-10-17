@@ -1,24 +1,24 @@
-import { fail, type Actions, redirect } from "@sveltejs/kit";
+import { fail, type Actions, redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
-  tutorialDone: async ({ locals }) => {
-    const supabaseClient = locals.supabase;
-    const session = await locals.getSession();
-    
-    if (!session) {
-      return fail(403, {error: 'User not authorized.'})
-    }
+	tutorialDone: async ({ locals }) => {
+		const supabaseClient = locals.supabase;
+		const session = await locals.getSession();
 
-    const userId = session.user.id
+		if (!session) {
+			return fail(403, { error: 'User not authorized.' });
+		}
 
-    // set first time login status on db to false
-    const { error } = await supabaseClient
-      .from('Users_details')
-      .update({ users_first_login: false })
-      .eq('users_id', userId)
+		const userId = session.user.id;
 
-    if (error) throw fail(500, {message: 'Error while setting users first login status.'})
+		// set first time login status on db to false
+		const { error } = await supabaseClient
+			.from('Users_details')
+			.update({ users_first_login: false })
+			.eq('users_id', userId);
 
-    throw redirect(303, '/swipe')
-  }
+		if (error) throw fail(500, { message: 'Error while setting users first login status.' });
+
+		throw redirect(303, '/swipe');
+	}
 };

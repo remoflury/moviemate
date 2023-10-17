@@ -6,6 +6,7 @@
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';
+	import { flip } from 'svelte/animate';
 
 	export let data;
 

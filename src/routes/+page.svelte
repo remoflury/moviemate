@@ -79,7 +79,8 @@
 		/><path class="cls-2" d="m633.93,119.41c-10.34-9.85-20.67-19.7-31.01-29.54" /><path
 			class="cls-2"
 			d="m678.64,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
-		/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg>
+		/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg
+	>
 </header>
 
 <section class="flex flex-col justify-center items-center xs:hidden">

@@ -2,20 +2,17 @@
 	import { showGoBack, previousPath, showSettings } from '$lib/stores/menu';
 	import { goto } from '$app/navigation';
 
-
 	const goBackTo = () => {
+		// if ($previousPath.path.includes('/mate/findmovies/'))
 		goto(`${$previousPath.path}${$previousPath.params}`);
 	};
 </script>
 
-
-
-
 <!-- GO BACK ICON -->
-		{#if $showGoBack == true}
-		<div class="max-w-[2rem] m-5 absolute">
+{#if $showGoBack == true}
+	<div class="max-w-[2rem] m-5 absolute">
+		<button on:click={goBackTo} aria-label="go back">
 			<svg
-				on:click={goBackTo}
 				class="max-w-full"
 				id="Layer_1"
 				style="enable-background:new 0 0 512 512;"
@@ -24,16 +21,20 @@
 				width="512px"
 				xml:space="preserve"
 				xmlns="http://www.w3.org/2000/svg"
-				xmlns:xlink="http://www.w3.org/1999/xlink">
-				<polygon class="fill-gray-dark" points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "/>
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+			>
+				<polygon
+					class="fill-gray-dark"
+					points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256 "
+				/>
 			</svg>
-		</div>
-		{/if}
-
+		</button>
+	</div>
+{/if}
 
 <!-- SETTINGS ICON -->
-	<div class="max-w-[2rem] m-5 absolute">
-		{#if $showSettings == true}
+<div class="max-w-[2rem] m-5 absolute">
+	{#if $showSettings == true}
 		<a href="/profile/settings">
 			<svg class="max-w-full fill-gray-dark" viewBox="0 0 50 50" width="512px">
 				<path
@@ -41,18 +42,14 @@
 				/></svg
 			>
 		</a>
-		{/if}
-	</div>
+	{/if}
+</div>
 
-
-<!-- LOGO ICON --> 
+<!-- LOGO ICON -->
 <div class="flex items-center justify-center h-[2rem] m-5">
-	<a href="/" >
+	<a href="/">
 		<img class="max-w-full" width="90px" src="/logo/Logo_Black.png" alt="Logo" />
 	</a>
 </div>
-
-
-
 
 <hr class="w-100 border-t border-gray-dark mt-2" />

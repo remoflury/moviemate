@@ -2,7 +2,7 @@
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
-	import { showGoBack } from '$lib/stores/menu';
+	import { previousPath, showGoBack } from '$lib/stores/menu';
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';

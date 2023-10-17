@@ -90,3 +90,11 @@ export type TMDBVideosByIdProps = {
 		id: string;
 	}[];
 };
+
+
+export type SearchResultProps = {
+	total_pages: number,
+	total_results: number,
+	page: 1,
+	results: TMDBMovieByRecommendationProps[]
+}

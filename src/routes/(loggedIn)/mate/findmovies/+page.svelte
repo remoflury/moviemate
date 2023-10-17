@@ -27,7 +27,7 @@
 	</div>
 
 	{#if showMoreCount <= movies.length}
-		<button class="link text-sm mt-8" on:click={() => (showMoreCount += 8)}> show more </button>
+		<button class="link text-sm mt-8" on:click={() => (showMoreCount += 8)}>show more</button>
 	{:else}
 		<p class="text-sm mt-8 text-center">No more movies available.</p>
 	{/if}

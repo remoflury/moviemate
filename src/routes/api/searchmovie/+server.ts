@@ -1,6 +1,7 @@
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { SearchResultProps } from '$lib/types/contentTypes';
+
 
 export const GET: RequestHandler = async ({ fetch, url }) => {
 	const searchQuery = url.searchParams.get('query');
@@ -22,7 +23,8 @@ export const GET: RequestHandler = async ({ fetch, url }) => {
 			}
 		);
 		const data = await response.json();
-		return new Response(JSON.stringify(data.results as TMDBMovieByRecommendationProps));
+	
+		return new Response(JSON.stringify(data as SearchResultProps));
 	} catch (err) {
 		console.error(err);
 		return new Response(JSON.stringify({ error: 'Error while fetching searched movies.' }), {

@@ -6,7 +6,7 @@
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';
-	import { flip } from 'svelte/animate';
+	import { page } from '$app/stores';
 
 	export let data;
 
@@ -23,6 +23,7 @@
 
 	// search movies on api
 	const searchMovie = async (query: string): Promise<TMDBMovieByRecommendationProps[]> => {
+		setSearchParams(query);
 		errorMsg = '';
 		const response = await fetch(
 			`${PUBLIC_APP_URL}/api/searchmovie?query=${query}&page=${loadMoreCount}`
@@ -33,6 +34,22 @@
 		return (searchResult = [
 			...data.filter((movie: TMDBMovieByRecommendationProps) => movie.poster_path)
 		]);
+	};
+
+	// set searchParams in URL
+	const setSearchParams = (query: string) => {
+		const url = new URL($page.url);
+		const searchParams = new URLSearchParams(url.search);
+
+		// Update or set the "search" search param
+		searchParams.set('search', query);
+
+		// Update the URL
+		url.search = searchParams.toString();
+
+		// Push the new URL to the browser history
+		history.pushState({}, '', url.toString());
+		$previousPath.params = `?search=${query}`;
 	};
 
 	// add Movie to Watchlist
@@ -70,6 +87,10 @@
 
 	onMount(() => {
 		searchInputElem.focus();
+
+		// if search value exists from search params, get search result
+		searchValue = $page.url.searchParams.get('search') || '';
+		if (searchValue) searchMovie(searchValue);
 	});
 </script>
 

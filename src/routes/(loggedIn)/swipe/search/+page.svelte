@@ -105,12 +105,15 @@
 		loading = false;
 	};
 
-	onMount(() => {
+	onMount(async () => {
 		searchInputElem.focus();
 
 		// if search value exists from search params, get search result
 		searchValue = $page.url.searchParams.get('search') || '';
-		if (searchValue) searchMovie(searchValue);
+		if (searchValue) {
+			searchResult = [...(await searchMovie(searchValue))];
+			filterSearchResults();
+		}
 	});
 </script>
 
@@ -123,8 +126,6 @@
 			filterSearchResults();
 		}}
 		on:submit|preventDefault={() => searchMovie(searchValue)}
-		use:enhance
-		method="POST"
 	>
 		<label for="search" hidden>Search Movie</label>
 		<input

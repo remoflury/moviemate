@@ -1,10 +1,14 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
-
+	import {createEventDispatcher} from "svelte";
 	export let isInWatchlist: boolean;
 	export let isInDismissedlist : boolean;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
+	const dispatch = createEventDispatcher();
 
+	const addMovieToWatchlist = ()=>{dispatch("addMovieToWatchlist")};
+	const addMovieToDismissedlist = ()=>{dispatch("addMovieToDismissedlist")};
+	const removeMovieFromLists = ()=>{dispatch("removeMovieFromLists")}
 </script>
 
 
@@ -22,7 +26,7 @@
 		
 
 <!-- Add Movie to Watchlist-->
-			<button
+			<button on:click|preventDefault={addMovieToWatchlist}
 				aria-label="add movie"
 				class="absolute bottom-0 right-0 border border-gray-dark rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 			>
@@ -33,7 +37,7 @@
 
 
 <!-- Movie in Watchlist -->
-			<button
+			<button on:click|preventDefault={addMovieToDismissedlist}
 				aria-label="movie is in watchlist"
 				class="absolute bottom-0 right-0 rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 			>
@@ -47,8 +51,9 @@
 			</button>
 
 			{:else if isInDismissedlist}
+
 <!-- Dismissed Movie -->
-			<button
+			<button on:click|preventDefault={removeMovieFromLists}
 				aria-label="movie is dismissed"
 				class="absolute bottom-0 right-0 rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 			>

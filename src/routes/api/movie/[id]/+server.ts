@@ -1,43 +1,44 @@
-import { TMDB_AUTH_KEY, TMDB_BASE_URL } from "$env/static/private";
-import type { TMDBMovieByIdrops } from "$lib/types/contentTypes";
-import type { RequestHandler } from "@sveltejs/kit";
+import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
+import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
+import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({params, fetch}) => {
-  const movieId = params.id
+export const GET: RequestHandler = async ({ params, fetch }) => {
+	const movieId = params.id;
 
-  // error handling
-  if (!movieId) return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
+	// error handling
+	if (!movieId)
+		return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
 
-  // get movieDetails
-  const getMovieDetails = async (id: string) => {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${id}`, {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${TMDB_AUTH_KEY}`
-      }
-    })
-    const data: TMDBMovieByIdrops = await response.json()
-    return data
-  }
-  
-  // get video details
-  const getVideoDetails = async (id: string) => {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${id}/videos`, {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${TMDB_AUTH_KEY}`
-      }
-    })
-    const data: TMDBMovieByIdrops = await response.json()
-    return data
-  }
+	// get movieDetails
+	const getMovieDetails = async (id: string) => {
+		const response = await fetch(`${TMDB_BASE_URL}/movie/${id}`, {
+			method: 'GET',
+			headers: {
+				accept: 'application/json',
+				Authorization: `Bearer ${TMDB_AUTH_KEY}`
+			}
+		});
+		const data: TMDBMovieByIdrops = await response.json();
+		return data;
+	};
 
-  const result = {
-    movieDetails: await getMovieDetails(movieId),
-    videoDetails: await getVideoDetails(movieId)
-  }
+	// get video details
+	const getVideoDetails = async (id: string) => {
+		const response = await fetch(`${TMDB_BASE_URL}/movie/${id}/videos`, {
+			method: 'GET',
+			headers: {
+				accept: 'application/json',
+				Authorization: `Bearer ${TMDB_AUTH_KEY}`
+			}
+		});
+		const data: TMDBMovieByIdrops = await response.json();
+		return data;
+	};
 
-  return new Response(JSON.stringify(result));
+	const result = {
+		movieDetails: await getMovieDetails(movieId),
+		videoDetails: await getVideoDetails(movieId)
+	};
+
+	return new Response(JSON.stringify(result));
 };

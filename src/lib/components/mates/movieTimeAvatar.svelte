@@ -31,7 +31,7 @@
 				<p class="text-gray-dark leading-none -translate-y-[1px]">-</p>
 			</button>
 		{/if}
-</div>
+	</div>
 	<p class="{inversed ? 'text-gray-dark' : 'text-black'} text-sm hyphens-auto">
 		{name.toLowerCase()}
 	</p>

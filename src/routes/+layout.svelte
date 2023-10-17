@@ -29,7 +29,12 @@
 	// set previous path, for back navigation on some pages
 	$previousPath.path = base;
 	afterNavigate(({ from }) => {
-		$previousPath.path = from?.url.pathname || $previousPath.path;
+		console.log(from?.url.pathname);
+		if (from?.url.pathname.includes('/mate/findmovies/')) {
+			$previousPath.path = '/mate';
+		} else {
+			$previousPath.path = from?.url.pathname || $previousPath.path;
+		}
 	});
 </script>
 

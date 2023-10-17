@@ -6,6 +6,8 @@
 	$showGoBack = true;
 	$showSettings = false;
 
+	console.log($previousPath.path);
+
 	let showMoreCount = 8;
 
 	$previousPath.params = $page.url.search;

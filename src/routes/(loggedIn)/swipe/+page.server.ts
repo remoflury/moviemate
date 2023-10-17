@@ -50,9 +50,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw pageError(500, 'Error fetching movies.');
 	}
 
-	// console.log('watchlistMovieIds ', watchlistMovieIds)
-	// console.log('!watchlistMovieIds.length ', !watchlistMovieIds.length)
-
 	let movies: TMDBMovieByRecommendationProps[] = [];
 	// if user has no movie-ids in watchlist, fetch popular movies
 	if (watchlistMovieIds.length === 0) {
@@ -68,7 +65,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 		}
 	}
 
-	// console.log(movies)
 	// if user has some movie-ids in watchlist, fetch recommendations based on random id of watchlist
 	else if (watchlistMovieIds.length) {
 		try {

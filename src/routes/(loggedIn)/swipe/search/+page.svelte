@@ -13,6 +13,7 @@
 	const { movies_dismissed: dismissedMovieIds } = data.dismissedMovies[0];
 	let searchResult: TMDBMovieByRecommendationProps[] = [];
 	let errorMsg = '';
+	let loadMoreCount: number = 1;
 
 	$showGoBack = true;
 	
@@ -25,7 +26,9 @@
 	// search movies on api
 	const searchMovie = async (query: string): Promise<TMDBMovieByRecommendationProps[]> => {
 		errorMsg = '';
-		const response = await fetch(`${PUBLIC_APP_URL}/api/searchmovie?query=${query}`);
+		const response = await fetch(
+			`${PUBLIC_APP_URL}/api/searchmovie?query=${query}&page=${loadMoreCount}`
+		);
 		const data = await response.json();
 
 		if (data?.error) errorMsg = data.error;

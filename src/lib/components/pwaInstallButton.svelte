@@ -1,6 +1,11 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+
 	let deferredPrompt: Event | null = null;
 	let btnElem: HTMLButtonElement;
+	let isPWAUsed: boolean = false;
+	let isChrome: boolean = false;
 
 	const installPWA = async () => {
 		const event = new Event('beforeinstallprompt');
@@ -14,6 +19,25 @@
 			}
 		}
 	};
+
+	const checkForChromeBrowser = (): boolean => {
+		// Detect Chrome
+		//@ts-ignore
+		return !!window.chrome;
+	};
+
+	const checkIfUserIsOnPWA = (): boolean => {
+		// check if pwa or web instance is used
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			return true;
+		}
+		return false;
+	};
+
+	onMount(() => {
+		isPWAUsed = checkIfUserIsOnPWA();
+		isChrome = checkForChromeBrowser();
+	});
 </script>
 
 <svelte:window
@@ -24,4 +48,17 @@
 	}}
 />
 
-<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>
+{#if isPWAUsed}
+	<div class="flex gap-x-8 flex-wrap items-center">
+		<a class="underline" href="/login">Login</a>
+		<a class="underline" href="/register">Register</a>
+	</div>
+{:else}
+	<div>
+		{#if isChrome}
+			<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>
+		{:else}
+			<p class="mt-4 text-sm">To install the app, please open in Chrome Browser.</p>
+		{/if}
+	</div>
+{/if}

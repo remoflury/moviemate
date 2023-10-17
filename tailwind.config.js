@@ -42,6 +42,9 @@ export default {
 			},
 			rotate: {
 				'y-180': 'rotateY(180deg)'
+			},
+			screens: {
+				'xs': '490px',
 			}
 		}
 	},

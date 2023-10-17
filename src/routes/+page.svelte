@@ -11,7 +11,7 @@
 </script>
 
 <!-- Mobile -->
-<header class="flex justify-center items-start mt-10 sm:hidden">
+<header class="flex justify-center items-start mt-10 xs:hidden">
 	<svg id="Layer_1" viewBox="0 0 701.13 273.31" width="200" height="80"
 		><defs
 			><style>
@@ -79,13 +79,12 @@
 		/><path class="cls-2" d="m633.93,119.41c-10.34-9.85-20.67-19.7-31.01-29.54" /><path
 			class="cls-2"
 			d="m678.64,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
-		/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg
-	>
+		/><path class="cls-2" d="m694.19,119.94c-107.08,0-214.16,0-321.23,0" /></svg>
 </header>
 
-<section class="flex flex-col justify-center items-center sm:hidden">
+<section class="flex flex-col justify-center items-center xs:hidden">
 	<h1 class="pt-10">Hi Mate!</h1>
-	<p class="text-2xl mx-10 text-center">
+	<p class="text-2xl mx-10 mb-14 text-center">
 		MovieMate is a web app that lets you create your own watchlist, discover new films and team up
 		with friends to find movies for your movie nights.
 	</p>
@@ -94,7 +93,7 @@
 </section>
 
 <!-- Desktop -->
-<section class="hidden sm:flex flex-row h-screen w-screen justify-center items-center absolute">
+<section class="hidden xs:flex flex-row h-screen w-screen justify-center items-center absolute">
 	<svg class="basis-1/4 max-h-20" id="Layer_1" viewBox="0 0 701.13 273.31"
 		><defs
 			><style>

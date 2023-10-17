@@ -106,7 +106,7 @@ export const getMovieRecommendationsById = async (
 		throw new Error('Error loading movies.');
 	}
 
-	let results: TMDBMovieByRecommendationProps[] = []
+	let results: TMDBMovieByRecommendationProps[] = [];
 
 	// if api has no recommendations for this movie, get popular movies
 	if (!data.results.length) {
@@ -115,15 +115,14 @@ export const getMovieRecommendationsById = async (
 			results = filterMoviesWithEmptyPoster(results as TMDBMovieByRecommendationProps[]);
 			// return results;
 		} catch (error) {
-			throw new Error('Error loading popular movies.' );
+			throw new Error('Error loading popular movies.');
 		}
-	} 
+	}
 	// if api has recommendations,
 	if (data.results.length) {
 		results = filterMoviesWithEmptyPoster(data.results as TMDBMovieByRecommendationProps[]);
 	}
 	return results;
-
 };
 
 export const filterMoviesWithEmptyPoster = <

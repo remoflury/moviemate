@@ -15,8 +15,6 @@
 	let movies: TMDBMovieByRecommendationProps[] = data.movies;
 	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 
-	// console.log(movies);
-
 	let loading: boolean = false;
 
 	let countIndex = 0;

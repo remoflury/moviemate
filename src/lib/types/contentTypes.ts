@@ -9,7 +9,7 @@ export type ExistingMateProps = {
 };
 
 export type TMDBMovieByIdrops = {
-	match?: boolean,
+	match?: boolean;
 	adult: boolean;
 	backdrop_path: string;
 	belongs_to_collection: {
@@ -57,7 +57,7 @@ export type TMDBMovieByIdrops = {
 };
 
 export type TMDBMovieByRecommendationProps = {
-	match?: boolean,
+	match?: boolean;
 	adult: boolean;
 	backdrop_path: string;
 	genre_ids: string[];
@@ -90,3 +90,11 @@ export type TMDBVideosByIdProps = {
 		id: string;
 	}[];
 };
+
+
+export type SearchResultProps = {
+	total_pages: number,
+	total_results: number,
+	page: 1,
+	results: TMDBMovieByRecommendationProps[]
+}

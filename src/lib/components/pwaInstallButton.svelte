@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 
 	let deferredPrompt: Event | null = null;
 	let btnElem: HTMLButtonElement;
 	let isPWAUsed: boolean = false;
+	let isChrome: boolean = false;
 
 	const installPWA = async () => {
 		const event = new Event('beforeinstallprompt');
@@ -18,19 +20,23 @@
 		}
 	};
 
+	const checkForChromeBrowser = (): boolean => {
+		// Detect Chrome
+		//@ts-ignore
+		return !!window.chrome;
+	};
+
 	const checkIfUserIsOnPWA = (): boolean => {
-		// let displayMode = 'browser tab';
+		// check if pwa or web instance is used
 		if (window.matchMedia('(display-mode: standalone)').matches) {
-			// displayMode = 'standalone';
 			return true;
 		}
 		return false;
-		// Log launch display mode to analytics
-		// console.log('DISPLAY_MODE_LAUNCH:', displayMode);
 	};
 
 	onMount(() => {
 		isPWAUsed = checkIfUserIsOnPWA();
+		isChrome = checkForChromeBrowser();
 	});
 </script>
 
@@ -48,5 +54,11 @@
 		<a class="underline" href="/register">Register</a>
 	</div>
 {:else}
-	<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>
+	<div>
+		{#if isChrome}
+			<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>
+		{:else}
+			<p class="mt-4 text-sm">To install the app, please open in Chrome Browser.</p>
+		{/if}
+	</div>
 {/if}

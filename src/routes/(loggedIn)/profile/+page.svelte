@@ -10,10 +10,10 @@
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
-	onMount(() => {
-		// reset movies watchlist, for page reloads
-		$movies = [];
-	});
+	// onMount(() => {
+	// 	// reset movies watchlist, for page reloads
+	// 	$movies = [];
+	// });
 
 	$showSettings = true;
 	$showGoBack = false;
@@ -23,6 +23,9 @@
 	// let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
 	let loading: boolean = false;
+
+	let watchlistCount = 0;
+
 
 	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
@@ -35,6 +38,10 @@
 				movies: TMDBMovieByIdrops[];
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
+
+			// Die Anzahl der Filme in der Watchlist aktualisieren
+			watchlistCount = $movies.length + data.movies.length;
+
 			// spread existing movies and new movies into same movies array
 			$movies = [...$movies, ...data.movies];
 			$movies = [...removeDuplicates($movies)];
@@ -43,6 +50,7 @@
 			console.error(error);
 		}
 	};
+
 
 	const loadMoreMovies = async () => {
 		loading = true;
@@ -75,10 +83,15 @@
 <section class="container relative">
 	<div class="flex flex-col items-center px-28 pb-5">
 		<Avatar />
-		<p class="info mt-4">{$page.data.user.username}</p>
+		<p class="info mt-2">{$page.data.user.username}</p>
 	</div>
+<section>
+	<div class="grid gap-4 grid-cols-2">
+		<h1>Watchlist</h1>
+		<p> {watchlistCount} Filme</p>
+	</div>
+</section>
 
-	<h1>Watchlist</h1>
 	{#await fetchWatchlist()}
 		<div class="mt-4">
 			<LoadingSpinner />

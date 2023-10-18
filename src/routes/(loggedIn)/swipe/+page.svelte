@@ -76,7 +76,7 @@
 </script>
 
 <div class="container flex justify-end mt-4 -mb-6">
-	<button class="mr-4" on:click={() => goto('/swipe/search')}>
+	<button aria-label="search for movie" class="mr-4" on:click={() => goto('/swipe/search')}>
 		<SearchIcon />
 	</button>
 </div>

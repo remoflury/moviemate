@@ -4,8 +4,9 @@
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import Link from '$lib/components/link.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import { showSettings } from '$lib/stores/menu';
+	import { showGoBack, showSettings } from '$lib/stores/menu';
 	$showSettings = false;
+	$showGoBack = false;
 
 	export let form;
 
@@ -46,12 +47,8 @@
 			<InputMessage message={form?.error} />
 		{/if}
 
-		<!-- {#if form?.success}
-      <InputMessage message="To login, check your emails." success={true}/>
-    {/if} -->
-
 		{#if !loading && !form?.success}
-			<div class="fixed bottom-12 left-0 w-full t-8">
+			<div class="w-full mt-8">
 				<PrimaryButton text="Login" />
 				<Link message="Don't have an account? Sign up here." link="/register" />
 			</div>

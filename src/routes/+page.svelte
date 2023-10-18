@@ -83,7 +83,7 @@
 	>
 </header>
 
-<section class="flex flex-col justify-center items-center xs:hidden">
+<section class="flex flex-col justify-center items-center xs:hidden container">
 	<h1 class="pt-10">Hi Mate!</h1>
 	<p class="text-2xl mx-10 mb-14 text-center">
 		MovieMate is a web app that lets you create your own watchlist, discover new films and team up
@@ -94,7 +94,9 @@
 </section>
 
 <!-- Desktop -->
-<section class="hidden xs:flex flex-row h-screen w-screen justify-center items-center absolute">
+<section
+	class="hidden xs:flex flex-row h-screen w-screen justify-center items-center absolute container"
+>
 	<svg class="basis-1/4 max-h-20" id="Layer_1" viewBox="0 0 701.13 273.31"
 		><defs
 			><style>
@@ -172,7 +174,7 @@
 	</div>
 </section>
 
-<footer class="fixed inset-x-0 bottom-5 text-white py-4">
+<footer class="fixed inset-x-0 bottom-5 text-white py-4 container">
 	<div class="container mx-auto justify-between items-center">
 		<div class="absolute left-5">
 			<p>© MovieMate 2023</p>

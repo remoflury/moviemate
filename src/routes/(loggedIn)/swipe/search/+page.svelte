@@ -69,6 +69,14 @@
 	const addMovieToWatchlist = async (movieId: string) => {
 		if (!watchlistMovieIds.includes(movieId)) watchlistMovieIds.push(movieId);
 		watchlistMovieIds = [...watchlistMovieIds];
+
+		// write the change to the db
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/add?movieid=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	// remove Movie from Watchlist & add Movie to Dismissedlist
@@ -92,7 +100,7 @@
 	};
 
 	// remove Movie from Watchlist and Dismissedlist
-	const removeMovieFromLists = (movieId: string) => {
+	const removeMovieFromLists = async (movieId: string) => {
 		if (watchlistMovieIds.includes(movieId)) {
 			const index = watchlistMovieIds.indexOf(movieId);
 			if (index >= 0) watchlistMovieIds.splice(index, 1);
@@ -104,6 +112,15 @@
 			if (index >= 0) dismissedMovieIds.splice(index, 1);
 		}
 		dismissedMovieIds = [...dismissedMovieIds];
+
+		// write the change to the db
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/clear?movieid=${movieId}`);
+			const data = await response.json();
+			console.log(data);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleShowMore = async () => {

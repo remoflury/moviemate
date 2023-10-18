@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import { watchlistCount } from '$lib/stores/watchlist.js';
 	import { watchlist as movies } from '$lib/utils/profile';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
@@ -17,11 +18,10 @@
 
 	let limit = 9;
 	let offset = 0;
-	// let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
 	let loading: boolean = false;
 
-	let watchlistCount = 0;
+	$watchlistCount = data.watchlistIds.length;
 
 	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
@@ -80,7 +80,7 @@
 	<section>
 		<div class="flex gap-x-4 items-end">
 			<h1 class="mb-0">Watchlist</h1>
-			<p class="info">{data.watchlistIds.length} Filme</p>
+			<p class="info">{$watchlistCount} Filme</p>
 		</div>
 	</section>
 

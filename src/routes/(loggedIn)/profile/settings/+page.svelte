@@ -67,7 +67,6 @@
 
 	<Accordion title="Privacy">
 		<p>
-			<br />
 			Fachhochschule Graubünden<br />
 			Pulvermühlestrasse 57<br />
 			7000 Chur<br />

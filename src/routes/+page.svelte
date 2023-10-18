@@ -166,13 +166,9 @@
 	>
 	<div class="pl-20 basis-3/4">
 		<h1 class="text-5xl">Hi Mate!</h1>
-		<p class="text-2xl py-8">Please open this page on a mobile device and download it.</p>
-		<p class="text-2xl py-8">You can download the app in the following stores.</p>
-
-		<div class="mt-4 flex gap-x-4">
-			<a class="underline" href="/login">Login</a>
-			<a class="underline" href="/register">Register</a>
-		</div>
+		<p class="text-2xl py-8">
+			Please open this page on a mobile device in chrome browser and install the app.
+		</p>
 	</div>
 </section>
 

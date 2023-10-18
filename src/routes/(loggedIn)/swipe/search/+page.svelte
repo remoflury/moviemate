@@ -8,6 +8,8 @@
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
+	import Error from '../../../+error.svelte';
+	import { error } from '@sveltejs/kit';
 
 	export let data;
 
@@ -64,13 +66,13 @@
 	};
 
 	// add Movie to Watchlist
-	const addMovieToWatchlist = (movieId: string) => {
+	const addMovieToWatchlist = async (movieId: string) => {
 		if (!watchlistMovieIds.includes(movieId)) watchlistMovieIds.push(movieId);
 		watchlistMovieIds = [...watchlistMovieIds];
 	};
 
 	// remove Movie from Watchlist & add Movie to Dismissedlist
-	const addMovieToDismissedlist = (movieId: string) => {
+	const addMovieToDismissedlist = async (movieId: string) => {
 		if (!dismissedMovieIds.includes(movieId)) dismissedMovieIds.push(movieId);
 		dismissedMovieIds = [...dismissedMovieIds];
 
@@ -79,6 +81,13 @@
 			if (index >= 0) watchlistMovieIds.splice(index, 1);
 		}
 		watchlistMovieIds = [...watchlistMovieIds];
+
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/remove?movieid=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	// remove Movie from Watchlist and Dismissedlist
@@ -138,7 +147,6 @@
 			id="search"
 		/>
 
-
 		{#if errorMsg}
 			<InputMessage message={errorMsg} success={false} />
 		{/if}
@@ -162,7 +170,6 @@
 				There are no movies with your search: <span class="italic">{searchValue}</span>
 			</p>
 		{/if}
-
 	</form>
 
 	{#if !loading && showMoreCount < total_pages}
@@ -174,5 +181,4 @@
 			<LoadingSpinner />
 		</div>
 	{/if}
-
 </section>

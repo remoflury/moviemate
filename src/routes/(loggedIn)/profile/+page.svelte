@@ -11,10 +11,6 @@
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
 	export let data;
-	// onMount(() => {
-	// 	// reset movies watchlist, for page reloads
-	// 	$movies = [];
-	// });
 
 	$showSettings = true;
 	$showGoBack = false;

@@ -82,6 +82,7 @@
 		}
 		watchlistMovieIds = [...watchlistMovieIds];
 
+		// write the change to the db
 		try {
 			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/remove?movieid=${movieId}`);
 			const data = await response.json();

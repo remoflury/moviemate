@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import { createEventDispatcher } from 'svelte';
+	import { scale } from 'svelte/transition';
 	export let isInWatchlist: boolean;
 	export let isInDismissedlist: boolean;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
@@ -34,7 +35,12 @@
 					aria-label="add movie"
 					class="absolute bottom-0 right-0 border border-gray-dark rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 				>
-					<p class="text-gray-dark leading-none -translate-y-[1px]">+</p>
+					<p
+						transition:scale={{ duration: 350 }}
+						class="text-gray-dark leading-none -translate-y-[1px]"
+					>
+						+
+					</p>
 				</button>
 			{:else if isInWatchlist}
 				<!-- Movie in Watchlist -->
@@ -43,7 +49,11 @@
 					aria-label="movie is in watchlist"
 					class="absolute bottom-0 right-0 rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 				>
-					<svg class="max-w-full w-full" viewBox="0 0 75.516 75.516">
+					<svg
+						transition:scale={{ duration: 350 }}
+						class="max-w-full w-full"
+						viewBox="0 0 75.516 75.516"
+					>
 						<path
 							d="M73.575,37.069A36.506,36.506,0,1,1,37.069.563,36.506,36.506,0,0,1,73.575,37.069ZM32.846,56.4,59.931,29.313a2.355,2.355,0,0,0,0-3.331L56.6,22.652a2.355,2.355,0,0,0-3.331,0L31.18,44.74,20.868,34.428a2.355,2.355,0,0,0-3.331,0l-3.331,3.331a2.355,2.355,0,0,0,0,3.331L29.515,56.4a2.355,2.355,0,0,0,3.331,0Z"
 							transform="translate(2.006 -0.582) rotate(2)"
@@ -58,7 +68,11 @@
 					aria-label="movie is dismissed"
 					class="absolute bottom-0 right-0 rounded-max w-5 aspect-square grid place-content-center bg-white translate-x-1/4 translate-y-1/4"
 				>
-					<svg class="max-w-full w-full" viewBox="0 0 75.516 75.516">
+					<svg
+						transition:scale={{ duration: 350 }}
+						class="max-w-full w-full"
+						viewBox="0 0 75.516 75.516"
+					>
 						<g transform="translate(-1962.385 -5486.297)">
 							<path
 								d="M73.575,37.069A36.506,36.506,0,1,1,37.069.563,36.506,36.506,0,0,1,73.575,37.069Z"

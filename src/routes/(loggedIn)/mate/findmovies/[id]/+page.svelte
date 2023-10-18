@@ -1,5 +1,9 @@
 <script lang="ts">
-	import type { TMDBMovieByIdrops, TMDBVideosByIdProps } from '$lib/types/contentTypes';
+	import type {
+		TMDBMovieByIdrops,
+		TMDBVideoProps,
+		TMDBVideosByIdProps
+	} from '$lib/types/contentTypes';
 	import { previousPath, showGoBack, showSettings } from '$lib/stores/menu';
 	$showGoBack = true;
 	$showSettings = false;
@@ -7,7 +11,7 @@
 	export let data;
 
 	const movie: TMDBMovieByIdrops = data.movie;
-	const video: TMDBVideosByIdProps = data.video;
+	const video: TMDBVideoProps[] = data.video;
 
 	const voteRounded: number = parseFloat(movie.vote_average.toFixed(1));
 	const releaseYear: string = movie.release_date.split('-')[0];
@@ -15,10 +19,10 @@
 
 <section class="container">
 	<article>
-		{#if video.results.length}
+		{#if video.length}
 			<iframe
 				class="w-full aspect-video"
-				src="https://www.youtube.com/embed/{video.results[0].key}"
+				src="https://www.youtube.com/embed/{video[0].key}"
 				frameborder="0"
 				title="video of {movie.title}"
 				allowfullscreen

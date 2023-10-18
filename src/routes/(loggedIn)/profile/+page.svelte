@@ -27,7 +27,6 @@
 
 	let watchlistCount = 0;
 
-
 	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
 		try {
@@ -48,7 +47,6 @@
 			console.error(error);
 		}
 	};
-
 
 	const loadMoreMovies = async () => {
 		loading = true;
@@ -83,12 +81,12 @@
 		<Avatar />
 		<p class="info mt-2">{$page.data.user.username}</p>
 	</div>
-<section>
-	<div class="flex gap-x-4 items-end">
-		<h1 class="mb-0">Watchlist</h1>
-		<p class="info">{data.watchlistIds.length} Filme</p>
-	</div>
-</section>
+	<section>
+		<div class="flex gap-x-4 items-end">
+			<h1 class="mb-0">Watchlist</h1>
+			<p class="info">{data.watchlistIds.length} Filme</p>
+		</div>
+	</section>
 
 	{#await fetchWatchlist()}
 		<div class="mt-4">

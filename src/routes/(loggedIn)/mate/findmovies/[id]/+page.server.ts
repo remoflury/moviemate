@@ -2,14 +2,14 @@ import type { PageServerLoad } from '../$types';
 import { getMovieById, getVideoById } from '$lib/utils/moviesUtils';
 import { error as pageError } from '@sveltejs/kit';
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import type { TMDBMovieByIdrops, TMDBVideosByIdProps } from '$lib/types/contentTypes';
+import type { TMDBMovieByIdrops, TMDBVideoProps} from '$lib/types/contentTypes';
 
 export const load: PageServerLoad = async ({ url }) => {
 	// get movie id from id
 	const movieId = url.pathname.split('/')[3];
 
 	let movieDetails: TMDBMovieByIdrops;
-	let movieVideoDetails: TMDBVideosByIdProps;
+	let movieVideoDetails: TMDBVideoProps[];
 
 	// if movie id is not provided
 	if (!movieId) {

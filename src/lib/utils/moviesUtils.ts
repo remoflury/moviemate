@@ -1,7 +1,7 @@
 import type {
 	TMDBMovieByIdrops,
 	TMDBMovieByRecommendationProps,
-	TMDBVideosByIdProps
+	TMDBVideoProps
 } from '$lib/types/contentTypes';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -63,7 +63,7 @@ export const getVideoById = async (
 	movieId: string,
 	tmdbUrl: string,
 	tmdbAuthKey: string
-): Promise<TMDBVideosByIdProps> => {
+): Promise<TMDBVideoProps[]> => {
 	// fetch tmdb video details of movie id
 	const response = await fetch(`${tmdbUrl}/movie/${movieId}/videos?language=en-US`, {
 		method: 'GET',
@@ -78,8 +78,9 @@ export const getVideoById = async (
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
+	const results = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
 
-	return data;
+	return results;
 };
 
 export const getMovieRecommendationsById = async (

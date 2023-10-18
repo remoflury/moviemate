@@ -198,7 +198,7 @@ export const updateMovieIds = async (
 	if (movieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	movieIds.push(movieId);
+	movieIds.unshift(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient
@@ -245,7 +245,7 @@ export const addMovieToDismissed = async (
 	if (dismissedMovieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	dismissedMovieIds.push(movieId);
+	dismissedMovieIds.unshift(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient

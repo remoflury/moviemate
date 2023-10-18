@@ -9,7 +9,7 @@
 	const movie: TMDBMovieByIdrops = data.movie;
 	const video: TMDBVideosByIdProps = data.video;
 
-	const voteRounded: number = parseFloat(movie.vote_average.toFixed(2));
+	const voteRounded: number = parseFloat(movie.vote_average.toFixed(1));
 	const releaseYear: string = movie.release_date.split('-')[0];
 </script>
 

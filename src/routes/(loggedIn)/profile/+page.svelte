@@ -10,6 +10,7 @@
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
+	export let data;
 	// onMount(() => {
 	// 	// reset movies watchlist, for page reloads
 	// 	$movies = [];
@@ -38,9 +39,6 @@
 				movies: TMDBMovieByIdrops[];
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
-
-			// Die Anzahl der Filme in der Watchlist aktualisieren
-			watchlistCount = $movies.length + data.movies.length;
 
 			// spread existing movies and new movies into same movies array
 			$movies = [...$movies, ...data.movies];
@@ -88,7 +86,7 @@
 <section>
 	<div class="flex gap-x-4 items-end">
 		<h1 class="mb-0">Watchlist</h1>
-		<p class="info"> {watchlistCount} Filme</p>
+		<p class="info">{data.watchlistIds.length} Filme</p>
 	</div>
 </section>
 

@@ -2,13 +2,14 @@
 	import type {
 		TMDBMovieByIdrops,
 		TMDBMovieByRecommendationProps,
+		TMDBVideoProps,
 		TMDBVideosByIdProps
 	} from '$lib/types/contentTypes';
 	import LoadingSpinner from '../loadingSpinner.svelte';
 
 	type BackCard = {
 		movieDetails: TMDBMovieByIdrops;
-		videoDetails: TMDBVideosByIdProps;
+		videoDetails: TMDBVideoProps[];
 	};
 
 	export let movie: TMDBMovieByRecommendationProps;
@@ -23,7 +24,6 @@
 	const getMovieDetails = async (movieId: number) => {
 		const response = await fetch(`/api/movie/${movieId}`);
 		const data: BackCard = await response.json();
-		console.log(data);
 		return data;
 	};
 </script>
@@ -39,10 +39,10 @@
 				<LoadingSpinner />
 			</div>
 		{:then movieDetails}
-			{#if movieDetails.videoDetails.results.length}
+			{#if movieDetails.videoDetails.length}
 				<iframe
 					class="w-full aspect-video"
-					src="https://www.youtube.com/embed/{movieDetails.videoDetails.results[0].key}"
+					src="https://www.youtube.com/embed/{movieDetails.videoDetails[0].key}"
 					frameborder="0"
 					title="video of {movieDetails.movieDetails.title}"
 					allowfullscreen

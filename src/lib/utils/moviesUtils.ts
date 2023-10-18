@@ -78,6 +78,8 @@ export const getVideoById = async (
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
 	}
+
+	// filter out movies which are not official trailers
 	const results = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
 
 	return results;

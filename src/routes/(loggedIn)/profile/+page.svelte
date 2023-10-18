@@ -86,9 +86,9 @@
 		<p class="info mt-2">{$page.data.user.username}</p>
 	</div>
 <section>
-	<div class="grid gap-4 grid-cols-2">
-		<h1>Watchlist</h1>
-		<p> {watchlistCount} Filme</p>
+	<div class="flex gap-x-4 items-end">
+		<h1 class="mb-0">Watchlist</h1>
+		<p class="info"> {watchlistCount} Filme</p>
 	</div>
 </section>
 

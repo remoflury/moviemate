@@ -117,7 +117,6 @@
 		try {
 			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/clear?movieid=${movieId}`);
 			const data = await response.json();
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}

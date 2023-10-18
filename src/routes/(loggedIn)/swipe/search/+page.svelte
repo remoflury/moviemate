@@ -138,6 +138,7 @@
 			id="search"
 		/>
 
+
 		{#if errorMsg}
 			<InputMessage message={errorMsg} success={false} />
 		{/if}
@@ -161,7 +162,9 @@
 				There are no movies with your search: <span class="italic">{searchValue}</span>
 			</p>
 		{/if}
+
 	</form>
+
 	{#if !loading && showMoreCount < total_pages}
 		<button class="link text-sm mt-8" on:click={async () => handleShowMore()}> show more </button>
 	{:else if !loading && showMoreCount >= total_pages}
@@ -171,4 +174,5 @@
 			<LoadingSpinner />
 		</div>
 	{/if}
+
 </section>

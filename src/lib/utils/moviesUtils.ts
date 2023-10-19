@@ -181,6 +181,25 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 	return results;
 };
 
+export const getDiscoveryMovies =async (tmdbUrl: string, tmdbAuthKey: string, page: number =1): Promise<TMDBMovieByRecommendationProps[]> => {
+	const response = await fetch(`${tmdbUrl}/discover/movie?page=${page}&language=en-US`, {
+		method: 'GET',
+			headers: {
+				accept: 'application/json',
+				Authorization: `Bearer ${tmdbAuthKey}`
+			}
+	})
+	const data = await response.json()
+
+	if (data?.success === false) {
+		throw new Error('Error loading movies.');
+	}
+
+	// filter out movies without poster
+	const results: TMDBMovieByRecommendationProps[] = filterMoviesWithEmptyPoster(data.results);
+	return results
+}
+
 // update all watchlist movie ids (liked movies)
 export const updateMovieIds = async (
 	supabaseClient: SupabaseClient,

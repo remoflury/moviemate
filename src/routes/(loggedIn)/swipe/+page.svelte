@@ -12,6 +12,7 @@
 	$showGoBack = false;
 
 	export let data;
+
 	let movies: TMDBMovieByRecommendationProps[] = data.movies;
 	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 

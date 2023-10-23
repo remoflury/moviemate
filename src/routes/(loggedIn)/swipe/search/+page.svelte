@@ -10,6 +10,7 @@
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import Error from '../../../+error.svelte';
 	import { error } from '@sveltejs/kit';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 
@@ -41,6 +42,12 @@
 		({ total_pages, total_results } = data);
 		return data.results as TMDBMovieByRecommendationProps[];
 	};
+
+	const clearSearch = () => {
+    searchValue = '';
+    searchResult = [];
+	};
+
 
 	// filter out movies without poster
 	const filterSearchResults = () => {
@@ -154,6 +161,7 @@
 		on:submit|preventDefault={() => searchMovie(searchValue)}
 	>
 		<label for="search" hidden>Search Movie</label>
+		<div class="relative">
 		<input
 			bind:this={searchInputElem}
 			bind:value={searchValue}
@@ -163,6 +171,16 @@
 			name="search"
 			id="search"
 		/>
+			<button 
+				transition:fade={{ duration: 350 }}
+				type="button"
+				on:click={clearSearch}
+				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer">
+					{#if searchValue}
+						<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path class="fill-black" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+					{/if}
+			</button>
+		</div>
 
 		{#if errorMsg}
 			<InputMessage message={errorMsg} success={false} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { removeMovie } from '$lib/stores/watchlist';
+	import { removeMovie, watchlistCount } from '$lib/stores/watchlist';
 	import { fly } from 'svelte/transition';
 	import ModalButton from './modalButton.svelte';
 	import { PUBLIC_APP_URL } from '$env/static/public';
@@ -12,6 +12,7 @@
 			);
 			const data = await response.json();
 			$removeMovie.showModal = false;
+			$watchlistCount--;
 			window.scrollTo(0, $removeMovie.pageYOffset);
 
 			$watchlist = $watchlist.filter((movie) => movie.id != $removeMovie.id);

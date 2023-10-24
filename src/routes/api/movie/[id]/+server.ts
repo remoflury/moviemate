@@ -1,5 +1,5 @@
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
-import type { TMDBMovieByIdrops } from '$lib/types/contentTypes';
+import type { TMDBMovieByIdrops, TMDBVideoProps } from '$lib/types/contentTypes';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ params, fetch }) => {
@@ -31,8 +31,10 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
 				Authorization: `Bearer ${TMDB_AUTH_KEY}`
 			}
 		});
-		const data: TMDBMovieByIdrops = await response.json();
-		return data;
+		const data = await response.json();
+		// filter out movies which are not official trailers
+		const results: TMDBVideoProps[] = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
+		return results;
 	};
 
 	const result = {

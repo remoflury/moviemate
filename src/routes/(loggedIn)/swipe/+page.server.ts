@@ -2,8 +2,8 @@ import type { PageServerLoad } from './$types';
 import { error as pageError, redirect } from '@sveltejs/kit';
 import {
 	generateRandomIndex,
-	getMovieRecommendationsById,
-	getPopularMovies
+	getDiscoveryMovies,
+	getMovieRecommendationsById
 } from '$lib/utils/moviesUtils';
 import { TMDB_AUTH_KEY, TMDB_BASE_URL } from '$env/static/private';
 import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
@@ -50,16 +50,20 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}
 
 	let movies: TMDBMovieByRecommendationProps[] = [];
-	// if user has no movie-ids in watchlist, fetch popular movies
+
+	// if user has no movie-ids in watchlist, fetch discovery movies
 	if (watchlistMovieIds.length === 0) {
 		try {
-			movies = await getPopularMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, 1);
+			const randomPage = Math.floor(Math.random() * 500)
+			movies = await getDiscoveryMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, randomPage)
+			
 			// filter out movies, which are already in watchlist
 			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id.toString()));
 
 			// filter out movies, which are in dismissed list
 			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id.toString()));
 		} catch (error) {
+			console.error(error)
 			throw pageError(500, { message: 'Error loading popular movies.' });
 		}
 	}
@@ -78,7 +82,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			}
 			// filter out movies, which are already in watchlist
 			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id?.toString()));
-
+			
 			// filter out movies, which are in dismissed list
 			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id?.toString()));
 		} catch (error) {

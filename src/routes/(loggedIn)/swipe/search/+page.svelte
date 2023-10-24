@@ -8,6 +8,9 @@
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
+	import Error from '../../../+error.svelte';
+	import { error } from '@sveltejs/kit';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 
@@ -40,6 +43,12 @@
 		return data.results as TMDBMovieByRecommendationProps[];
 	};
 
+	const clearSearch = () => {
+    searchValue = '';
+    searchResult = [];
+	};
+
+
 	// filter out movies without poster
 	const filterSearchResults = () => {
 		searchResult = [
@@ -64,13 +73,21 @@
 	};
 
 	// add Movie to Watchlist
-	const addMovieToWatchlist = (movieId: string) => {
+	const addMovieToWatchlist = async (movieId: string) => {
 		if (!watchlistMovieIds.includes(movieId)) watchlistMovieIds.push(movieId);
 		watchlistMovieIds = [...watchlistMovieIds];
+
+		// write the change to the db
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/add?movieid=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	// remove Movie from Watchlist & add Movie to Dismissedlist
-	const addMovieToDismissedlist = (movieId: string) => {
+	const addMovieToDismissedlist = async (movieId: string) => {
 		if (!dismissedMovieIds.includes(movieId)) dismissedMovieIds.push(movieId);
 		dismissedMovieIds = [...dismissedMovieIds];
 
@@ -79,10 +96,18 @@
 			if (index >= 0) watchlistMovieIds.splice(index, 1);
 		}
 		watchlistMovieIds = [...watchlistMovieIds];
+
+		// write the change to the db
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/remove?movieid=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	// remove Movie from Watchlist and Dismissedlist
-	const removeMovieFromLists = (movieId: string) => {
+	const removeMovieFromLists = async (movieId: string) => {
 		if (watchlistMovieIds.includes(movieId)) {
 			const index = watchlistMovieIds.indexOf(movieId);
 			if (index >= 0) watchlistMovieIds.splice(index, 1);
@@ -94,6 +119,14 @@
 			if (index >= 0) dismissedMovieIds.splice(index, 1);
 		}
 		dismissedMovieIds = [...dismissedMovieIds];
+
+		// write the change to the db
+		try {
+			const response = await fetch(`${PUBLIC_APP_URL}/api/watchlist/clear?movieid=${movieId}`);
+			const data = await response.json();
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const handleShowMore = async () => {
@@ -105,12 +138,15 @@
 		loading = false;
 	};
 
-	onMount(() => {
+	onMount(async () => {
 		searchInputElem.focus();
 
 		// if search value exists from search params, get search result
 		searchValue = $page.url.searchParams.get('search') || '';
-		if (searchValue) searchMovie(searchValue);
+		if (searchValue) {
+			searchResult = [...(await searchMovie(searchValue))];
+			filterSearchResults();
+		}
 	});
 </script>
 
@@ -123,10 +159,9 @@
 			filterSearchResults();
 		}}
 		on:submit|preventDefault={() => searchMovie(searchValue)}
-		use:enhance
-		method="POST"
 	>
 		<label for="search" hidden>Search Movie</label>
+		<div class="relative">
 		<input
 			bind:this={searchInputElem}
 			bind:value={searchValue}
@@ -136,6 +171,16 @@
 			name="search"
 			id="search"
 		/>
+			<button 
+				transition:fade={{ duration: 350 }}
+				type="button"
+				on:click={clearSearch}
+				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer">
+					{#if searchValue}
+						<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path class="fill-black" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+					{/if}
+			</button>
+		</div>
 
 		{#if errorMsg}
 			<InputMessage message={errorMsg} success={false} />
@@ -161,6 +206,7 @@
 			</p>
 		{/if}
 	</form>
+
 	{#if !loading && showMoreCount < total_pages}
 		<button class="link text-sm mt-8" on:click={async () => handleShowMore()}> show more </button>
 	{:else if !loading && showMoreCount >= total_pages}

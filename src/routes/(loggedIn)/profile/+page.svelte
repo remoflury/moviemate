@@ -4,28 +4,24 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import { watchlistCount } from '$lib/stores/watchlist.js';
 	import { watchlist as movies } from '$lib/utils/profile';
 	import Avatar from '$lib/components/mates/avatar.svelte';
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
 
-	// onMount(() => {
-	// 	// reset movies watchlist, for page reloads
-	// 	$movies = [];
-	// });
+	export let data;
 
 	$showSettings = true;
 	$showGoBack = false;
 
 	let limit = 9;
 	let offset = 0;
-	// let movies: TMDBMovieByIdrops[] = [];
 	let isLoadMoreAvailable: boolean = false;
 	let loading: boolean = false;
 
-	let watchlistCount = 0;
-
+	$watchlistCount = data.watchlistIds.length;
 
 	// fetch all movies from watchlist via api endpoint
 	const fetchWatchlist = async () => {
@@ -39,9 +35,6 @@
 			} = await response.json();
 			isLoadMoreAvailable = data.isLoadMoreAvailable;
 
-			// Die Anzahl der Filme in der Watchlist aktualisieren
-			watchlistCount = $movies.length + data.movies.length;
-
 			// spread existing movies and new movies into same movies array
 			$movies = [...$movies, ...data.movies];
 			$movies = [...removeDuplicates($movies)];
@@ -50,7 +43,6 @@
 			console.error(error);
 		}
 	};
-
 
 	const loadMoreMovies = async () => {
 		loading = true;
@@ -85,12 +77,12 @@
 		<Avatar />
 		<p class="info mt-2">{$page.data.user.username}</p>
 	</div>
-<section>
-	<div class="grid gap-4 grid-cols-2">
-		<h1>Watchlist</h1>
-		<p> {watchlistCount} Filme</p>
-	</div>
-</section>
+	<section>
+		<div class="flex gap-x-4 items-end">
+			<h1 class="mb-0">Watchlist</h1>
+			<p class="info">{$watchlistCount} Filme</p>
+		</div>
+	</section>
 
 	{#await fetchWatchlist()}
 		<div class="mt-4">

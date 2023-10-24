@@ -12,6 +12,7 @@
 	$showGoBack = false;
 
 	export let data;
+
 	let movies: TMDBMovieByRecommendationProps[] = data.movies;
 	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 
@@ -76,7 +77,7 @@
 </script>
 
 <div class="container flex justify-end mt-4 -mb-6">
-	<button class="mr-4" on:click={() => goto('/swipe/search')}>
+	<button aria-label="search for movie" class="mr-4" on:click={() => goto('/swipe/search')}>
 		<SearchIcon />
 	</button>
 </div>

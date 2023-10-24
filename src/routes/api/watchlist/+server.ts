@@ -50,7 +50,6 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		if (count >= movieIds.length) break;
 		try {
 			const response = await getMovieById(movieIds[count], TMDB_BASE_URL, TMDB_AUTH_KEY);
-			// console.log(response)
 			movies.push(response);
 			movies = filterMoviesWithEmptyPoster(movies);
 		} catch (error) {

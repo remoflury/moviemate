@@ -1,7 +1,7 @@
 import type {
 	TMDBMovieByIdrops,
 	TMDBMovieByRecommendationProps,
-	TMDBVideosByIdProps
+	TMDBVideoProps
 } from '$lib/types/contentTypes';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -63,7 +63,7 @@ export const getVideoById = async (
 	movieId: string,
 	tmdbUrl: string,
 	tmdbAuthKey: string
-): Promise<TMDBVideosByIdProps> => {
+): Promise<TMDBVideoProps[]> => {
 	// fetch tmdb video details of movie id
 	const response = await fetch(`${tmdbUrl}/movie/${movieId}/videos?language=en-US`, {
 		method: 'GET',
@@ -79,7 +79,10 @@ export const getVideoById = async (
 		throw new Error('Error loading movies.');
 	}
 
-	return data;
+	// filter out movies which are not official trailers
+	const results = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
+
+	return results;
 };
 
 export const getMovieRecommendationsById = async (
@@ -178,6 +181,25 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 	return results;
 };
 
+export const getDiscoveryMovies =async (tmdbUrl: string, tmdbAuthKey: string, page: number =1): Promise<TMDBMovieByRecommendationProps[]> => {
+	const response = await fetch(`${tmdbUrl}/discover/movie?page=${page}&language=en-US`, {
+		method: 'GET',
+			headers: {
+				accept: 'application/json',
+				Authorization: `Bearer ${tmdbAuthKey}`
+			}
+	})
+	const data = await response.json()
+
+	if (data?.success === false) {
+		throw new Error('Error loading movies.');
+	}
+
+	// filter out movies without poster
+	const results: TMDBMovieByRecommendationProps[] = filterMoviesWithEmptyPoster(data.results);
+	return results
+}
+
 // update all watchlist movie ids (liked movies)
 export const updateMovieIds = async (
 	supabaseClient: SupabaseClient,
@@ -197,7 +219,7 @@ export const updateMovieIds = async (
 	if (movieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	movieIds.push(movieId);
+	movieIds.unshift(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient
@@ -244,7 +266,7 @@ export const addMovieToDismissed = async (
 	if (dismissedMovieIds.includes(movieId)) return;
 
 	// add movie to watchlist
-	dismissedMovieIds.push(movieId);
+	dismissedMovieIds.unshift(movieId);
 
 	// insert movieIds to db
 	const { error } = await supabaseClient

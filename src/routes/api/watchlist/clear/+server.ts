@@ -32,8 +32,8 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 	// remove movie from watchlist
 	watchlist = watchlist.filter((id) => id != movieId);
 
-	// add movie to dismissedList
-	if (!dismissedList.includes(movieId)) dismissedList.push(movieId);
+	// remove movie from dismissedList
+  dismissedList = dismissedList.filter((id) => id != movieId)
 
 	// update db with new values
 	try {

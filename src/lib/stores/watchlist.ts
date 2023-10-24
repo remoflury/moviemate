@@ -7,4 +7,4 @@ export const removeMovie = writable({
 	pageYOffset: 0
 });
 
-export const watchlistCount = writable(0)
+export const watchlistCount = writable(0);

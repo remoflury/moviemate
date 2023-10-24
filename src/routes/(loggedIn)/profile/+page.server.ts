@@ -7,19 +7,19 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// if not authorized
 	if (!session) throw pageError(401, 'Unauthorized. Please login.');
 
-	const supabaseClient = locals.supabase
+	const supabaseClient = locals.supabase;
 	const userId = session.user.id;
 
-	let watchlistIds: string[]
+	let watchlistIds: string[];
 	try {
-		const data = await getAllMovieIds(supabaseClient, [userId])
-		watchlistIds = data[0].movies_watchlist
+		const data = await getAllMovieIds(supabaseClient, [userId]);
+		watchlistIds = data[0].movies_watchlist;
 	} catch (err) {
-		console.error(err)
-		throw pageError(500, 'Ups, something went wrong.')
+		console.error(err);
+		throw pageError(500, 'Ups, something went wrong.');
 	}
 
 	return {
 		watchlistIds
-	}
+	};
 };

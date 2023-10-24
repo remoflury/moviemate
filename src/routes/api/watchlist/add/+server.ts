@@ -1,7 +1,7 @@
-import type { RequestHandler } from "@sveltejs/kit";
+import type { RequestHandler } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({url, locals}) => {
-  const supabaseClient = locals.supabase;
+export const GET: RequestHandler = async ({ url, locals }) => {
+	const supabaseClient = locals.supabase;
 
 	const session = await locals.getSession();
 	const userId = session?.user.id;
@@ -9,9 +9,10 @@ export const GET: RequestHandler = async ({url, locals}) => {
 	if (!userId) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
 
 	const movieId = url.searchParams.get('movieid');
-	if (!movieId) return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
+	if (!movieId)
+		return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
 
-  // get watchlist and dismissed list
+	// get watchlist and dismissed list
 	let watchlist: string[] = [];
 	try {
 		const { data, error } = await supabaseClient
@@ -44,5 +45,5 @@ export const GET: RequestHandler = async ({url, locals}) => {
 		console.error(error);
 		return new Response(JSON.stringify({ error }));
 	}
-  return new Response(JSON.stringify({status: 200, error: ''}));
+	return new Response(JSON.stringify({ status: 200, error: '' }));
 };

@@ -77,7 +77,7 @@ export type TMDBMovieByRecommendationProps = {
 
 export type TMDBVideosByIdProps = {
 	id: number;
-	results: TMDBVideoProps[]
+	results: TMDBVideoProps[];
 };
 
 export type TMDBVideoProps = {
@@ -91,12 +91,11 @@ export type TMDBVideoProps = {
 	official: boolean;
 	published_at: string;
 	id: string;
-}
-
+};
 
 export type SearchResultProps = {
-	total_pages: number,
-	total_results: number,
-	page: 1,
-	results: TMDBMovieByRecommendationProps[]
-}
+	total_pages: number;
+	total_results: number;
+	page: 1;
+	results: TMDBMovieByRecommendationProps[];
+};

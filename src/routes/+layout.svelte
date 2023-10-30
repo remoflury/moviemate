@@ -28,7 +28,13 @@
 
 	// set previous path, for back navigation on some pages
 	$previousPath.path = base;
-	afterNavigate(({ from }) => {
+	afterNavigate(({ from, to }) => {
+		if (to?.url.pathname == '/swipe') {
+			document.body.classList.add('overflow-y-hidden');
+		} else {
+			document.body.classList.remove('overflow-y-hidden');
+		}
+
 		if (from?.url.pathname.includes('/mate/findmovies/')) {
 			$previousPath.path = '/mate';
 		} else {

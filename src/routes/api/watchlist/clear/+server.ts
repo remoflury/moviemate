@@ -9,7 +9,8 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 	if (!userId) return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
 
 	const movieId = url.searchParams.get('movieid');
-	if (!movieId) return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
+	if (!movieId)
+		return new Response(JSON.stringify({ error: 'Please provide movie id.' }), { status: 500 });
 
 	// get watchlist and dismissed list
 	let watchlist: string[] = [];
@@ -33,7 +34,7 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 	watchlist = watchlist.filter((id) => id != movieId);
 
 	// remove movie from dismissedList
-  dismissedList = dismissedList.filter((id) => id != movieId)
+	dismissedList = dismissedList.filter((id) => id != movieId);
 
 	// update db with new values
 	try {
@@ -51,5 +52,5 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 		return new Response(JSON.stringify({ error }));
 	}
 
-	return new Response(JSON.stringify({status: 200, error: ''}));
+	return new Response(JSON.stringify({ status: 200, error: '' }));
 };

@@ -33,7 +33,9 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
 		});
 		const data = await response.json();
 		// filter out movies which are not official trailers
-		const results: TMDBVideoProps[] = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
+		const results: TMDBVideoProps[] = data.results.filter(
+			(movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer'
+		);
 		return results;
 	};
 

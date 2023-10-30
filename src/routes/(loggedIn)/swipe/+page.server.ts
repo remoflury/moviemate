@@ -54,16 +54,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// if user has no movie-ids in watchlist, fetch discovery movies
 	if (watchlistMovieIds.length === 0) {
 		try {
-			const randomPage = Math.floor(Math.random() * 500)
-			movies = await getDiscoveryMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, randomPage)
-			
+			const randomPage = Math.floor(Math.random() * 500);
+			movies = await getDiscoveryMovies(TMDB_BASE_URL, TMDB_AUTH_KEY, randomPage);
+
 			// filter out movies, which are already in watchlist
 			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id.toString()));
 
 			// filter out movies, which are in dismissed list
 			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id.toString()));
 		} catch (error) {
-			console.error(error)
+			console.error(error);
 			throw pageError(500, { message: 'Error loading popular movies.' });
 		}
 	}
@@ -82,7 +82,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			}
 			// filter out movies, which are already in watchlist
 			movies = movies.filter((movie) => !watchlistMovieIds.includes(movie.id?.toString()));
-			
+
 			// filter out movies, which are in dismissed list
 			movies = movies.filter((movie) => !dismissedMovieIds.includes(movie.id?.toString()));
 		} catch (error) {

@@ -36,7 +36,7 @@
 				</p>
 				<div class="flex gap-x-6 items-center justify-center mt-4">
 					<ModalButton text="YES" on:press={async () => await confirm()} />
-					<ModalButton text="NEIN" on:press={deny} />
+					<ModalButton text="NO" on:press={deny} />
 				</div>
 			</article>
 		</div>

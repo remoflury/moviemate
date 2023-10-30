@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { showSettings } from '$lib/stores/menu';
+	import { showGoBack, showSettings } from '$lib/stores/menu';
 	import PwaInstallButton from '$lib/components/pwaInstallButton.svelte';
 	$showSettings = false;
+	$showGoBack = false;
 
 	export let data;
 

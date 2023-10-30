@@ -80,7 +80,9 @@ export const getVideoById = async (
 	}
 
 	// filter out movies which are not official trailers
-	const results = data.results.filter((movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer')
+	const results = data.results.filter(
+		(movie: TMDBVideoProps) => movie.official == true && movie.type == 'Trailer'
+	);
 
 	return results;
 };
@@ -181,15 +183,19 @@ export const getPopularMovies = async (tmdbUrl: string, tmdbAuthKey: string, pag
 	return results;
 };
 
-export const getDiscoveryMovies =async (tmdbUrl: string, tmdbAuthKey: string, page: number =1): Promise<TMDBMovieByRecommendationProps[]> => {
+export const getDiscoveryMovies = async (
+	tmdbUrl: string,
+	tmdbAuthKey: string,
+	page: number = 1
+): Promise<TMDBMovieByRecommendationProps[]> => {
 	const response = await fetch(`${tmdbUrl}/discover/movie?page=${page}&language=en-US`, {
 		method: 'GET',
-			headers: {
-				accept: 'application/json',
-				Authorization: `Bearer ${tmdbAuthKey}`
-			}
-	})
-	const data = await response.json()
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${tmdbAuthKey}`
+		}
+	});
+	const data = await response.json();
 
 	if (data?.success === false) {
 		throw new Error('Error loading movies.');
@@ -197,8 +203,8 @@ export const getDiscoveryMovies =async (tmdbUrl: string, tmdbAuthKey: string, pa
 
 	// filter out movies without poster
 	const results: TMDBMovieByRecommendationProps[] = filterMoviesWithEmptyPoster(data.results);
-	return results
-}
+	return results;
+};
 
 // update all watchlist movie ids (liked movies)
 export const updateMovieIds = async (

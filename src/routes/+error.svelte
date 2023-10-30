@@ -9,6 +9,9 @@
 		{$page.status}: {$page.error?.message}
 	</p>
 	<div class="mt-12">
-		<PrimaryLink text="Zur Startseite" link="/" />
+		<PrimaryLink
+			text={$page.status == 401 ? 'Login' : 'Zur Startseite'}
+			link={$page.status == 401 ? '/login' : '/'}
+		/>
 	</div>
 </section>

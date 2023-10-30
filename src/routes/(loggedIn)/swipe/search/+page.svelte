@@ -40,14 +40,14 @@
 
 		if (data?.error) errorMsg = data.error;
 		({ total_pages, total_results } = data);
+		console.log(data.results);
 		return data.results as TMDBMovieByRecommendationProps[];
 	};
 
 	const clearSearch = () => {
-    searchValue = '';
-    searchResult = [];
+		searchValue = '';
+		searchResult = [];
 	};
-
 
 	// filter out movies without poster
 	const filterSearchResults = () => {
@@ -162,23 +162,29 @@
 	>
 		<label for="search" hidden>Search Movie</label>
 		<div class="relative">
-		<input
-			bind:this={searchInputElem}
-			bind:value={searchValue}
-			class="search"
-			placeholder="search movie"
-			type="text"
-			name="search"
-			id="search"
-		/>
-			<button 
+			<input
+				bind:this={searchInputElem}
+				bind:value={searchValue}
+				class="search"
+				placeholder="search movie"
+				type="text"
+				name="search"
+				id="search"
+			/>
+			<button
 				transition:fade={{ duration: 350 }}
 				type="button"
 				on:click={clearSearch}
-				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer">
-					{#if searchValue}
-						<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path class="fill-black" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
-					{/if}
+				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer"
+			>
+				{#if searchValue}
+					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
+						><path
+							class="fill-black"
+							d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+						/></svg
+					>
+				{/if}
 			</button>
 		</div>
 

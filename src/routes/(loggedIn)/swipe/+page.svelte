@@ -4,10 +4,16 @@
 	import { fade } from 'svelte/transition';
 	import { generateRandomIndex, getAllMovieIds } from '$lib/utils/moviesUtils.js';
 	import { PUBLIC_APP_URL } from '$env/static/public';
-	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import {
+		showSettings,
+		showGoBack,
+		topNavigationHeight,
+		bottomNavigationHeight
+	} from '$lib/stores/menu';
 	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import SearchIcon from '$lib/components/icons/searchIcon.svelte';
+	import { onMount } from 'svelte';
 	$showSettings = false;
 	$showGoBack = false;
 
@@ -17,6 +23,9 @@
 	let allMatchedMoviesOfSession: TMDBMovieByRecommendationProps[] = movies;
 
 	let loading: boolean = false;
+	let cardWrapper: HTMLElement;
+	let cardWrapperTopPadding: string;
+	let cardWrapperBottomPadding: string;
 
 	let countIndex = 0;
 
@@ -74,6 +83,17 @@
 			countIndex = 0;
 		}
 	};
+
+	onMount(() => {
+		cardWrapperTopPadding = window
+			.getComputedStyle(cardWrapper, null)
+			.getPropertyValue('padding-top');
+		cardWrapperBottomPadding = window
+			.getComputedStyle(cardWrapper, null)
+			.getPropertyValue('padding-bottom');
+		console.log(cardWrapperTopPadding);
+		console.log(cardWrapperBottomPadding);
+	});
 </script>
 
 <div class="container flex justify-end mt-4 -mb-6">
@@ -81,9 +101,16 @@
 		<SearchIcon />
 	</button>
 </div>
-<section class="container">
+<section class="container" bind:this={cardWrapper}>
 	<h1 hidden>Swipe</h1>
-	<div class="relative aspect-[9/16]">
+	<!-- <div class="relative aspect-[9/16]"> -->
+	<div
+		class="relative"
+		style={`
+			height: calc(100vh - ${$topNavigationHeight}px - ${$bottomNavigationHeight}px - ${cardWrapperTopPadding} - ${cardWrapperBottomPadding});
+			height: calc(100dvh - ${$topNavigationHeight}px - ${$bottomNavigationHeight}px - ${cardWrapperTopPadding} - ${cardWrapperBottomPadding});
+			`}
+	>
 		{#each movies as movie, index (index)}
 			{#if index === countIndex}
 				<div class="w-full h-full" in:fade={{ duration: 350 }}>

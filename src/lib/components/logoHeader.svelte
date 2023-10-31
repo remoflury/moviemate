@@ -14,10 +14,10 @@
 	});
 </script>
 
-<div bind:this={navWrapper}>
+<div bind:this={navWrapper} class="relative container py-2">
 	<!-- GO BACK ICON -->
 	{#if $showGoBack == true}
-		<div class="max-w-[2rem] m-5 absolute">
+		<div class="max-w-[2rem] top-1/2 left-0 absolute -translate-y-[calc(50%-5px)]">
 			<button on:click={goBackTo} aria-label="go back">
 				<svg
 					class="max-w-full"
@@ -40,7 +40,7 @@
 	{/if}
 
 	<!-- SETTINGS ICON -->
-	<div class="max-w-[2rem] m-5 absolute">
+	<div class="max-w-[2rem] top-1/2 left-0 absolute -translate-y-[calc(50%-5px)]">
 		{#if $showSettings == true}
 			<a href="/profile/settings">
 				<svg class="max-w-full fill-gray-dark" viewBox="0 0 50 50" width="512px">
@@ -53,11 +53,10 @@
 	</div>
 
 	<!-- LOGO ICON -->
-	<div class="flex items-center justify-center h-[2rem] m-5">
+	<div class="flex items-center justify-center h-[2rem]">
 		<a href="/">
 			<img class="max-w-full" width="90px" src="/logo/Logo_Black.png" alt="Logo" />
 		</a>
 	</div>
-
-	<hr class="w-100 border-t border-gray-dark mt-2" />
 </div>
+<hr class="w-100 border-t border-gray-dark mt-2" />

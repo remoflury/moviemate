@@ -65,12 +65,14 @@
 <Splide {options} hasTrack={false} on:move={handleMove}>
 	<div class="splide__arrows">
 		<button
+			type="button"
 			on:click={() => handleUpdateAvatarId('prev')}
 			class="splide__arrow splide__arrow--prev image-slider-btn absolute !-left-2 !top-1/2 !-translate-y-1/2 !-translate-x-full !h-8 !w-8"
 		>
 			<GoBackIcon />
 		</button>
 		<button
+			type="button"
 			on:click={() => handleUpdateAvatarId('next')}
 			class="splide__arrow splide__arrow--next image-slider-btn absolute !-right-2 !top-1/2 !-translate-y-1/2 !translate-x-full !h-8 !w-8"
 		>
@@ -83,7 +85,11 @@
 		{#each sortedAvatars as avatar, index (index)}
 			<SplideSlide>
 				<figure class="aspect-square overflow-hidden rounded-max">
-					<img src={`/assets/${avatar.fileName}`} alt="Avatar number {avatar.id.toString()}" />
+					<img
+						class="object-cover object-center w-full h-full"
+						src={`/assets/${avatar.fileName}`}
+						alt="Avatar number {avatar.id.toString()}"
+					/>
 				</figure>
 			</SplideSlide>
 		{/each}

@@ -14,7 +14,7 @@
 	});
 </script>
 
-<div bind:this={navWrapper} class="relative container py-2">
+<header bind:this={navWrapper} class="relative container py-2">
 	<!-- GO BACK ICON -->
 	{#if $showGoBack == true}
 		<div class="max-w-[2rem] top-1/2 left-0 absolute -translate-y-[calc(50%-5px)]">
@@ -58,5 +58,5 @@
 			<img class="max-w-full" width="90px" src="/logo/Logo_Black.png" alt="Logo" />
 		</a>
 	</div>
-</div>
+</header>
 <hr class="w-100 border-t border-gray-dark mt-2" />

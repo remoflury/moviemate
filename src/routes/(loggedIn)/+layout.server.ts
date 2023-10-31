@@ -20,13 +20,12 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 		throw pageError(500, 'Error fetching user.');
 	}
 
-	const { users_username: username, users_avatar: avatarId } = data[0];
+	const { users_username: username } = data[0];
 
 	return {
 		user: {
 			id: userId,
 			username,
-			avatarId
 		}
 	};
 };

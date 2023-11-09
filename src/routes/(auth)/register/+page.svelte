@@ -5,6 +5,7 @@
 	import Link from '$lib/components/link.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import { showGoBack, showSettings } from '$lib/stores/menu';
+	import SelectAvatar from '$lib/components/mates/selectAvatar.svelte';
 	$showSettings = false;
 	$showGoBack = false;
 
@@ -12,6 +13,8 @@
 
 	let loading = false;
 	$: if (form) loading = false;
+
+	let currentAvatarIndex = 1;
 </script>
 
 <section class="container">
@@ -63,6 +66,19 @@
 		{#if form?.passwordError}
 			<InputMessage message={form?.passwordError} />
 		{/if}
+
+		<div class="mt-6">
+			<label class="pt-4" for="avatar" hidden>Avatar</label>
+			<div class="px-28">
+				<input type="hidden" name="avatar" bind:value={currentAvatarIndex} />
+				<SelectAvatar
+					initialAvatarId={Number(form?.avatar) ?? 1}
+					on:changeAvatar={(e) => {
+						currentAvatarIndex = e.detail.imageNumber;
+					}}
+				/>
+			</div>
+		</div>
 
 		{#if !loading && !form?.success}
 			<div class="w-full mt-8">

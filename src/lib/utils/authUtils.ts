@@ -211,12 +211,14 @@ export const addUserToDB = async (
 	email: string | FormDataEntryValue | null,
 	username: string | FormDataEntryValue | null,
 	userId: string,
+	avatarId: number,
 	supabaseClient: SupabaseClient
 ) => {
 	// insert user to supabase, table Users_details
 	const { error } = await supabaseClient.from('Users_details').insert({
 		users_email: email,
 		users_username: username,
+		users_avatar: avatarId,
 		users_id: userId
 	});
 

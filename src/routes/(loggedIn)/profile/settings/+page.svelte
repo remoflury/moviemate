@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import { showSettings, showGoBack, previousPath } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import Accordion from '$lib/components/accordion.svelte';
 	import SelectAvatar from '$lib/components/mates/selectAvatar.svelte';
 
 	$showSettings = false;
 	$showGoBack = true;
+	$previousPath.path = '/profile';
 
 	export let data;
 

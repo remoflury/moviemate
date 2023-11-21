@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { activeMenu, previousPath } from '$lib/stores/menu';
-	$activeMenu = 'profile';
-	$previousPath.params = $page.url.search;
 	import { page } from '$app/stores';
-	import PrimaryButton from '$lib/components/primaryButton.svelte';
 	import { enhance } from '$app/forms';
+	import PrimaryButton from '$lib/components/primaryButton.svelte';
+	import { activeMenu, showGoBack } from '$lib/stores/menu';
+	$activeMenu = 'profile';
+	$showGoBack = false;
 </script>
 
 <section class="container text-center flex flex-col items-center">

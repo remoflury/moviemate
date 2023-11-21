@@ -23,6 +23,7 @@
 	let total_pages: number;
 	let total_results: number;
 	$showGoBack = true;
+	$previousPath.path = '/swipe';
 
 	$: if (errorMsg) searchResult = [];
 

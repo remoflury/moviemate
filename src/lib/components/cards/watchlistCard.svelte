@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { removeMovie } from '$lib/stores/watchlist';
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
-	import { fly } from 'svelte/transition';
 
 	export let showDeleteButton: boolean = true;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
-	// export let index: number;
 
 	let y: number;
 

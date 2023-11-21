@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 
 	let deferredPrompt: Event | null = null;
@@ -42,7 +41,6 @@
 
 <svelte:window
 	on:beforeinstallprompt={(event) => {
-		console.log(event);
 		event.preventDefault();
 		deferredPrompt = event;
 	}}

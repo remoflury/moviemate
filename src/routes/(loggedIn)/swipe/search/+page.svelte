@@ -40,7 +40,6 @@
 
 		if (data?.error) errorMsg = data.error;
 		({ total_pages, total_results } = data);
-		console.log(data.results);
 		return data.results as TMDBMovieByRecommendationProps[];
 	};
 

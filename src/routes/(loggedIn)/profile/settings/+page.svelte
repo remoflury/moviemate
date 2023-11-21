@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import { showSettings, showGoBack } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
-	import Avatar from '$lib/components/mates/avatar.svelte';
 	import Accordion from '$lib/components/accordion.svelte';
 	import SelectAvatar from '$lib/components/mates/selectAvatar.svelte';
 

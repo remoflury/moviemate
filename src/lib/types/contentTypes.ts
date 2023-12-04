@@ -6,6 +6,7 @@ export type SearchMatesProps = {
 export type ExistingMateProps = {
 	id: string;
 	username: string;
+	avatarId: number
 };
 
 export type TMDBMovieByIdrops = {

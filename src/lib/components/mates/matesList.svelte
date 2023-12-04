@@ -33,6 +33,7 @@
 					<MovieTimeAvatar
 						name={mate.username}
 						id={mate.id}
+						avatarId={mate.avatarId}
 						showDeleteButton={false}
 						inversed={true}
 						flexCol={true}

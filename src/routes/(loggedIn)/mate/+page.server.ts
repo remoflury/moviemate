@@ -35,7 +35,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// get all details of mates
 	const { data: matesDetails, error: matesDetailsError } = await supabaseClient
 		.from('Users_details')
-		.select('users_id, users_username')
+		.select('users_id, users_username, users_avatar')
 		.in('users_id', mates);
 
 	// error handling

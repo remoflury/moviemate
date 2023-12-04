@@ -3,6 +3,7 @@
 	import { mateStore } from '$lib/stores/mates';
 	export let name: string;
 	export let id: string = '';
+	export let avatarId: number;
 	export let showDeleteButton: boolean = true;
 	export let inversed: boolean = false;
 	export let flexCol: boolean = false;
@@ -21,7 +22,7 @@
 
 <div class="flex gap-4 {flexCol ? 'flex-col ' : 'justify-start items-center'}">
 	<div class="w-16 basis-[30%] relative">
-		<Avatar border={true} />
+		<Avatar border={true} {avatarId} />
 		{#if showDeleteButton}
 			<button
 				aria-label="remove mate"

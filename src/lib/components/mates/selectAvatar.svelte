@@ -46,9 +46,10 @@
 
 	const handleMove = (event: any) => {
 		const imageNumber = event.detail.index + 1;
-
+		// console.log('imageNumber ', imageNumber);
+		// console.log('currentIndex ', event.detail.index);
 		dispatch('changeAvatar', {
-			imageNumber: currentAvatarIndex
+			imageNumber: imageNumber
 		});
 	};
 

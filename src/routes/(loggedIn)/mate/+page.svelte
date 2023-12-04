@@ -6,7 +6,6 @@
 
 	export let data;
 
-	console.log(data);
 	$showGoBack = false;
 	$showSettings = false;
 </script>

@@ -35,7 +35,7 @@
 
 	onMount(() => {
 		isPWAUsed = checkIfUserIsOnPWA();
-		isChrome = checkForChromeBrowser();
+		// isChrome = checkForChromeBrowser();
 	});
 </script>
 
@@ -52,11 +52,11 @@
 		<a class="underline" href="/register">Register</a>
 	</div>
 {:else}
-	<div>
-		{#if isChrome}
-			<button class="btn" on:click={installPWA} bind:this={btnElem}> Install App </button>
-		{:else}
-			<p class="mt-4 text-sm">To install the app, please open in Chrome Browser.</p>
-		{/if}
+	<div class="flex flex-col items-center">
+		<!-- {#if isChrome} -->
+		<button class="btn" on:click={installPWA} bind:this={btnElem}>Install App</button>
+		<!-- {:else} -->
+		<p class="mt-4 text-sm text-center">To install the app, please open in Chrome Browser.</p>
+		<!-- {/if} -->
 	</div>
 {/if}

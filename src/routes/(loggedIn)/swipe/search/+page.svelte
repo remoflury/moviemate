@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
-	import { enhance } from '$app/forms';
 	import { previousPath, showGoBack } from '$lib/stores/menu';
-	import type { SearchResultProps, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
+	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
 	import InputMessage from '$lib/components/inputMessage.svelte';
 	import WatchlistCardadd from '$lib/components/cards/watchlistCardadd.svelte';
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
-	import Error from '../../../+error.svelte';
-	import { error } from '@sveltejs/kit';
 	import { fade } from 'svelte/transition';
 
 	export let data;

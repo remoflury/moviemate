@@ -74,7 +74,7 @@
 
 <section class="container relative">
 	<div class="flex flex-col items-center px-28 pb-5">
-		<Avatar />
+		<Avatar avatarId={data.avatarId} />
 		<p class="info mt-2">{$page.data.user.username}</p>
 	</div>
 	<section>

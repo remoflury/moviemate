@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	// get all mates of user
 	const { data, error } = await supabaseClient
 		.from('Users_details')
-		.select('users_mates')
+		.select('users_mates, users_avatar')
 		.eq('users_id', userId);
 
 	// error handling
@@ -28,14 +28,15 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 	if (mates.length === 0) {
 		return {
-			mates: []
+			mates: [],
+			usersAvatarId: data[0].users_avatar
 		};
 	}
 
 	// get all details of mates
 	const { data: matesDetails, error: matesDetailsError } = await supabaseClient
 		.from('Users_details')
-		.select('users_id, users_username')
+		.select('users_id, users_username, users_avatar')
 		.in('users_id', mates);
 
 	// error handling
@@ -47,7 +48,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const result = createExistingMateProps(matesDetails);
 
 	return {
-		mates: result
+		mates: result,
+		usersAvatarId: data[0].users_avatar
 	};
 };
 

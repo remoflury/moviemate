@@ -17,7 +17,8 @@ export const createExistingMateProps = (input: Record<string, string>[]): Existi
 	const existingMates: ExistingMateProps[] = input.map((mate) => {
 		return {
 			id: mate.users_id,
-			username: mate.users_username
+			username: mate.users_username,
+			avatarId: parseInt(mate.users_avatar)
 		};
 	});
 	return existingMates;

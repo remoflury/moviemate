@@ -6,11 +6,11 @@
 	import MovieTimeAvatar from './movieTimeAvatar.svelte';
 	export let mates: ExistingMateProps[];
 
-	const addMateToStore = (id: string, username: string) => {
+	const addMateToStore = (id: string, username: string, avatarId: number) => {
 		// if id is already in mates store, return early
 		if ($mateStore.mates.some((item) => item.id === id)) return;
 
-		$mateStore.mates = [...$mateStore.mates, { id, username }];
+		$mateStore.mates = [...$mateStore.mates, { id, username, avatarId }];
 	};
 </script>
 
@@ -28,11 +28,12 @@
 				<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />
 				<button
 					aria-label="add mate to session"
-					on:click={() => addMateToStore(mate.id, mate.username)}
+					on:click={() => addMateToStore(mate.id, mate.username, mate.avatarId)}
 				>
 					<MovieTimeAvatar
 						name={mate.username}
 						id={mate.id}
+						avatarId={mate.avatarId}
 						showDeleteButton={false}
 						inversed={true}
 						flexCol={true}

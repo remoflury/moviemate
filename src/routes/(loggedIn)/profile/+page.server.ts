@@ -10,6 +10,17 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const supabaseClient = locals.supabase;
 	const userId = session.user.id;
 
+	const { data, error: err} = await supabaseClient
+		.from('Users_details')
+		.select('users_avatar')
+		.eq('users_id', userId)
+		.single()
+
+	if (err) {
+		console.error(err)
+		throw pageError(500, 'Ups, something went wrong.')
+	}
+
 	let watchlistIds: string[];
 	try {
 		const data = await getAllMovieIds(supabaseClient, [userId]);
@@ -20,6 +31,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	}
 
 	return {
-		watchlistIds
+		watchlistIds,
+		avatarId: data.users_avatar
 	};
 };

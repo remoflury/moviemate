@@ -20,5 +20,5 @@
 </section>
 
 <section class="container">
-	<MatesSession />
+	<MatesSession usersAvatarId={data.usersAvatarId} />
 </section>

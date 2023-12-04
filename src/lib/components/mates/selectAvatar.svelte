@@ -12,10 +12,6 @@
 
 	const dispatch = createEventDispatcher();
 
-	// const sortAvatars = (arr: any[], index: number) => {
-	// 	return arr.slice(index).concat(arr.slice(0, index));
-	// };
-
 	const avatars = [
 		{
 			id: 1,
@@ -38,7 +34,6 @@
 			fileName: 'avatar-5.webp'
 		}
 	];
-	// const sortedAvatars = sortAvatars(avatars, initialAvatarId - 1);
 
 	const options = {
 		omitEnd: true,
@@ -48,10 +43,7 @@
 	};
 
 	const handleMove = (event: any) => {
-		// console.log('event ', event);
 		const imageNumber = event.detail.index + 1;
-		// console.log('imageNumber ', imageNumber);
-		// console.log('currentIndex ', event.detail.index);
 		dispatch('changeAvatar', {
 			imageNumber: imageNumber
 		});

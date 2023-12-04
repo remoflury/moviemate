@@ -13,9 +13,11 @@
 	export let data;
 
 	const handleAvatarChange = async (event: any) => {
+		const imageNumber = event.detail.imageNumber;
+		if (imageNumber === data.avatarId) return;
+
 		const response = await fetch(`/api/avatar?id=${event.detail.imageNumber}`);
 		const { error } = await response.json();
-
 		if (error) console.error(error);
 	};
 </script>

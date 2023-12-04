@@ -15,8 +15,6 @@
 	let loading = false;
 	let searchValue = '';
 
-	// $: console.log(mates);
-
 	const handleFormData = async (resultObject: ActionResult) => {
 		if (resultObject.type === 'error' || resultObject.type === 'failure')
 			return (error = 'Ups, there was an error / failure.');

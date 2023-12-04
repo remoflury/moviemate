@@ -1,19 +1,29 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { showSettings, showGoBack } from '$lib/stores/menu';
+	import { showSettings, showGoBack, previousPath } from '$lib/stores/menu';
 	import PrimaryButton from '$lib/components/primaryButton.svelte';
-	import Avatar from '$lib/components/mates/avatar.svelte';
 	import Accordion from '$lib/components/accordion.svelte';
+	import SelectAvatar from '$lib/components/mates/selectAvatar.svelte';
 
 	$showSettings = false;
 	$showGoBack = true;
+	$previousPath.path = '/profile';
+
+	export let data;
+
+	const handleAvatarChange = async (event: any) => {
+		const response = await fetch(`/api/avatar?id=${event.detail.imageNumber}`);
+		const { error } = await response.json();
+
+		if (error) console.error(error);
+	};
 </script>
 
 <section class="container relative">
 	<h1 class="text-center">Settings</h1>
 	<div class="flex flex-col items-center px-28 pb-5">
-		<Avatar />
+		<SelectAvatar on:changeAvatar={handleAvatarChange} initialAvatarId={data.avatarId} />
 		<p class="info mt-4">{$page.data.user.username}</p>
 	</div>
 	<div class="pb-10">

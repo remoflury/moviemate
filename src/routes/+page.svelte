@@ -177,13 +177,13 @@
 
 <footer class="fixed inset-x-0 bottom-5 text-white py-4 container">
 	<div class="container mx-auto justify-between items-center">
-		<div class="absolute left-5">
-			<p>© MovieMate 2023</p>
+		<div class="absolute left-2">
+			<p class="text-xs">© MovieMate 2023</p>
 		</div>
-		<div class="absolute right-5">
-			<a href="/privacy" class="text-white hover:text-gray-300">Privacy</a>
+		<div class="absolute right-2">
+			<a href="/privacy" class="text-xs text-white hover:text-gray-300">Privacy</a>
 			<span> | </span>
-			<a href="/legalNotice" class="text-white hover:text-gray-300">Legal Notice</a>
+			<a href="/legalNotice" class="text-xs text-white hover:text-gray-300">Legal Notice</a>
 		</div>
 	</div>
 </footer>

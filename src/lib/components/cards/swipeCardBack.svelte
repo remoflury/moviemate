@@ -17,9 +17,6 @@
 
 	const voteRounded: number = parseFloat(movie.vote_average.toFixed(1));
 	const releaseYear: string = movie.release_date.split('-')[0];
-	$: if (isFlipped) {
-		console.log(isFlipped);
-	}
 
 	const getMovieDetails = async (movieId: number) => {
 		const response = await fetch(`/api/movie/${movieId}`);

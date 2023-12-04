@@ -5,12 +5,10 @@
 	export let data;
 	$showGoBack = true;
 	$showSettings = false;
-
-	console.log($previousPath.path);
+	$previousPath.path = '/mate';
+	$previousPath.params = $page.url.search;
 
 	let showMoreCount = 8;
-
-	$previousPath.params = $page.url.search;
 
 	const movies = [...data.matches, ...data.recommendations];
 </script>

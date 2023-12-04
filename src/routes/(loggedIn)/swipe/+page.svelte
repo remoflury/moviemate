@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { TMDBMovieByRecommendationProps } from '$lib/types/contentTypes.js';
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
-	import { generateRandomIndex, getAllMovieIds } from '$lib/utils/moviesUtils.js';
+	import { generateRandomIndex } from '$lib/utils/moviesUtils.js';
 	import { PUBLIC_APP_URL } from '$env/static/public';
 	import {
 		showSettings,
@@ -13,7 +14,7 @@
 	import SwipeCard from '$lib/components/cards/swipeCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import SearchIcon from '$lib/components/icons/searchIcon.svelte';
-	import { onMount } from 'svelte';
+
 	$showSettings = false;
 	$showGoBack = false;
 
@@ -31,33 +32,20 @@
 
 	const fetchMoreMovies = async () => {
 		let randomIndex: number;
-
 		let response!: Response;
 
 		// if user has some matched movies in session
 		if (allMatchedMoviesOfSession.length) {
 			randomIndex = generateRandomIndex(allMatchedMoviesOfSession);
 			response = await fetch(
-				`${PUBLIC_APP_URL}/api/recommendations?movieId=${allMatchedMoviesOfSession[randomIndex].id}`,
-				{
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}
+				`${PUBLIC_APP_URL}/api/recommendations?movieId=${allMatchedMoviesOfSession[randomIndex].id}`
 			);
 		}
 		// if user does not have some matched movies in session, load from initially loaded movies
 		if (!allMatchedMoviesOfSession.length) {
 			randomIndex = generateRandomIndex(movies);
 			response = await fetch(
-				`${PUBLIC_APP_URL}/api/recommendations?movieId=${movies[randomIndex].id}`,
-				{
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}
+				`${PUBLIC_APP_URL}/api/recommendations?movieId=${movies[randomIndex].id}`
 			);
 		}
 
@@ -68,7 +56,6 @@
 
 	const onSwipe = async () => {
 		countIndex = countIndex + 1;
-
 		// if no more movies are available, load more movies
 		if (countIndex + 1 === movies.length) {
 			loading = true;
@@ -85,14 +72,13 @@
 	};
 
 	onMount(() => {
+		// set card proportions
 		cardWrapperTopPadding = window
 			.getComputedStyle(cardWrapper, null)
 			.getPropertyValue('padding-top');
 		cardWrapperBottomPadding = window
 			.getComputedStyle(cardWrapper, null)
 			.getPropertyValue('padding-bottom');
-		console.log(cardWrapperTopPadding);
-		console.log(cardWrapperBottomPadding);
 	});
 </script>
 
@@ -103,7 +89,6 @@
 </div>
 <section class="container" bind:this={cardWrapper}>
 	<h1 hidden>Swipe</h1>
-	<!-- <div class="relative aspect-[9/16]"> -->
 	<div
 		class="relative"
 		style={`

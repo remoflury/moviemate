@@ -20,6 +20,7 @@ export const actions: Actions = {
 		const email = data.get('email');
 		const username = data.get('username');
 		const password = data.get('password');
+		const avatarId = Number(data.get('avatar')) || 1
 
 		let emailError;
 		let usernameError;
@@ -44,7 +45,8 @@ export const actions: Actions = {
 				username,
 				usernameError,
 				password: '',
-				passwordError
+				passwordError,
+				avatar: avatarId
 			};
 
 		// check if users email exists
@@ -60,7 +62,8 @@ export const actions: Actions = {
 				email,
 				emailError: emailAlreadyExists.error,
 				username,
-				usernameError: usernameAlreadyExists.error
+				usernameError: usernameAlreadyExists.error,
+				avatar: avatarId
 			};
 
 		// create user
@@ -71,7 +74,7 @@ export const actions: Actions = {
 		const userId: string = signUpResult?.data?.user?.id || '';
 
 		//write user to db
-		const addUserToDBResult = await addUserToDB(email, username, userId, supabaseClient);
+		const addUserToDBResult = await addUserToDB(email, username, userId, avatarId, supabaseClient);
 		if (!addUserToDBResult.success) {
 			throw pageError(500, 'Error registering user.');
 		}

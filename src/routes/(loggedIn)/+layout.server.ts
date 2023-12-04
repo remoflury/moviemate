@@ -13,7 +13,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 
 	const { data, error } = await supabaseClient
 		.from('Users_details')
-		.select('users_username')
+		.select('users_username, users_avatar')
 		.eq('users_id', userId);
 
 	if (error) {
@@ -25,7 +25,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	return {
 		user: {
 			id: userId,
-			username
+			username,
 		}
 	};
 };

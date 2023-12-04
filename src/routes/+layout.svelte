@@ -27,20 +27,20 @@
 	});
 
 	// set previous path, for back navigation on some pages
-	$previousPath.path = base;
-	afterNavigate(({ from, to }) => {
-		if (to?.url.pathname == '/swipe') {
-			document.body.classList.add('overflow-y-hidden');
-		} else {
-			document.body.classList.remove('overflow-y-hidden');
-		}
+	// $previousPath.path = base;
+	// afterNavigate(({ from, to }) => {
+	// 	if (to?.url.pathname == '/swipe') {
+	// 		document.body.classList.add('overflow-y-hidden');
+	// 	} else {
+	// 		document.body.classList.remove('overflow-y-hidden');
+	// 	}
 
-		if (from?.url.pathname.includes('/mate/findmovies/')) {
-			$previousPath.path = '/mate';
-		} else {
-			$previousPath.path = from?.url.pathname || $previousPath.path;
-		}
-	});
+	// 	if (from?.url.pathname.includes('/mate/findmovies/')) {
+	// 		$previousPath.path = '/mate';
+	// 	} else {
+	// 		$previousPath.path = from?.url.pathname || $previousPath.path;
+	// 	}
+	// });
 </script>
 
 <svelte:head>

@@ -16,23 +16,23 @@
 	const avatars = [
 		{
 			id: 1,
-			fileName: 'Female-Superhero.webp'
+			fileName: 'avatar-1.webp'
 		},
 		{
 			id: 2,
-			fileName: 'Female-Villain.webp'
+			fileName: 'avatar-2.webp'
 		},
 		{
 			id: 3,
-			fileName: 'Male-Superhero.webp'
+			fileName: 'avatar-3.webp'
 		},
 		{
 			id: 4,
-			fileName: 'Male-Villain.webp'
+			fileName: 'avatar-4.webp'
 		},
 		{
 			id: 5,
-			fileName: 'superhero_male_b.webp'
+			fileName: 'avatar-5.webp'
 		}
 	];
 	const sortedAvatars = sortAvatars(avatars, initialAvatarId - 1);

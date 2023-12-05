@@ -287,12 +287,26 @@ export const addMovieToDismissed = async (
 };
 
 
-export const setPreviousPath = (path: string) => {
-	// Updating the current value
-previousPath.update(currentValue => {
-	return { 
-			...currentValue, 
-			path,
-	};
-});
+export const setPreviousPath = (path: string, params: string = '') => {
+
+	if (params) {
+		// Updating the current value
+		previousPath.update(currentValue => {
+			return { 
+				...currentValue, 
+				path,
+				params
+			};
+		});
+	}
+
+	if (!params) {
+			// Updating the current value
+			previousPath.update(currentValue => {
+			return { 
+				...currentValue, 
+				path
+			};
+		});
+	}
 };

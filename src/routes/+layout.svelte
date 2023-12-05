@@ -1,10 +1,9 @@
 <script lang="ts">
 	import '../css/main.css';
-	import { base } from '$app/paths';
 	import { fade } from 'svelte/transition';
-	import { invalidate, afterNavigate } from '$app/navigation';
+	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { bottomNavigationHeight, previousPath } from '$lib/stores/menu';
+	import { bottomNavigationHeight } from '$lib/stores/menu';
 	import { page } from '$app/stores';
 	import { dev } from '$app/environment';
 
@@ -25,22 +24,6 @@
 
 		return () => data.subscription.unsubscribe();
 	});
-
-	// set previous path, for back navigation on some pages
-	// $previousPath.path = base;
-	// afterNavigate(({ from, to }) => {
-	// 	if (to?.url.pathname == '/swipe') {
-	// 		document.body.classList.add('overflow-y-hidden');
-	// 	} else {
-	// 		document.body.classList.remove('overflow-y-hidden');
-	// 	}
-
-	// 	if (from?.url.pathname.includes('/mate/findmovies/')) {
-	// 		$previousPath.path = '/mate';
-	// 	} else {
-	// 		$previousPath.path = from?.url.pathname || $previousPath.path;
-	// 	}
-	// });
 </script>
 
 <svelte:head>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBVideoProps } from '$lib/types/contentTypes';
-	import { previousPath, showGoBack, showSettings } from '$lib/stores/menu';
+	import { showGoBack, showSettings } from '$lib/stores/menu';
 	$showGoBack = true;
 	$showSettings = false;
 	// $previousPath.path = '/mate/findmovies';

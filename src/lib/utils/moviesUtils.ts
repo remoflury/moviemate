@@ -4,6 +4,7 @@ import type {
 	TMDBVideoProps
 } from '$lib/types/contentTypes';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { previousPath } from '$lib/stores/menu';
 
 export const getMatchesAndNotMatchesArray = (array: { movies_watchlist: string[] }[]) => {
 	// If the array is empty or contains a single element, we can't find matches
@@ -283,4 +284,15 @@ export const addMovieToDismissed = async (
 	if (error) {
 		throw Error('Error updating movies');
 	}
+};
+
+
+export const setPreviousPath = (path: string) => {
+	// Updating the current value
+previousPath.update(currentValue => {
+	return { 
+			...currentValue, 
+			path,
+	};
+});
 };

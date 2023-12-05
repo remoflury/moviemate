@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import MatchCard from '$lib/components/cards/matchCard.svelte';
 	import { showGoBack, showSettings, previousPath } from '$lib/stores/menu';
+	import { setPreviousPath } from '$lib/utils/moviesUtils.js';
 	export let data;
 	$showGoBack = true;
 	$showSettings = false;
@@ -10,11 +11,6 @@
 	let showMoreCount = 8;
 
 	const movies = [...data.matches, ...data.recommendations];
-
-	const setPreviousPath = () => {
-		$previousPath.path = $page.url.pathname;
-		$previousPath.params = $page.url.search;
-	};
 </script>
 
 <section class="container">
@@ -24,7 +20,11 @@
 
 	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
 		{#each movies.slice(0, showMoreCount) as movie, index (index)}
-			<MatchCard content={movie} isMatch={movie.match} on:click={setPreviousPath} />
+			<MatchCard
+				content={movie}
+				isMatch={movie.match}
+				on:click={() => setPreviousPath($page.url.pathname, $page.url.search)}
+			/>
 		{/each}
 	</div>
 

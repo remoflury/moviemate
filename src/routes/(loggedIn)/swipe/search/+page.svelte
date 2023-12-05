@@ -8,6 +8,7 @@
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import { fade } from 'svelte/transition';
+	import { setPreviousPath } from '$lib/utils/moviesUtils.js';
 
 	export let data;
 
@@ -194,6 +195,7 @@
 			<div class="grid grid-cols-3 pt-8 gap-x-6 gap-y-10">
 				{#each searchResult as movie, index (index)}
 					<WatchlistCardadd
+						on:click={() => setPreviousPath($page.url.pathname)}
 						on:addMovieToWatchlist={() => addMovieToWatchlist(movie.id.toString())}
 						on:addMovieToDismissedlist={() => addMovieToDismissedlist(movie.id.toString())}
 						on:removeMovieFromLists={() => removeMovieFromLists(movie.id.toString())}

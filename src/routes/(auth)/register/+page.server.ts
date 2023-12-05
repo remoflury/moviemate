@@ -20,7 +20,7 @@ export const actions: Actions = {
 		const email = data.get('email');
 		const username = data.get('username');
 		const password = data.get('password');
-		const avatarId = Number(data.get('avatar')) || 1
+		const avatarId = Number(data.get('avatar')) || 1;
 
 		let emailError;
 		let usernameError;

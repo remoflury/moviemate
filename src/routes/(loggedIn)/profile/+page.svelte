@@ -10,6 +10,7 @@
 	import WatchlistCard from '$lib/components/cards/watchlistCard.svelte';
 	import LoadingSpinner from '$lib/components/loadingSpinner.svelte';
 	import RemoveModal from '$lib/components/modal/removeModal.svelte';
+	import { setPreviousPath } from '$lib/utils/moviesUtils.js';
 
 	export let data;
 
@@ -92,7 +93,7 @@
 		{#if $movies?.length}
 			<div class="grid grid-cols-3 gap-x-6 gap-y-10">
 				{#each $movies as movie, index (index)}
-					<WatchlistCard content={movie} />
+					<WatchlistCard content={movie} on:click={() => setPreviousPath($page.url.pathname)} />
 				{/each}
 			</div>
 			{#if isLoadMoreAvailable && !loading}

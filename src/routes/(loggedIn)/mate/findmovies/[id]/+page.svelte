@@ -3,7 +3,7 @@
 	import { previousPath, showGoBack, showSettings } from '$lib/stores/menu';
 	$showGoBack = true;
 	$showSettings = false;
-	$previousPath.path = '/mate/findmovies';
+	// $previousPath.path = '/mate/findmovies';
 
 	export let data;
 

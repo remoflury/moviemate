@@ -1,11 +1,15 @@
 <script lang="ts">
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
+	import { createEventDispatcher } from 'svelte';
 
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
 	export let isMatch: boolean = false;
+
+	const dispatch = createEventDispatcher();
+	const handleClick = () => dispatch('click');
 </script>
 
-<a href="/mate/findmovies/{content.id}">
+<a href="/mate/findmovies/{content.id}" on:click={handleClick}>
 	<figure class="rounded-3xl overflow-hidden relative">
 		<img
 			src="https://image.tmdb.org/t/p/w300/{content.poster_path}"

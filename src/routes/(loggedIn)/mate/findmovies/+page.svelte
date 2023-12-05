@@ -6,11 +6,15 @@
 	$showGoBack = true;
 	$showSettings = false;
 	$previousPath.path = '/mate';
-	$previousPath.params = $page.url.search;
 
 	let showMoreCount = 8;
 
 	const movies = [...data.matches, ...data.recommendations];
+
+	const setPreviousPath = () => {
+		$previousPath.path = $page.url.pathname;
+		$previousPath.params = $page.url.search;
+	};
 </script>
 
 <section class="container">
@@ -20,7 +24,7 @@
 
 	<div class="grid grid-cols-2 gap-x-6 gap-y-10">
 		{#each movies.slice(0, showMoreCount) as movie, index (index)}
-			<MatchCard content={movie} isMatch={movie.match} />
+			<MatchCard content={movie} isMatch={movie.match} on:click={setPreviousPath} />
 		{/each}
 	</div>
 

@@ -6,7 +6,7 @@
 	import MovieTimeAvatar from './movieTimeAvatar.svelte';
 	export let mates: ExistingMateProps[];
 
-	const addMateToStore = (id: string, username: string, avatarId: number) => {
+	const addMateToStore = (id: string, username: string, avatarId: string) => {
 		// if id is already in mates store, return early
 		if ($mateStore.mates.some((item) => item.id === id)) return;
 

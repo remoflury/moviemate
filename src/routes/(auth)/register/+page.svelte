@@ -15,8 +15,6 @@
 	$: if (form) loading = false;
 
 	let currentAvatarIndex = 1;
-
-	// $: console.log(currentAvatarIndex);
 </script>
 
 <section class="container">

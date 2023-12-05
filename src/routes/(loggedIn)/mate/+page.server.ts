@@ -74,13 +74,13 @@ export const actions: Actions = {
 		// search for email
 		const { data: email, error: emailError } = await supabaseClient
 			.from('Users_details')
-			.select('users_id, users_email, users_username')
+			.select('users_id, users_email, users_username, users_avatar')
 			.ilike('users_email', `%${searchTerm}%`);
 
-		// search for email
+		// search for username
 		const { data: username, error: usernameError } = await supabaseClient
 			.from('Users_details')
-			.select('users_id, users_email, users_username')
+			.select('users_id, users_email, users_username, users_avatar')
 			.ilike('users_username', `%${searchTerm}%`);
 
 		// error handling

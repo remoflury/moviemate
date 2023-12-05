@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let border = false;
-	export let avatarId: number = 1;
+	export let avatarId: string = '1';
 </script>
 
 <figure class="rounded-max overflow-hidden {border ? 'border-gray-dark border' : ''}">

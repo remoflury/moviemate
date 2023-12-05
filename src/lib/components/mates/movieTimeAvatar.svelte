@@ -3,7 +3,7 @@
 	import { mateStore } from '$lib/stores/mates';
 	export let name: string;
 	export let id: string = '';
-	export let avatarId: number;
+	export let avatarId: string;
 	export let showDeleteButton: boolean = true;
 	export let inversed: boolean = false;
 	export let flexCol: boolean = false;

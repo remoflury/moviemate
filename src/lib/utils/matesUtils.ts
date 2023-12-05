@@ -6,7 +6,8 @@ export const createSearchMateProps = (input: Record<string, string>[]): SearchMa
 		return {
 			id: mate.users_id,
 			email: mate.users_email,
-			username: mate.users_username
+			username: mate.users_username,
+			avatarId: mate.users_avatar
 		};
 	});
 	return searchMates;

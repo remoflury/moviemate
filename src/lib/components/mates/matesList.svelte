@@ -27,7 +27,7 @@
 			>
 				<input type="hidden" name="new-mate-id" id={index.toString()} value={mate.id} />
 				<button
-					aria-label="add mate to session"
+					aria-label={`add ${mate.username} to movie session`}
 					on:click={() => addMateToStore(mate.id, mate.username, mate.avatarId)}
 				>
 					<MovieTimeAvatar

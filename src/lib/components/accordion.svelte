@@ -20,7 +20,7 @@
 		<h2>{title}</h2>
 	</button>
 	{#if isOpen}
-		<div transition:slide={{ duration: 350 }}>
+		<div transition:slide={{ duration: 350 }} class="pb-6">
 			<slot />
 		</div>
 	{/if}

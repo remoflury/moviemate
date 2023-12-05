@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { removeMovie } from '$lib/stores/watchlist';
 	import type { TMDBMovieByIdrops, TMDBMovieByRecommendationProps } from '$lib/types/contentTypes';
+	import { createEventDispatcher } from 'svelte';
 
 	export let showDeleteButton: boolean = true;
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
@@ -14,10 +15,12 @@
 		$removeMovie.movieTitle = movieTitle;
 		$removeMovie.pageYOffset = y;
 	};
+	const dispatch = createEventDispatcher();
+	const handleClick = () => dispatch('click');
 </script>
 
 <svelte:window bind:scrollY={y} />
-<a class="relative" href="/mate/findmovies/{content.id}">
+<a class="relative" href="/mate/findmovies/{content.id}" on:click={handleClick}>
 	<figure class="rounded-3xl overflow-hidden aspect-3/4">
 		<img
 			class="object-center object-cover w-full h-full"

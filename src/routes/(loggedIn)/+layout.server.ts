@@ -6,7 +6,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	const session = await locals.getSession();
 
 	if (!session) {
-		throw pageError(401, 'Unauthorized')
+		throw pageError(401, 'Unauthorized');
 	}
 
 	const userId = session?.user.id;
@@ -25,7 +25,7 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	return {
 		user: {
 			id: userId,
-			username,
+			username
 		}
 	};
 };

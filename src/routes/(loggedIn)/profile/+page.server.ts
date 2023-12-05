@@ -10,15 +10,15 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const supabaseClient = locals.supabase;
 	const userId = session.user.id;
 
-	const { data, error: err} = await supabaseClient
+	const { data, error: err } = await supabaseClient
 		.from('Users_details')
 		.select('users_avatar')
 		.eq('users_id', userId)
-		.single()
+		.single();
 
 	if (err) {
-		console.error(err)
-		throw pageError(500, 'Ups, something went wrong.')
+		console.error(err);
+		throw pageError(500, 'Ups, something went wrong.');
 	}
 
 	let watchlistIds: string[];

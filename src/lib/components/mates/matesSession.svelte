@@ -4,7 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import MovieTimeAvatar from './movieTimeAvatar.svelte';
 	import PrimaryLink from '$lib/components/primaryLink.svelte';
-	export let usersAvatarId: number;
+	export let usersAvatarId: string;
 </script>
 
 <h2>Movie time with mates</h2>

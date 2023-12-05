@@ -27,14 +27,14 @@
 		}
 	};
 
-	const addMateToStore = (id: string, username: string) => {
+	const addMateToStore = (id: string, username: string, avatarId: string) => {
 		// if id is already in mates store, return early
 		if ($mateStore.mates.some((item) => item.id === id)) return;
 
 		// if users id is equal to selected mate, return early (can not add yourself)
 		if ($page.data.userId === id) return setTimeOutError('Try adding another mate than yourself.');
 		// else push it to store
-		$mateStore.mates = [...$mateStore.mates, { id, username }];
+		$mateStore.mates = [...$mateStore.mates, { id, username, avatarId }];
 	};
 
 	const setTimeOutError = (errorMessage: string) => {
@@ -48,6 +48,8 @@
 		searchValue = '';
 		mates = [];
 	};
+
+	// $: console.log(mates);
 </script>
 
 <form
@@ -82,12 +84,12 @@
 				on:click|preventDefault={clearSearch}
 				class="absolute top-1/2 right-2.5 transform -translate-y-1/2 border-none cursor-pointer"
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
-					><path
+				<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+					<path
 						class="fill-black"
 						d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
-					/></svg
-				>
+					/>
+				</svg>
 			</button>
 		{/if}
 	</div>
@@ -105,10 +107,10 @@
 					transition:slide={{ duration: 250 }}
 					class="grid grid-cols-4 gap-4 items-center"
 					aria-label="add mate to session"
-					on:click={() => addMateToStore(mate.id, mate.username)}
+					on:click={() => addMateToStore(mate.id, mate.username, mate.avatarId)}
 				>
 					<div class="col-span-1 m-2">
-						<Avatar />
+						<Avatar avatarId={mate.avatarId} />
 					</div>
 					<p class="">{mate.username}</p>
 				</button>

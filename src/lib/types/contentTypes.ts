@@ -2,11 +2,12 @@ export type SearchMatesProps = {
 	email: string;
 	id: string;
 	username: string;
+	avatarId: string;
 };
 export type ExistingMateProps = {
 	id: string;
 	username: string;
-	avatarId: number
+	avatarId: string;
 };
 
 export type TMDBMovieByIdrops = {

@@ -7,18 +7,14 @@
 	export let content: TMDBMovieByIdrops | TMDBMovieByRecommendationProps;
 	const dispatch = createEventDispatcher();
 
-	const addMovieToWatchlist = () => {
-		dispatch('addMovieToWatchlist');
-	};
-	const addMovieToDismissedlist = () => {
-		dispatch('addMovieToDismissedlist');
-	};
-	const removeMovieFromLists = () => {
-		dispatch('removeMovieFromLists');
-	};
+	const addMovieToWatchlist = () => dispatch('addMovieToWatchlist');
+	const addMovieToDismissedlist = () => dispatch('addMovieToDismissedlist');
+	const removeMovieFromLists = () => dispatch('removeMovieFromLists');
+
+	const handleClick = () => dispatch('click');
 </script>
 
-<a class="relative" href="/mate/findmovies/{content.id}">
+<a class="relative" href="/mate/findmovies/{content.id}" on:click={handleClick}>
 	<figure class="rounded-3xl overflow-hidden aspect-3/4">
 		<img
 			class="object-center object-cover w-full h-full"

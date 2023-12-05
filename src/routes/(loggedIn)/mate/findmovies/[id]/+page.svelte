@@ -12,6 +12,8 @@
 
 	const voteRounded: number = parseFloat(movie.vote_average.toFixed(1));
 	const releaseYear: string = movie.release_date.split('-')[0];
+
+	console.log(data);
 </script>
 
 <section class="container">
@@ -40,7 +42,10 @@
 				<p class="info whitespace-nowrap">{voteRounded} / 10</p>
 			{/if}
 		</div>
-		<p class="info mb-6">{releaseYear} / {movie.genres[0].name}</p>
+		<p class="info mb-6">
+			{releaseYear}
+			{#if movie.genres.length}/ {movie.genres[0].name} {/if}
+		</p>
 		<p>{movie.overview}</p>
 	</article>
 </section>

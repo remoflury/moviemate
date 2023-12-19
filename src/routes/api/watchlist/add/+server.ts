@@ -29,7 +29,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 	}
 
 	// add movie to watchlist
-	if (!watchlist.includes(movieId)) watchlist.push(movieId);
+	if (!watchlist.includes(movieId)) watchlist.unshift(movieId);
 
 	// update db with new values
 	try {

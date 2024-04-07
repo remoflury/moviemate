@@ -1,39 +1,22 @@
-# Movie Mate
+# create-svelte
 
-This is an web-app built with svelte-kit and tailwindcss. It uses the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction) to fetch movie data.
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-## Tech-Stack
+## Creating a project
 
-This repo uses:
-
-- Svelte & SvelteKit as JS Framework (with TypeScript)
-- Supabase with the according SDK and sveltekit-supabase-auth-helpers
-- Tailwind CSS
-- TMDB API
-
-## Setup Dev-Environment
-
-In your Terminal run:
+If you're seeing this, you've probably already done this step. Congrats!
 
 ```bash
-  npm install
-```
+# create a new project in the current directory
+npm create svelte@latest
 
-Afterwards, create an .env file in the root of the project and paste in the necessary credentials.
+# create a new project in my-app
+npm create svelte@latest my-app
+```
 
 ## Developing
 
-Development takes place on the dev branch.
-
-### Coding Standards
-
-- camelCase for JS
-- kebab-case for HTML and CSS
-- use descriptive names for variables, functions, etc.
-- use english for naming
-- indentation with 2 spaces
-
-To start the dev server:
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
 npm run dev
@@ -51,3 +34,5 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

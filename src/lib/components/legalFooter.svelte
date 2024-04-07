@@ -1,5 +1,5 @@
 <script lang="ts">
-	const year = new Date().getFullYear();
+	const year = new Date().getFullYear()
 
 	const legalLinks = [
 		{
@@ -10,7 +10,7 @@
 			title: 'Legal Notice',
 			uri: '/legal-notice'
 		}
-	];
+	]
 </script>
 
 <footer class="container py-8 flex justify-between items-center">

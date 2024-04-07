@@ -4,16 +4,16 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-      supabase: SupabaseClient
-      safeGetSession(): Promise<{ session: Session | null; user: User | null }>
-    }
-    interface PageData {
-      session: Session | null
-      supabase: SupabaseClient
-    }
+			supabase: SupabaseClient
+			safeGetSession(): Promise<{ session: Session | null; user: User | null }>
+		}
+		interface PageData {
+			session: Session | null
+			supabase?: SupabaseClient
+		}
 		// interface PageState {}
 		// interface Platform {}
 	}
 }
 
-export {};
+export {}

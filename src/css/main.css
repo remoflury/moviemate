@@ -4,15 +4,15 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply scroll-smooth font-body bg-blue text-white selection:text-blue selection:bg-turqoise min-h-dvh tracking-wide
-  }
+	body {
+		@apply scroll-smooth font-body bg-blue text-white selection:text-blue selection:bg-turqoise min-h-dvh tracking-wide;
+	}
 
-  svg {
-    @apply max-w-full
-  }
+	svg {
+		@apply max-w-full;
+	}
 
-  /* Typography */
+	/* Typography */
 	h1,
 	h2,
 	h3,
@@ -30,8 +30,29 @@
 	}
 
 	p,
-	a {
-		@apply text-base;
+	a,
+	button {
+		@apply text-base tracking-wide;
 	}
 
+	/* Layout System */
+
+	.section-spacing {
+		@apply py-10
+	}
+
+	/* Form Styles */
+	label {
+		@apply hidden
+	}
+
+	input {
+		@apply bg-white text-blue placeholder:text-gray-light py-2 px-6 rounded-max inline-block w-full transition;
+		@apply focus:outline-turqoise focus:outline focus:outline-2;
+		@apply first-of-type:mt-0 mt-6
+	}
+
+	input[aria-invalid='true'] {
+		@apply outline outline-red outline-2
+	}
 }

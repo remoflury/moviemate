@@ -1,17 +1,17 @@
 <script lang="ts">
-	import Logo from '$lib/assets/logo.svelte';
-	import LegalFooter from '$lib/components/legalFooter.svelte';
-	import { SvelteComponent, onMount } from 'svelte';
+	import Logo from '$lib/assets/logo.svelte'
+	import LegalFooter from '$lib/components/legalFooter.svelte'
+	import { SvelteComponent, onMount } from 'svelte'
 
-	let footerElem: HTMLDivElement;
-	let footerHeight: number;
+	let footerElem: HTMLDivElement
+	let footerHeight: number
 
 	onMount(() => {
-		footerHeight = footerElem.clientHeight;
-	});
+		footerHeight = footerElem.clientHeight
+	})
 
 	function recalculateFooterHeight() {
-		footerHeight = footerElem.clientHeight;
+		footerHeight = footerElem.clientHeight
 	}
 </script>
 

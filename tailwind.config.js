@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
-  theme: {
-    colors: {
+	content: ['./src/**/*.{html,js,svelte,ts}'],
+	theme: {
+		colors: {
 			transparent: 'transparent',
 			blue: '#0C011A',
 			white: '#FDFFFC',
@@ -18,24 +18,23 @@ export default {
 			body: ['Manrope', 'sans-serif'],
 			heading: ['Outfit', 'sans-serif']
 		},
-    extend: {
-      container: {
+		extend: {
+			container: {
 				center: true,
 				padding: {
 					DEFAULT: '1.5rem'
 				}
 			},
-      borderRadius: {
-        max: '100vmax'
-      },
-      aspectRatio: {
+			borderRadius: {
+				max: '100vmax'
+			},
+			aspectRatio: {
 				'3/4': '3/4'
 			},
-      screens: {
+			screens: {
 				xs: '490px'
 			}
-    },
-  },
-  plugins: [],
+		}
+	},
+	plugins: []
 }
-

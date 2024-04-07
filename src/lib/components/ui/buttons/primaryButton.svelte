@@ -1,7 +1,7 @@
 <script lang="ts">
 	import LoadingSpinner from '$lib/assets/loadingSpinner.svelte'
 
-	export let type: 'button' | 'submit' | 'reset' = 'button'
+	export let type: 'button' | 'submit' | 'reset' = 'submit'
 	export let disabled: boolean = false
 	export let text: string
 </script>

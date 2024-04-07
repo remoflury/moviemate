@@ -1,0 +1,127 @@
+<svg id="Layer_1" viewBox="0 0 701.13 273.31" width="200" height="80">
+	<text class="font-heading text-9xl font-thin" transform="translate(0 238.92)"
+		><tspan class="fill-turqoise tracking-[-0.03m]" x="0" y="0" xml:space="preserve"
+			>Movie
+		</tspan><tspan class="tracking-[-0-04em] fill-white" x="380.9" y="0">M</tspan><tspan
+			class="tracking-[-0-04em] fill-white"
+			x="488.33"
+			y="0">a</tspan
+		>
+		<tspan class="fill-white tracking-[-0.03em]" x="561.23" y="0">te</tspan></text
+	>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m697.13,98.53v138.9c0,17.61-15.65,31.89-34.96,31.89h-262.14c-16.48,0-29.85-12.19-29.85-27.22V101.42l7.25-4.4,6.66-5.82h305c4.44,0,8.03,3.28,8.03,7.33Z"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m689.96,30.06c.61,3.34-1.86,8.45-5.51,9.01l-298.73,43.58-2.44.37c-3.66.56-15.06-9.55-15.67-12.89l.23,9.03c-.17-.97-.16-8.07-.23-9.03-1.35-16.27,10.97-24.94,28.95-25.71L654.76,5.06c16.26-4.44,31.63,5.58,34.35,20.4l.85,4.6Z"
+	>
+	</path><ellipse
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		cx="367.36"
+		cy="88.8"
+		rx="12.41"
+		ry="11.32"
+	></ellipse>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m408.73,40.94c-10.13,14.81-19.27,28.16-27.48,40.16"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m452.53,37.18c-9.16,13.39-18.32,24.81-27.48,38.19"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m493.75,28.93c-10.13,14.81-20.68,30.18-28.88,42.17"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m535.12,22.63c-10.13,14.81-21.22,30.53-29.43,42.52"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m580.14,15.76c-10.13,14.81-19.27,28.16-27.48,40.16"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m580.14,15.76c-10.13,14.81-21.51,30.87-29.72,42.86"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m625.45,8.86c-10.13,14.81-19.27,30.84-27.48,42.83"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m666.82,2.55c-10.13,14.81-20.22,31.25-28.43,43.24"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m410.88,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m454.29,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m502.36,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m548.96,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m589.23,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m633.93,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m678.64,119.41c-10.34-9.85-20.67-19.7-31.01-29.54"
+	>
+	</path>
+	<path
+		class="fill-none stroke-turqoise stroke-[8px]"
+		stroke-miterlimit="10"
+		d="m694.19,119.94c-107.08,0-214.16,0-321.23,0"
+	>
+	</path></svg
+>

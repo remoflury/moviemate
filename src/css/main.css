@@ -5,6 +5,33 @@
 
 @layer base {
   body {
-    @apply scroll-smooth
+    @apply scroll-smooth font-body bg-blue text-white selection:text-blue selection:bg-turqoise min-h-dvh tracking-wide
   }
+
+  svg {
+    @apply max-w-full
+  }
+
+  /* Typography */
+	h1,
+	h2,
+	h3,
+	h4 {
+		@apply font-heading text-turqoise font-bold;
+	}
+
+	h1,
+	h2 {
+		@apply text-2xl mb-4 uppercase lg:text-4xl;
+	}
+
+	h3 {
+		@apply text-lg;
+	}
+
+	p,
+	a {
+		@apply text-base;
+	}
+
 }

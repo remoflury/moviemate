@@ -4,13 +4,13 @@ export default {
   theme: {
     colors: {
 			transparent: 'transparent',
-			black: '#0C011A',
+			blue: '#0C011A',
 			white: '#FDFFFC',
 			gray: {
 				dark: '#707070',
 				light: '#A0A0A0'
 			},
-			primary: '#2EC4B6',
+			turqoise: '#2EC4B6',
 			green: '#2DB722',
 			red: '#e02e27'
 		},

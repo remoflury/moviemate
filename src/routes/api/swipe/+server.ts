@@ -27,11 +27,11 @@ export const GET: RequestHandler = async ({ locals }) => {
     error(500)
   }
 
-  const likedMovies = dbMovies[0].movie_likes
-  const dislikedMovies = dbMovies[0].movie_dislikes
+  const likedMovieIds = dbMovies[0].movie_likes.map((row: {movie_id: number}) => row.movie_id)
+  const dislikedMovieIds = dbMovies[0].movie_dislikes.map((row: {movie_id: number}) => row.movie_id)
 
   // if user has no liked movies, return movies from discovery
-  if (!likedMovies.length) {
+  if (!likedMovieIds.length) {
     const response = await fetch(`${PUBLIC_TMDB_BASE_URL}/discover/movie`, {
       headers: {
         accept: 'application/json',
@@ -39,6 +39,7 @@ export const GET: RequestHandler = async ({ locals }) => {
       }
     })
     const data = await response.json()
+    console.log("user has no liked movies")
     return json(data)
   }
 
@@ -46,24 +47,31 @@ export const GET: RequestHandler = async ({ locals }) => {
   // based on a random id from the liked movies
   let hasRecommendations = false
   let recommendationsData 
-  
+
   // some recommendation fetches return empty results
   // fetch inside a while loop until a non-empty result is returned
   while (!hasRecommendations) {
-    const randomIndex = getRandomIndex(likedMovies)
+    const randomIndex = getRandomIndex(likedMovieIds)
 
-    const response = await fetch(`${PUBLIC_TMDB_BASE_URL}/movie/${likedMovies[randomIndex].movie_id}/recommendations?language=en-US`, {
+    const response = await fetch(`${PUBLIC_TMDB_BASE_URL}/movie/${likedMovieIds[randomIndex]}/recommendations?language=en-US`, {
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${TMDB_AUTH_KEY}`
       }
     })
-    const data = await response.json()
-    if (data.results?.length) {
+    recommendationsData = await response.json()
+    // filter out movies that already have been liked
+    recommendationsData.results = recommendationsData.results.filter((movie: {id: number}) => !likedMovieIds.includes(movie.id))
+
+    // filter out movies that have been disliked
+    recommendationsData.results = recommendationsData.results.filter((movie: {id: number}) => !dislikedMovieIds.includes(movie.id))
+
+    if (recommendationsData.results?.length) {
       hasRecommendations = true
-      recommendationsData = data
     }
+
   }
+  console.log("user has liked movies")
   
   return json(recommendationsData)
 };

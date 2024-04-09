@@ -38,7 +38,7 @@
 	/* Layout System */
 
 	.section-spacing {
-		@apply py-10
+		@apply py-6
 	}
 
 	/* Form Styles */

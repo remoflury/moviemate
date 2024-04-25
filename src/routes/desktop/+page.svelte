@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Logo from '$lib/assets/logo.svelte'
 	import LegalFooter from '$lib/components/legalFooter.svelte'
-	import { SvelteComponent, onMount } from 'svelte'
+	import { onMount } from 'svelte'
 
 	let footerElem: HTMLDivElement
 	let footerHeight: number

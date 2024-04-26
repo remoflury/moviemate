@@ -27,15 +27,15 @@
 		console.log(recommendations)
 	}
 
-	const handleSwipe = async () => {
-		await dislikeMovie(currentIndex)
+	const handleSwipe = async (direction: 'left' | 'right') => {
+		await addMovieToDB(currentIndex, direction)
 		currentIndex++
 		recommendations.shift()
 		recommendations = [...recommendations]
 	}
 
-	const dislikeMovie = async (index: number) => {
-		const response = await fetch('api/swipe/dislike', {
+	const addMovieToDB = async (index: number, direction: 'left' | 'right') => {
+		const response = await fetch(`api/swipe/${direction === 'left' ? 'dislike' : 'like'}`, {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json'
@@ -62,8 +62,8 @@
 				<SwipeCard
 					content={recommendation}
 					zIndex={index * -1}
-					on:swipe-left={handleSwipe}
-					on:swipe-right={handleSwipe}
+					on:swipe-left={() => handleSwipe('left')}
+					on:swipe-right={() => handleSwipe('right')}
 				/>
 			{/each}
 		</div>

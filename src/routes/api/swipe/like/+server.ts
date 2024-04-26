@@ -8,22 +8,22 @@ export const POST: RequestHandler = async ({ locals, request}) => {
   const body = await request.json()
   if (!body.movieId) error(400, 'id is required')
 
-  const { data: dislikeData, error: dislikeDataErr } = await locals.supabase
-    .from('movie_dislikes')
+  const { data: likesData, error: likeDataErr } = await locals.supabase
+    .from('movie_likes')
     .select('movie_id')
     .match({
       'movie_id': body.movieId,
       'user_uid': session.user.id
     })
 
-  if (dislikeDataErr) {
-    console.log(dislikeDataErr)
-    error(500, dislikeDataErr.message)
+  if (likeDataErr) {
+    console.log(likeDataErr)
+    error(500, likeDataErr.message)
   }
 
-  if (dislikeData.length == 0) {
+  if (likesData.length == 0) {
     const { error: dislikeInsertErr } = await locals.supabase
-      .from('movie_dislikes')
+      .from('movie_likes')
       .insert({'movie_id': body.movieId})
 
       if (dislikeInsertErr) {

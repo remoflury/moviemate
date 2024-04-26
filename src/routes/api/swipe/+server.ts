@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ locals }) => {
   if (!session) error(401)
   
 
-  // get all liked movies
+  // get all liked and disliked movies
   const { data: dbMovies, error: dbMoviesError } = await locals.supabase
     .from(`user`)
     .select(`

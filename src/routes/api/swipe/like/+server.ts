@@ -3,7 +3,7 @@ import type { RequestHandler } from "./$types";
 
 export const POST: RequestHandler = async ({ locals, request}) => {
   const session = await locals.safeGetSession();
-  if (!session) error(401)
+  if (!session.session) error(401)
 
   const body = await request.json()
   if (!body.movieId) error(400, 'id is required')

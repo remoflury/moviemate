@@ -6,7 +6,7 @@ import { getRandomIndex } from "$lib/utils/generalUtils";
 
 export const GET: RequestHandler = async ({ locals }) => {
   const session = await locals.safeGetSession();
-  if (!session) error(401)
+  if (!session.session) error(401)
   
 
   // get all liked and disliked movies

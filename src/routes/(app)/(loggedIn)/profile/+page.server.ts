@@ -3,8 +3,9 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
   const session = await locals.safeGetSession()
-  if (!session) error(401)
+  if (!session.session) error(401)
 
+  // get user data
   const { data: user, error: userError } = await locals.supabase
     .from('user')
     .select('username, avatar_id')

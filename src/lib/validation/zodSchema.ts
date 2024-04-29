@@ -37,3 +37,12 @@ export const registerSchema = z.object({
 });
 
 export type RegisterSchema = typeof registerSchema
+
+export const movieIdSchema = z.object({
+	movieId: z
+		.number({ required_error: 'Movie ID is required.' })
+		.positive({ message: 'Movie ID must be a positive number.' })
+		.step(1, { message: 'Movie ID must be a whole number.' })
+})
+
+export type MovieIdSchema = typeof movieIdSchema

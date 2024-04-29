@@ -10,11 +10,14 @@
 	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 	import LinkButton from '$lib/components/ui/buttons/linkButton.svelte'
 	import { fade } from 'svelte/transition'
+	import RemoveFromWatchlistForm from '$lib/components/form/removeFromWatchlistForm.svelte'
 
 	export let data
 	let totalMovies: number
 	let limit = 9
 	let offset = 0
+	let showRemoveFromWatchlistForm = false
+	let currentMovie: MovieByIdProps
 
 	const avatarImage = avatarImages.find((avatar) => avatar.id === data.user.avatar_id)
 
@@ -28,6 +31,10 @@
 
 	const handleLoadMore = () => {
 		limit += 9
+	}
+
+	const toggleRemoveFromWatchlistForm = () => {
+		showRemoveFromWatchlistForm = !showRemoveFromWatchlistForm
 	}
 </script>
 
@@ -54,7 +61,18 @@
 							href="/profile/{movie.id}"
 							src={getTMDBImageUrl(movie.poster_path || movie.backdrop_path)}
 							alt="Poster of {movie.title}"
-						/>
+							class="relative isolate"
+						>
+							<button
+								on:click|preventDefault={() => {
+									toggleRemoveFromWatchlistForm()
+									currentMovie = movie
+								}}
+								class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 z-10 bg-white aspect-square rounded-full w-5 grid place-content-center"
+							>
+								<p class="font-bold text-gray-dark -translate-y-px">-</p>
+							</button>
+						</MovieLinkCard>
 					</article>
 				{/each}
 				{#if movies.length < totalMovies}
@@ -75,3 +93,15 @@
 		{/await}
 	</div>
 </section>
+
+<RemoveFromWatchlistForm
+	data={data.removeFromWatchlistForm}
+	actionPath="?/removefromwatchlist"
+	isShown={showRemoveFromWatchlistForm}
+	movie={currentMovie}
+	on:closeModal={toggleRemoveFromWatchlistForm}
+	on:successfulRemoval={() => {
+		limit += limit
+		limit / 2
+	}}
+/>

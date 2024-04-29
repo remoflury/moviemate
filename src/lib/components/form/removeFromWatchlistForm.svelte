@@ -5,10 +5,11 @@
 	import { onDestroy, onMount } from 'svelte'
 	import { superForm } from 'sveltekit-superforms'
 	import { createEventDispatcher } from 'svelte'
-	import { fly } from 'svelte/transition'
+	import { fly, slide } from 'svelte/transition'
 	import { TRANSITION } from '$lib/utils/constants'
 	import type { MovieByIdProps } from '$lib/types/TMDB'
 	import PrimaryButton from '../ui/buttons/primaryButton.svelte'
+	import FetchErrorMessage from '../ui/general/fetchErrorMessage.svelte'
 
 	export let data: SuperValidated<Infer<MovieIdSchema>>
 	export let actionPath: string
@@ -27,9 +28,10 @@
 		closeModal()
 	}
 
-	const { form, errors, enhance, delayed } = superForm(data, {
+	const { message, enhance, delayed } = superForm(data, {
 		id: Math.random().toString(),
 		onSubmit: ({ formData }) => {
+			message.update((value) => (value = ''))
 			formData.set('movieId', movie.id.toString())
 		},
 		onUpdate: ({ result }) => {
@@ -62,6 +64,11 @@
 					<PrimaryButton text="no" type="button" on:click={closeModal} color="white" />
 					<PrimaryButton text="yes" class="!mt-0" color="blue" disabled={$delayed} />
 				</div>
+				{#if $message}
+					<div class="mt-6" transition:slide={TRANSITION}>
+						<FetchErrorMessage message={$message} />
+					</div>
+				{/if}
 			</form>
 		</div>
 	</div>

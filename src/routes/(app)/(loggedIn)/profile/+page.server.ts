@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import { fail, superValidate } from "sveltekit-superforms";
+import { fail, message, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { movieIdSchema } from "$lib/validation/zodSchema";
 
@@ -54,7 +54,7 @@ export const actions: Actions = {
 
     if (removeError) {
       console.error(removeError)
-      return fail(500, {form})
+      return message(form, "Error removing from watchlist. Try again later.", {status: 500})
     }
 
     return {form}

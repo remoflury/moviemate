@@ -2,6 +2,7 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { PUBLIC_TMDB_BASE_URL } from "$env/static/public";
 import { TMDB_AUTH_KEY } from "$env/static/private";
+import type { MovieByIdProps } from "$lib/types/TMDB";
 
 export const GET: RequestHandler = async ({locals, url, fetch }) => {
   const session = await locals.safeGetSession()
@@ -26,11 +27,7 @@ export const GET: RequestHandler = async ({locals, url, fetch }) => {
 
   const movieIds = movieIdData.map((movieIdData: {movie_id: number}) => movieIdData.movie_id)
 
-  console.log(movieIds)
-
-  let movies: any[] = []
-
-  movieIds.forEach(async (movieId: number) => {
+  const movies: MovieByIdProps[] = await Promise.all(movieIds.map(async (movieId: number) => {
     const response = await fetch(`${PUBLIC_TMDB_BASE_URL}/movie/${movieId}`, {
       method: 'GET',
       headers: {
@@ -38,14 +35,9 @@ export const GET: RequestHandler = async ({locals, url, fetch }) => {
         Authorization: `Bearer ${TMDB_AUTH_KEY}`
       }
     })
-    const data = await response.json()
-    console.log(data)
-    movies.push(data)
-  })
-
-  console.log(movies)
-
-  await new Promise((resolve) => setTimeout(resolve, 2000))
+    const data: MovieByIdProps[] = await response.json()
+    return data
+  }))
 
   return json(movies)
 };

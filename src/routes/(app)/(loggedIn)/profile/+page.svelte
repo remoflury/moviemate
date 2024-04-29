@@ -2,6 +2,11 @@
 	import { avatarImages } from '$lib/utils/data'
 	import UserCard from '$lib/components/ui/cards/userCard.svelte'
 	import MovieSkeletonCard from '$lib/components/ui/skeleton/movieSkeletonCard.svelte'
+	import MovieLinkCard from '$lib/components/ui/cards/movieLinkCard.svelte'
+	import type { MovieByIdProps } from '$lib/types/TMDB.js'
+	import { getTMDBImageUrl } from '$lib/utils/generalUtils'
+	import { flip } from 'svelte/animate'
+	import { TRANSITION } from '$lib/utils/constants.js'
 
 	export let data
 
@@ -9,7 +14,8 @@
 
 	const getWatchlist = async () => {
 		const response = await fetch('api/watchlist')
-		const data = await response.json()
+		const data: MovieByIdProps[] = await response.json()
+		return data
 		console.log(data)
 	}
 </script>
@@ -24,13 +30,21 @@
 </section>
 <section class="container section-spacing">
 	<h2>Watchlist</h2>
-	{#await getWatchlist()}
-		<div class="grid grid-cols-3 gap-3">
+	<div class="grid grid-cols-3 gap-3">
+		{#await getWatchlist()}
 			{#each Array(9) as _}
 				<MovieSkeletonCard />
 			{/each}
-		</div>
-	{:then}
-		loaded
-	{/await}
+		{:then movies}
+			{#each movies as movie (movie.id)}
+				<article animate:flip={TRANSITION}>
+					<MovieLinkCard
+						href="/profile/{movie.id}"
+						src={getTMDBImageUrl(movie.poster_path)}
+						alt="Poster of {movie.title}"
+					/>
+				</article>
+			{/each}
+		{/await}
+	</div>
 </section>

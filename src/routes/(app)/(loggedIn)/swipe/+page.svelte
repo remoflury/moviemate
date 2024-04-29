@@ -6,7 +6,7 @@
 
 	export let data
 	let recommendations: RecommendationProps[] = []
-	let recommendationsOriginal: RecommendationProps[] = []
+	let recommendationsLength: number
 	let currentIndex = 0
 
 	async function getMovies(reload: boolean) {
@@ -18,13 +18,13 @@
 		const response = await fetch(`/api/swipe`)
 		const data = await response.json()
 		recommendations = [...data.results]
-		recommendationsOriginal = [...data.results]
+		recommendationsLength = recommendations.length
+		console.log(recommendations)
 
 		// error handling
 		if (!recommendations || !recommendations.length) {
 			throw Error('No recommendations found')
 		}
-		console.log(recommendations)
 	}
 
 	const handleSwipe = async (direction: 'left' | 'right') => {
@@ -47,7 +47,7 @@
 		const data = await response.json()
 	}
 
-	$: reload = currentIndex >= recommendationsOriginal.length ? true : false
+	$: reload = currentIndex >= recommendationsLength ? true : false
 </script>
 
 <section class="container section-spacing">

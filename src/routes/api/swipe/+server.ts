@@ -66,6 +66,9 @@ export const GET: RequestHandler = async ({ locals }) => {
     // filter out movies that have been disliked
     recommendationsData.results = recommendationsData.results.filter((movie: {id: number}) => !dislikedMovieIds.includes(movie.id))
 
+    // filter out movies that have no poster or backdrop path
+    recommendationsData.results = recommendationsData.results.filter((movie: {poster_path: string}) => movie.poster_path)
+
     if (recommendationsData.results?.length) {
       hasRecommendations = true
     }

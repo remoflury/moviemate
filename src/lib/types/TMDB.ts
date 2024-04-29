@@ -29,7 +29,10 @@ export type MovieByIdProps = {
     backdrop_path: string
   },
   budget: number,
-  genres: {id: number, name: string}[],
+  genres: {
+    id: number,
+    name: string
+  }[],
   homepage: string,
   id: number,
   imdb_id: string,
@@ -37,7 +40,7 @@ export type MovieByIdProps = {
   original_title: string,
   overview: string,
   popularity: number,
-  poster_path: string,
+  poster_path: string | null,
   production_companies: {
     id: number,
     logo_path: string,

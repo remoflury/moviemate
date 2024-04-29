@@ -19,6 +19,7 @@ export const GET: RequestHandler = async ({locals, url, fetch }) => {
       count: 'exact',
     })
     .eq('user_uid', session.user.id)
+    .order('created_at', {ascending: false})
     // limit -1, as range() is 0-indexed
     .range(offset, limit - 1)
   

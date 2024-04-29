@@ -13,9 +13,11 @@ export const GET: RequestHandler = async ({locals, url, fetch }) => {
   const limit = url.searchParams.get('limit') ? parseInt(url.searchParams.get('limit') as string) : 9
   const offset = url.searchParams.get('offset') ? parseInt(url.searchParams.get('offset') as string) : 0
 
-  const { data: movieIdData, error: movieIdsError } = await locals.supabase
+  const { data: movieIdData, error: movieIdsError, count} = await locals.supabase
     .from('movie_likes')
-    .select('movie_id')
+    .select('movie_id', {
+      count: 'exact',
+    })
     .eq('user_uid', session.user.id)
     // limit -1, as range() is 0-indexed
     .range(offset, limit - 1)
@@ -39,5 +41,8 @@ export const GET: RequestHandler = async ({locals, url, fetch }) => {
     return data
   }))
 
-  return json(movies)
+  return json({
+    movies,
+    totalCount: count
+  })
 };

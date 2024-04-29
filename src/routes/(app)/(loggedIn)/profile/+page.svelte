@@ -7,16 +7,19 @@
 	import { getTMDBImageUrl } from '$lib/utils/generalUtils'
 	import { flip } from 'svelte/animate'
 	import { TRANSITION } from '$lib/utils/constants.js'
+	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 
 	export let data
+	let totalMovies: number
 
 	const avatarImage = avatarImages.find((avatar) => avatar.id === data.user.avatar_id)
 
 	const getWatchlist = async () => {
 		const response = await fetch('api/watchlist')
-		const data: MovieByIdProps[] = await response.json()
-		return data
-		console.log(data)
+		const data = await response.json()
+		const movies: MovieByIdProps[] = data.movies
+		totalMovies = data.totalCount
+		return movies
 	}
 </script>
 
@@ -36,15 +39,21 @@
 				<MovieSkeletonCard />
 			{/each}
 		{:then movies}
-			{#each movies as movie (movie.id)}
-				<article animate:flip={TRANSITION}>
-					<MovieLinkCard
-						href="/profile/{movie.id}"
-						src={getTMDBImageUrl(movie.poster_path)}
-						alt="Poster of {movie.title}"
-					/>
-				</article>
-			{/each}
+			{#if movies.length}
+				{#each movies as movie (movie.id)}
+					<article animate:flip={TRANSITION}>
+						<MovieLinkCard
+							href="/profile/{movie.id}"
+							src={getTMDBImageUrl(movie.poster_path)}
+							alt="Poster of {movie.title}"
+						/>
+					</article>
+				{/each}
+			{:else}
+				<p>No movies in your watchlist, mate.</p>
+			{/if}
+		{:catch error}
+			<FetchErrorMessage message={error.message} class="col-span-full" />
 		{/await}
 	</div>
 </section>

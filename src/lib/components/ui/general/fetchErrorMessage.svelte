@@ -3,7 +3,7 @@
 	export let error: string | null = null
 </script>
 
-<article class="rounded-lg p-4 bg-red">
+<article class="rounded-lg p-4 bg-red {$$props.class}">
 	<p class="text-white">
 		{message}
 		{#if error}

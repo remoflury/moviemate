@@ -1,10 +1,9 @@
 <script lang="ts">
-	import LoadingSpinner from '$lib/assets/loadingSpinner.svelte'
+	import LoadingSpinner from '$lib/components/ui/general/loadingSpinner.svelte'
 	import SwipeCard from '$lib/components/ui/cards/swipeCard.svelte'
 	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 	import type { RecommendationProps } from '$lib/types/TMDB'
 
-	export let data
 	let recommendations: RecommendationProps[] = []
 	let recommendationsLength: number
 	let currentIndex = 0
@@ -19,7 +18,6 @@
 		const data = await response.json()
 		recommendations = [...data.results]
 		recommendationsLength = recommendations.length
-		console.log(recommendations)
 
 		// error handling
 		if (!recommendations || !recommendations.length) {

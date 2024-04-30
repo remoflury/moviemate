@@ -79,12 +79,6 @@
 			y: 0
 		}
 	}
-
-	// onDestroy(() => {
-	// 	resetPositions()
-	// })
-
-	// $: console.log(currentPos.x - touchstartPos.x)
 </script>
 
 <article

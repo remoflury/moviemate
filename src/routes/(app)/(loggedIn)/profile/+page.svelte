@@ -18,10 +18,14 @@
 	let offset = 0
 	let showRemoveFromWatchlistForm = false
 	let currentMovie: MovieByIdProps
+	let reload = false
 
 	const avatarImage = avatarImages.find((avatar) => avatar.id === data.user.avatar_id)
 
-	const getWatchlist = async (limit: number, offset: number) => {
+	const getWatchlist = async (limit: number, offset: number, isReloading: boolean) => {
+		if (isReloading) {
+			reload = false
+		}
 		const response = await fetch(`api/watchlist?limit=${limit}&offset=${offset}`)
 		const data = await response.json()
 		const movies: MovieByIdProps[] = data.movies
@@ -49,7 +53,7 @@
 <section class="container section-spacing">
 	<h2>Watchlist</h2>
 	<div class="grid grid-cols-3 gap-3">
-		{#await getWatchlist(limit, offset)}
+		{#await getWatchlist(limit, offset, reload)}
 			{#each Array(limit) as _}
 				<MovieSkeletonCard />
 			{/each}
@@ -65,8 +69,8 @@
 						>
 							<button
 								on:click|preventDefault={() => {
-									toggleRemoveFromWatchlistForm()
 									currentMovie = movie
+									toggleRemoveFromWatchlistForm()
 								}}
 								class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 z-10 bg-white aspect-square rounded-full w-5 grid place-content-center"
 							>
@@ -100,8 +104,5 @@
 	isShown={showRemoveFromWatchlistForm}
 	movie={currentMovie}
 	on:closeModal={toggleRemoveFromWatchlistForm}
-	on:successfulRemoval={() => {
-		limit += limit
-		limit / 2
-	}}
+	on:successfulRemoval={() => (reload = true)}
 />

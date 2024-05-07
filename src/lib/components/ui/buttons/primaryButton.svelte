@@ -1,5 +1,6 @@
 <script lang="ts">
-	import LoadingSpinner from '$lib/assets/loadingSpinner.svelte'
+	// import LoadingSpinner from '$lib/assets/loadingSpinner.svelte'
+	import LoadingSpinner from '$lib/components/ui/general/loadingSpinner.svelte'
 	import { createEventDispatcher } from 'svelte'
 
 	export let type: 'button' | 'submit' | 'reset' = 'submit'
@@ -27,7 +28,7 @@
 		on:click={handleClick}
 	>
 		{#if disabled}
-			<LoadingSpinner color="white" />
+			<LoadingSpinner />
 		{/if}
 		{text}
 	</button>

@@ -57,6 +57,8 @@ export const actions: Actions = {
       return message(form, "Error removing from watchlist. Try again later.", {status: 500})
     }
 
+    await new Promise(resolve => setTimeout(resolve, 4000))
+
     return {form}
   }
 };

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { RecommendationProps } from '$lib/types/TMDB'
 	import { getTMDBImageUrl } from '$lib/utils/generalUtils'
-	import { createEventDispatcher, onDestroy } from 'svelte'
+	import { createEventDispatcher } from 'svelte'
 
 	export let content: RecommendationProps
 	export let zIndex: number

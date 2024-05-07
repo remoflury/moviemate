@@ -8,6 +8,18 @@
 	export let text: string
 	export let color: 'turqoise' | 'white' | 'blue' = 'turqoise'
 
+	const getSpinnerColor = () => {
+		switch (color) {
+			case 'turqoise':
+				return 'white'
+			case 'white':
+				return 'turqoise'
+			case 'blue':
+				return 'white'
+		}
+	}
+
+	const spinnerColor = getSpinnerColor()
 	const dispatch = createEventDispatcher()
 
 	const handleClick = () => {
@@ -28,7 +40,7 @@
 		on:click={handleClick}
 	>
 		{#if disabled}
-			<LoadingSpinner />
+			<LoadingSpinner color={spinnerColor} />
 		{/if}
 		{text}
 	</button>

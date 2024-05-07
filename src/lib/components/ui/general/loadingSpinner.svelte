@@ -1,15 +1,27 @@
-<script>
+<script lang="ts">
 	import { slide } from 'svelte/transition'
+
+	export let color: 'turqoise' | 'blue' | 'white' = 'turqoise'
 </script>
 
 <div transition:slide={{ duration: 350 }} class="grid place-content-center">
-	<span class="loader" />
+	<span class="loader" class:color />
 </div>
 
 <style lang="postcss">
 	.loader {
-		@apply w-8 aspect-square rounded-[50%] inline-block border-t-[3px] border-t-turqoise border-r-[3px] border-r-transparent;
+		@apply w-[1em] aspect-square rounded-[50%] inline-block border-t-[3px] border-r-[3px] border-r-transparent;
 		animation: rotation 1s linear infinite;
+	}
+
+	.loader.turqoise {
+		@apply border-t-turqoise;
+	}
+	.loader.white {
+		@apply border-t-white;
+	}
+	.loader.blue {
+		@apply border-t-blue;
 	}
 
 	@keyframes rotation {

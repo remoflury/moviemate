@@ -5,7 +5,12 @@
 </script>
 
 <div transition:slide={{ duration: 350 }} class="grid place-content-center">
-	<span class="loader" class:color />
+	<span
+		class="loader"
+		class:turqoise={color === 'turqoise'}
+		class:white={color === 'white'}
+		class:blue={color === 'blue'}
+	/>
 </div>
 
 <style lang="postcss">

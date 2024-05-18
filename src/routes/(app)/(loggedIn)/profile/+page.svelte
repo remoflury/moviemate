@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { avatarImages } from '$lib/utils/data'
-	import UserCard from '$lib/components/ui/cards/userCard.svelte'
-	import MovieSkeletonCard from '$lib/components/ui/skeleton/movieSkeletonCard.svelte'
-	import MovieLinkCard from '$lib/components/ui/cards/movieLinkCard.svelte'
 	import type { MovieByIdProps } from '$lib/types/TMDB.js'
+	import { avatarImages } from '$lib/utils/data'
 	import { getTMDBImageUrl } from '$lib/utils/generalUtils'
 	import { flip } from 'svelte/animate'
 	import { TRANSITION } from '$lib/utils/constants.js'
+	import { fade } from 'svelte/transition'
+	import UserCard from '$lib/components/ui/cards/userCard.svelte'
+	import MovieSkeletonCard from '$lib/components/ui/skeleton/movieSkeletonCard.svelte'
+	import MovieLinkCard from '$lib/components/ui/cards/movieLinkCard.svelte'
 	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 	import LinkButton from '$lib/components/ui/buttons/linkButton.svelte'
-	import { fade } from 'svelte/transition'
 	import RemoveFromWatchlistForm from '$lib/components/form/removeFromWatchlistForm.svelte'
 
 	export let data

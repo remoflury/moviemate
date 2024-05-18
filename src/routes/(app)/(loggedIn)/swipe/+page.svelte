@@ -50,9 +50,6 @@
 
 <section class="container section-spacing">
 	<h1 hidden>Swipe your movies</h1>
-	<div class="grid place-content-center">
-		<LoadingSpinner />
-	</div>
 	{#await getMovies(reload)}
 		<div class="grid place-content-center">
 			<LoadingSpinner />

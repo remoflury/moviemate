@@ -1,11 +1,12 @@
 <script lang="ts">
+	import type { EventDetail, MoveEventDetail } from '@splidejs/svelte-splide/types'
 	import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide'
 	import '@splidejs/svelte-splide/css/core'
 	import { createEventDispatcher, onMount } from 'svelte'
 	import { SPLIDE_OPTIONS, avatarImages } from '$lib/utils/data'
 	import Chevron from '$lib/assets/chevron.svelte'
 	import AvatarImage from './avatarImage.svelte'
-	import type { EventDetail, MoveEventDetail } from '@splidejs/svelte-splide/types'
+	export let initialAvatarIndex: number = 1
 
 	const dispatch = createEventDispatcher()
 
@@ -16,7 +17,13 @@
 	}
 
 	function handleMount(event: CustomEvent<EventDetail<Record<string, unknown>>>) {
-		dispatch('currentAvatarIndex', avatarImages[0].id)
+		if (initialAvatarIndex != 1) {
+			event.detail.splide.go(initialAvatarIndex - 1)
+		}
+		dispatch(
+			'currentAvatarIndex',
+			initialAvatarIndex != 1 ? avatarImages[0].id : initialAvatarIndex
+		)
 	}
 </script>
 
@@ -24,7 +31,7 @@
 	<Splide
 		hasTrack={false}
 		options={{ ...SPLIDE_OPTIONS, padding: '2rem' }}
-		on:move={handleMove}
+		on:moved={handleMove}
 		on:mounted={handleMount}
 	>
 		<SplideTrack>

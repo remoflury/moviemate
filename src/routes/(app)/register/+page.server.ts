@@ -77,12 +77,5 @@ export const actions: Actions = {
 
     return message(form, 'User signed up successfully. Please check your mails to validate your email address.')
 
-    // console.log(data)
-
-    // console.log(data)
-
-    // console.log(data)
-    // // if user signed up successfully, redirect to /swipe
-    // throw redirect(303, '/swipe');
   }
 };

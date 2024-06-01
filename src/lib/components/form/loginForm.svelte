@@ -12,8 +12,6 @@
 	export let data: SuperValidated<Infer<LoginSchema>>
 
 	const { form, errors, enhance, constraints, delayed, message } = superForm(data)
-
-	$: console.log($message)
 </script>
 
 <form action={actionPath} use:enhance method="POST">

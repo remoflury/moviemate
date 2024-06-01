@@ -2,7 +2,7 @@ import { error } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { fail, message, superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { movieIdSchema } from "$lib/validation/zodSchema";
+import { movieIdSchema, searchSchema } from "$lib/validation/zodSchema";
 
 export const load: PageServerLoad = async ({ locals }) => {
   const session = await locals.safeGetSession()
@@ -24,10 +24,12 @@ export const load: PageServerLoad = async ({ locals }) => {
   }
 
   const removeFromWatchlistForm = await superValidate(zod(movieIdSchema))
+  const watchlistSearchForm = await superValidate(zod(searchSchema))
 
   return {
     user: user[0],
-    removeFromWatchlistForm
+    removeFromWatchlistForm,
+    watchlistSearchForm
   }
 };
 

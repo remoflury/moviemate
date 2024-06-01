@@ -4,13 +4,14 @@
 	import { getTMDBImageUrl } from '$lib/utils/generalUtils'
 	import { flip } from 'svelte/animate'
 	import { TRANSITION } from '$lib/utils/constants.js'
-	import { fade } from 'svelte/transition'
+	import { fade, slide } from 'svelte/transition'
 	import UserCard from '$lib/components/ui/cards/userCard.svelte'
 	import MovieSkeletonCard from '$lib/components/ui/skeleton/movieSkeletonCard.svelte'
 	import MovieLinkCard from '$lib/components/ui/cards/movieLinkCard.svelte'
 	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 	import LinkButton from '$lib/components/ui/buttons/linkButton.svelte'
 	import RemoveFromWatchlistForm from '$lib/components/form/removeFromWatchlistForm.svelte'
+	import SearchForm from '$lib/components/form/searchForm.svelte'
 
 	export let data
 	let totalMovies: number
@@ -19,15 +20,27 @@
 	let showRemoveFromWatchlistForm = false
 	let currentMovie: MovieByIdProps
 	let reload = false
+	let searchQuery = ''
 
 	const avatarImage = avatarImages.find((avatar) => avatar.id === data.user.avatar_id)
 
-	const getWatchlist = async (limit: number, offset: number, isReloading: boolean) => {
+	const getWatchlist = async (
+		limit: number,
+		offset: number,
+		isReloading: boolean,
+		search: boolean = false
+	) => {
 		if (isReloading) {
 			reload = false
 		}
-		const response = await fetch(`api/watchlist?limit=${limit}&offset=${offset}`)
+
+		console.log(search)
+		const response = search
+			? await fetch(`api/watchlist/search?q=${searchQuery}`)
+			: await fetch(`api/watchlist?limit=${limit}&offset=${offset}`)
 		const data = await response.json()
+
+		console.log(data)
 		const movies: MovieByIdProps[] = data.movies
 		totalMovies = data.totalCount
 		return movies
@@ -40,6 +53,8 @@
 	const toggleRemoveFromWatchlistForm = () => {
 		showRemoveFromWatchlistForm = !showRemoveFromWatchlistForm
 	}
+
+	$: console.log(searchQuery)
 </script>
 
 <section class="container section-spacing">
@@ -52,12 +67,20 @@
 </section>
 <section class="container section-spacing">
 	<h2>Watchlist</h2>
-	<div class="grid grid-cols-3 gap-3">
-		{#await getWatchlist(limit, offset, reload)}
+	<SearchForm
+		actionPath="?/search"
+		isSubmittable={false}
+		data={data.watchlistSearchForm}
+		on:input={(e) => (searchQuery = e.detail.query)}
+	/>
+	{#await getWatchlist(limit, offset, reload, !!searchQuery)}
+		<div class="grid grid-cols-3 gap-3">
 			{#each Array(limit) as _}
 				<MovieSkeletonCard />
 			{/each}
-		{:then movies}
+		</div>
+	{:then movies}
+		<div class="grid grid-cols-3 gap-3">
 			{#if movies.length}
 				{#each movies as movie (movie.id)}
 					<article animate:flip={TRANSITION}>
@@ -90,12 +113,12 @@
 					</div>
 				{/if}
 			{:else}
-				<p>No movies in your watchlist, mate.</p>
+				<p class="col-span-full">No movies in your watchlist, mate.</p>
 			{/if}
-		{:catch error}
-			<FetchErrorMessage message={error.message} class="col-span-full" />
-		{/await}
-	</div>
+		</div>
+	{:catch error}
+		<FetchErrorMessage message={error.message} class="col-span-full" />
+	{/await}
 </section>
 
 <RemoveFromWatchlistForm

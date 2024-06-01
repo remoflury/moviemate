@@ -46,3 +46,11 @@ export const movieIdSchema = z.object({
 })
 
 export type MovieIdSchema = typeof movieIdSchema
+
+export const searchSchema = z.object({
+	query: z
+		.string({ required_error: 'Search term is required.' })
+		.min(1, { message: 'Search term is required.' })
+})
+
+export type SearchSchema = typeof searchSchema

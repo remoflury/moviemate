@@ -2,6 +2,7 @@
 	export let label: string
 	export let name: string
 	export let required: boolean = false
+	export let hidden: boolean = false
 </script>
 
-<label for={name}>{label}{required ? ' *' : ''}</label>
+<label for={name} {hidden}>{label}{required ? ' *' : ''}</label>

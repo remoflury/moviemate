@@ -1,8 +1,9 @@
 <script lang="ts">
-	import LoadingSpinner from '$lib/components/ui/general/loadingSpinner.svelte'
-	import SwipeCard from '$lib/components/ui/cards/swipeCard.svelte'
-	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 	import type { RecommendationProps } from '$lib/types/TMDB'
+	import { SwipeDeck, SwipeCard } from 'svelte-swipe-cards'
+	import LoadingSpinner from '$lib/components/ui/general/loadingSpinner.svelte'
+	import SwipeCardContent from '$lib/components/ui/cards/swipeCardContent.svelte'
+	import FetchErrorMessage from '$lib/components/ui/general/fetchErrorMessage.svelte'
 
 	let recommendations: RecommendationProps[] = []
 	let recommendationsLength: number
@@ -55,16 +56,19 @@
 			<LoadingSpinner />
 		</div>
 	{:then}
-		<div class="relative">
-			{#each recommendations as recommendation, index}
+		<SwipeDeck>
+			{#each recommendations as recommendation, index (recommendation.id)}
 				<SwipeCard
-					content={recommendation}
-					zIndex={index * -1}
-					on:swipe-left={() => handleSwipe('left')}
-					on:swipe-right={() => handleSwipe('right')}
-				/>
+					{index}
+					allowedDirections="horizontal"
+					threshold={30}
+					on:swipe_left={() => handleSwipe('left')}
+					on:swipe_right={() => handleSwipe('right')}
+				>
+					<SwipeCardContent content={recommendation} />
+				</SwipeCard>
 			{/each}
-		</div>
+		</SwipeDeck>
 	{:catch error}
 		<FetchErrorMessage message="Something went wrong" {error} />
 	{/await}

@@ -38,6 +38,7 @@
 	"dependencies": {
 		"@splidejs/svelte-splide": "^0.2.9",
 		"@supabase/ssr": "^0.1.0",
-		"@supabase/supabase-js": "^2.42.0"
+		"@supabase/supabase-js": "^2.42.0",
+		"svelte-swipe-cards": "^1.0.4"
 	}
 }

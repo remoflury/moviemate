@@ -28,6 +28,10 @@
 
 <svelte:head>
 	<title>Movie Mate</title>
+	<meta name="keywords" content="movie, movie night, netflix, disney plus">
+	<meta name="description" content="Don't know which movie to watch on a movie night? Swipe some movies, moviemate will help you out.">
+  	<meta name="author" content="Remo Flury, Tina Frauenknecht, Christina Benz">
+
 </svelte:head>
 
 {#key $page.url.pathname}

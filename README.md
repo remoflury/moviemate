@@ -1,15 +1,11 @@
 # Movie Mate
 
-This is an web-app built with svelte-kit and tailwindcss. It uses the [TMDB API](https://developers.themoviedb.org/3/getting-started/introduction) to fetch movie data.
+It often takes forever for a group to agree on a film at a movie night.
+MovieMate offers a solution: With this Progressive Web App (PWA), films can be swiped like on Tinder. The liked films then end up in a watchlist. During a movie night, the app automatically suggests films that everyone wants to see or that are suitable based on previously liked films. Long searches on Netflix are a thing of the past.
 
 ## Tech-Stack
 
-This repo uses:
-
-- Svelte & SvelteKit as JS Framework (with TypeScript)
-- Supabase with the according SDK and sveltekit-supabase-auth-helpers
-- Tailwind CSS
-- TMDB API
+MovieMate is built with Svelte / SvelteKit and Typescript, using Supabase as DB. All the movie data is fetched from the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started).
 
 ## Setup Dev-Environment
 
@@ -20,34 +16,3 @@ In your Terminal run:
 ```
 
 Afterwards, create an .env file in the root of the project and paste in the necessary credentials.
-
-## Developing
-
-Development takes place on the dev branch.
-
-### Coding Standards
-
-- camelCase for JS
-- kebab-case for HTML and CSS
-- use descriptive names for variables, functions, etc.
-- use english for naming
-- indentation with 2 spaces
-
-To start the dev server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
